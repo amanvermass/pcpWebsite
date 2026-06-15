@@ -5,7 +5,7 @@ import { Header } from "@/components/homepage/Header";
 import { Hero } from "@/components/homepage/Hero";
 import { FeaturedProducts } from "@/components/homepage/FeaturedProducts";
 import { RecommendationEngine } from "@/components/homepage/RecommendationEngine";
-import { Calculators } from "@/components/homepage/Calculators";
+import { CalculatorsTeaser } from "@/components/homepage/CalculatorsTeaser";
 import { Projects } from "@/components/homepage/Projects";
 import { Sustainability } from "@/components/homepage/Sustainability";
 import { DealerLocator } from "@/components/homepage/DealerLocator";
@@ -29,10 +29,10 @@ export default function Home() {
       <Header darkMode={darkMode} setDarkMode={setDarkMode} />
       <main className="flex-grow">
         <Hero />
-        <FeaturedProducts />
+        <FeaturedProducts teaser={true} />
         <RecommendationEngine />
-        <Calculators />
-        <Projects />
+        <CalculatorsTeaser />
+        <Projects teaser={true} />
         <Sustainability />
         <DealerLocator />
         <BlogsAndNews />

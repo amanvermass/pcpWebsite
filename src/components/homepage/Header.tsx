@@ -4,6 +4,8 @@ import React, { useState, useEffect } from "react";
 import { Menu, X, ChevronDown, Building2, HardHat, FileText, Calculator, PhoneCall, Sun, Moon } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Logo } from "./Logo";
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 
 interface HeaderProps {
   darkMode: boolean;
@@ -14,6 +16,8 @@ export const Header: React.FC<HeaderProps> = ({ darkMode, setDarkMode }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+  const pathname = usePathname();
+  const router = useRouter();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -35,37 +39,52 @@ export const Header: React.FC<HeaderProps> = ({ darkMode, setDarkMode }) => {
     }
   };
 
-  const handleLinkClick = (selector: string) => {
+  const handleLinkClick = (pathOrSelector: string) => {
     setIsOpen(false);
     setActiveDropdown(null);
-    const element = document.querySelector(selector);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+    
+    if (pathOrSelector.startsWith("#")) {
+      if (pathname === "/") {
+        const element = document.querySelector(pathOrSelector);
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth" });
+        }
+      } else {
+        router.push(`/${pathOrSelector}`);
+      }
+    } else {
+      router.push(pathOrSelector);
     }
+  };
+
+  const getHref = (href: string) => {
+    if (href.startsWith("#")) {
+      return pathname === "/" ? href : `/${href}`;
+    }
+    return href;
   };
 
   const menuItems = {
     products: [
-      { name: "Clay Bricks", href: "#products" },
-      { name: "Terracotta Bricks", href: "#products" },
-      { name: "Roofing Tiles", href: "#products" },
-      { name: "Pavers", href: "#products" },
-      { name: "Cladding Bricks", href: "#products" },
-      { name: "Hollow Blocks", href: "#products" },
-      { name: "AAC Blocks", href: "#products" },
-      { name: "Engineering & Special", href: "#products" },
+      { name: "Clay Bricks", href: "/products?category=Clay Bricks" },
+      { name: "Terracotta Facades", href: "/products?category=Terracotta" },
+      { name: "Roofing Tiles", href: "/products?category=Roofing Tiles" },
+      { name: "Paving Stones", href: "/products?category=Pavers" },
+      { name: "Hollow Blocks", href: "/products?category=Hollow Blocks" },
+      { name: "AAC Blocks", href: "/products?category=AAC Blocks" },
     ],
     calculators: [
-      { name: "Brick Quantity Calculator", href: "#calculators" },
-      { name: "House Material Estimator", href: "#calculators" },
-      { name: "Roofing Tile Estimator", href: "#calculators" },
-      { name: "Paver Calculator", href: "#calculators" },
+      { name: "Brick Quantity Calculator", href: "/calculators?id=brick-quantity" },
+      { name: "House Material Estimator", href: "/calculators?id=house-estimator" },
+      { name: "Wall Net Area Estimator", href: "/calculators?id=wall-net-area" },
+      { name: "Roofing Tile Estimator", href: "/calculators?id=roofing-tile" },
+      { name: "Paver Calculator", href: "/calculators?id=paver" },
     ],
     resources: [
-      { name: "Technical Datasheets", href: "#resources" },
-      { name: "CAD Drawings (DWG/DXF)", href: "#resources" },
-      { name: "BIM & Revit Objects (RVT/IFC)", href: "#resources" },
-      { name: "Installation Manuals", href: "#resources" },
+      { name: "Technical Datasheets", href: "/resources?type=Technical Datasheet" },
+      { name: "CAD Drawings (DWG/DXF)", href: "/resources?type=CAD Detail" },
+      { name: "BIM & Revit Objects (RVT/IFC)", href: "/resources?type=BIM Revit Object" },
+      { name: "Installation Manuals", href: "/resources?type=Installation Guide" },
     ],
   };
 
@@ -80,7 +99,13 @@ export const Header: React.FC<HeaderProps> = ({ darkMode, setDarkMode }) => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <div className="flex items-center gap-2 cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
+          <div className="flex items-center gap-2 cursor-pointer" onClick={() => {
+            if (pathname === "/") {
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            } else {
+              router.push("/");
+            }
+          }}>
             <Logo height="48" inverseText={darkMode} />
           </div>
 
@@ -91,7 +116,7 @@ export const Header: React.FC<HeaderProps> = ({ darkMode, setDarkMode }) => {
               <button
                 onClick={() => toggleDropdown("products")}
                 onMouseEnter={() => setActiveDropdown("products")}
-                className="flex items-center gap-1 text-sm font-semibold text-brand-slate-200 hover:text-brand-terracotta-500 transition-colors py-2"
+                className={`flex items-center gap-1 text-sm font-semibold transition-colors py-2 cursor-pointer ${pathname.startsWith("/products") ? "text-brand-terracotta-500" : "text-brand-slate-200 hover:text-brand-terracotta-500"}`}
               >
                 Products <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${activeDropdown === "products" ? "rotate-180" : ""}`} />
               </button>
@@ -106,15 +131,18 @@ export const Header: React.FC<HeaderProps> = ({ darkMode, setDarkMode }) => {
                     className="absolute left-0 mt-2 w-64 rounded-xl shadow-2xl glass-panel bg-brand-slate-950/95 border border-brand-slate-800 p-2 grid grid-cols-1 gap-1"
                   >
                     {menuItems.products.map((item, idx) => (
-                      <a
+                      <Link
                         key={idx}
                         href={item.href}
-                        onClick={() => handleLinkClick("#products")}
+                        onClick={() => {
+                          setIsOpen(false);
+                          setActiveDropdown(null);
+                        }}
                         className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-brand-slate-300 hover:bg-brand-slate-900 hover:text-brand-terracotta-500 transition-all font-medium"
                       >
                         <span className="w-1.5 h-1.5 rounded-full bg-brand-terracotta-600"></span>
                         {item.name}
-                      </a>
+                      </Link>
                     ))}
                   </motion.div>
                 )}
@@ -123,8 +151,8 @@ export const Header: React.FC<HeaderProps> = ({ darkMode, setDarkMode }) => {
 
             {/* Projects */}
             <button
-              onClick={() => handleLinkClick("#projects")}
-              className="text-sm font-semibold text-brand-slate-200 hover:text-brand-terracotta-500 transition-colors py-2"
+              onClick={() => handleLinkClick("/projects")}
+              className={`text-sm font-semibold transition-colors py-2 cursor-pointer ${pathname.startsWith("/projects") ? "text-brand-terracotta-500" : "text-brand-slate-200 hover:text-brand-terracotta-500"}`}
             >
               Projects
             </button>
@@ -134,7 +162,7 @@ export const Header: React.FC<HeaderProps> = ({ darkMode, setDarkMode }) => {
               <button
                 onClick={() => toggleDropdown("calculators")}
                 onMouseEnter={() => setActiveDropdown("calculators")}
-                className="flex items-center gap-1 text-sm font-semibold text-brand-slate-200 hover:text-brand-terracotta-500 transition-colors py-2"
+                className={`flex items-center gap-1 text-sm font-semibold transition-colors py-2 cursor-pointer ${pathname.startsWith("/calculators") ? "text-brand-terracotta-500" : "text-brand-slate-200 hover:text-brand-terracotta-500"}`}
               >
                 Calculators <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${activeDropdown === "calculators" ? "rotate-180" : ""}`} />
               </button>
@@ -149,15 +177,21 @@ export const Header: React.FC<HeaderProps> = ({ darkMode, setDarkMode }) => {
                     className="absolute left-0 mt-2 w-64 rounded-xl shadow-2xl glass-panel bg-brand-slate-950/95 border border-brand-slate-800 p-2 grid grid-cols-1 gap-1"
                   >
                     {menuItems.calculators.map((item, idx) => (
-                      <a
+                      <Link
                         key={idx}
-                        href={item.href}
-                        onClick={() => handleLinkClick("#calculators")}
+                        href={getHref(item.href)}
+                        onClick={() => {
+                          setIsOpen(false);
+                          setActiveDropdown(null);
+                          if (pathname === "/" && item.href.startsWith("#")) {
+                            handleLinkClick(item.href);
+                          }
+                        }}
                         className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-brand-slate-300 hover:bg-brand-slate-900 hover:text-brand-terracotta-500 transition-all font-medium"
                       >
                         <Calculator className="w-4 h-4 text-brand-terracotta-500" />
                         {item.name}
-                      </a>
+                      </Link>
                     ))}
                   </motion.div>
                 )}
@@ -167,7 +201,7 @@ export const Header: React.FC<HeaderProps> = ({ darkMode, setDarkMode }) => {
             {/* Recommender Quiz */}
             <button
               onClick={() => handleLinkClick("#recommender")}
-              className="text-sm font-semibold text-brand-slate-200 hover:text-brand-terracotta-500 transition-colors py-2"
+              className="text-sm font-semibold text-brand-slate-200 hover:text-brand-terracotta-500 transition-colors py-2 cursor-pointer"
             >
               Material Wizard
             </button>
@@ -177,7 +211,7 @@ export const Header: React.FC<HeaderProps> = ({ darkMode, setDarkMode }) => {
               <button
                 onClick={() => toggleDropdown("resources")}
                 onMouseEnter={() => setActiveDropdown("resources")}
-                className="flex items-center gap-1 text-sm font-semibold text-brand-slate-200 hover:text-brand-terracotta-500 transition-colors py-2"
+                className={`flex items-center gap-1 text-sm font-semibold transition-colors py-2 cursor-pointer ${pathname.startsWith("/resources") ? "text-brand-terracotta-500" : "text-brand-slate-200 hover:text-brand-terracotta-500"}`}
               >
                 Resources <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${activeDropdown === "resources" ? "rotate-180" : ""}`} />
               </button>
@@ -192,15 +226,21 @@ export const Header: React.FC<HeaderProps> = ({ darkMode, setDarkMode }) => {
                     className="absolute left-0 mt-2 w-68 rounded-xl shadow-2xl glass-panel bg-brand-slate-950/95 border border-brand-slate-800 p-2 grid grid-cols-1 gap-1"
                   >
                     {menuItems.resources.map((item, idx) => (
-                      <a
+                      <Link
                         key={idx}
-                        href={item.href}
-                        onClick={() => handleLinkClick("#resources")}
+                        href={getHref(item.href)}
+                        onClick={() => {
+                          setIsOpen(false);
+                          setActiveDropdown(null);
+                          if (pathname === "/" && item.href.startsWith("#")) {
+                            handleLinkClick(item.href);
+                          }
+                        }}
                         className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-brand-slate-300 hover:bg-brand-slate-900 hover:text-brand-terracotta-500 transition-all font-medium"
                       >
                         <FileText className="w-4 h-4 text-brand-terracotta-500" />
                         {item.name}
-                      </a>
+                      </Link>
                     ))}
                   </motion.div>
                 )}
@@ -210,7 +250,7 @@ export const Header: React.FC<HeaderProps> = ({ darkMode, setDarkMode }) => {
             {/* Sustainability */}
             <button
               onClick={() => handleLinkClick("#sustainability")}
-              className="text-sm font-semibold text-brand-slate-200 hover:text-brand-terracotta-500 transition-colors py-2"
+              className="text-sm font-semibold text-brand-slate-200 hover:text-brand-terracotta-500 transition-colors py-2 cursor-pointer"
             >
               Sustainability
             </button>
@@ -218,7 +258,7 @@ export const Header: React.FC<HeaderProps> = ({ darkMode, setDarkMode }) => {
             {/* Dealer Locator */}
             <button
               onClick={() => handleLinkClick("#dealers")}
-              className="text-sm font-semibold text-brand-slate-200 hover:text-brand-terracotta-500 transition-colors py-2"
+              className="text-sm font-semibold text-brand-slate-200 hover:text-brand-terracotta-500 transition-colors py-2 cursor-pointer"
             >
               Dealers
             </button>
@@ -226,7 +266,7 @@ export const Header: React.FC<HeaderProps> = ({ darkMode, setDarkMode }) => {
             {/* Blog */}
             <button
               onClick={() => handleLinkClick("#blogs")}
-              className="text-sm font-semibold text-brand-slate-200 hover:text-brand-terracotta-500 transition-colors py-2"
+              className="text-sm font-semibold text-brand-slate-200 hover:text-brand-terracotta-500 transition-colors py-2 cursor-pointer"
             >
               Knowledge Base
             </button>
@@ -285,20 +325,20 @@ export const Header: React.FC<HeaderProps> = ({ darkMode, setDarkMode }) => {
             {/* Navigation links */}
             <div className="flex flex-col gap-2">
               <button
-                onClick={() => handleLinkClick("#products")}
-                className="w-full text-left font-semibold text-brand-slate-200 py-2.5 px-3 rounded-lg hover:bg-brand-slate-900 transition-colors"
+                onClick={() => handleLinkClick("/products")}
+                className={`w-full text-left font-semibold py-2.5 px-3 rounded-lg hover:bg-brand-slate-900 transition-colors ${pathname.startsWith("/products") ? "text-brand-terracotta-500 bg-brand-slate-900/50 font-bold" : "text-brand-slate-200"}`}
               >
                 Products Catalog
               </button>
               <button
-                onClick={() => handleLinkClick("#projects")}
-                className="w-full text-left font-semibold text-brand-slate-200 py-2.5 px-3 rounded-lg hover:bg-brand-slate-900 transition-colors"
+                onClick={() => handleLinkClick("/projects")}
+                className={`w-full text-left font-semibold py-2.5 px-3 rounded-lg hover:bg-brand-slate-900 transition-colors ${pathname.startsWith("/projects") ? "text-brand-terracotta-500 bg-brand-slate-900/50 font-bold" : "text-brand-slate-200"}`}
               >
                 Architectural Projects
               </button>
               <button
-                onClick={() => handleLinkClick("#calculators")}
-                className="w-full text-left font-semibold text-brand-slate-200 py-2.5 px-3 rounded-lg hover:bg-brand-slate-900 transition-colors"
+                onClick={() => handleLinkClick("/calculators")}
+                className={`w-full text-left font-semibold py-2.5 px-3 rounded-lg hover:bg-brand-slate-900 transition-colors ${pathname.startsWith("/calculators") ? "text-brand-terracotta-500 bg-brand-slate-900/50 font-bold" : "text-brand-slate-200"}`}
               >
                 Material Calculators
               </button>
@@ -309,8 +349,8 @@ export const Header: React.FC<HeaderProps> = ({ darkMode, setDarkMode }) => {
                 Material Recommendation Quiz
               </button>
               <button
-                onClick={() => handleLinkClick("#resources")}
-                className="w-full text-left font-semibold text-brand-slate-200 py-2.5 px-3 rounded-lg hover:bg-brand-slate-900 transition-colors"
+                onClick={() => handleLinkClick("/resources")}
+                className={`w-full text-left font-semibold py-2.5 px-3 rounded-lg hover:bg-brand-slate-900 transition-colors ${pathname.startsWith("/resources") ? "text-brand-terracotta-500 bg-brand-slate-900/50 font-bold" : "text-brand-slate-200"}`}
               >
                 BIM / CAD Resource Center
               </button>

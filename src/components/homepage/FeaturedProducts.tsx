@@ -4,146 +4,19 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FileText, Eye, Check, X, ArrowRight, Download } from "lucide-react";
 import { useToast } from "../ui/Toast";
+import Link from "next/link";
+import { products, Product } from "../../data/products";
 
-interface Product {
-  id: string;
-  name: string;
-  category: string;
-  desc: string;
-  image: string;
-  specs: {
-    length: string;
-    width: string;
-    height: string;
-    weight: string;
-    density: string;
-    waterAbsorption: string;
-    compStrength: string;
-    thermalInsulation?: string;
-    fireResistance: string;
-  };
-}
-
-export const FeaturedProducts: React.FC = () => {
+export const FeaturedProducts: React.FC<{ teaser?: boolean }> = ({ teaser = false }) => {
   const { toast } = useToast();
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [activeQuickView, setActiveQuickView] = useState<Product | null>(null);
 
   const categories = ["All", "Clay Bricks", "Terracotta", "Roofing Tiles", "Pavers", "Hollow Blocks", "AAC Blocks"];
 
-  const products: Product[] = [
-    {
-      id: "p1",
-      name: "Classic Clay Facing Brick",
-      category: "Clay Bricks",
-      desc: "Traditional extruded clay brick featuring high compressive strength and clean aesthetics for exterior facades.",
-      image: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=600&q=80",
-      specs: {
-        length: "230 mm",
-        width: "110 mm",
-        height: "75 mm",
-        weight: "3.2 kg",
-        density: "1900 kg/m³",
-        waterAbsorption: "7.8%",
-        compStrength: "35 N/mm²",
-        thermalInsulation: "0.45 W/mK",
-        fireResistance: "Class A1 (4 Hours)",
-      },
-    },
-    {
-      id: "p2",
-      name: "Natural Terracotta Cladding Tile",
-      category: "Terracotta",
-      desc: "Ventilated facade tiles made from 100% organic clay, offering natural UV stability and building envelope insulation.",
-      image: "https://images.unsplash.com/photo-1590381105924-c72589b9ef3f?auto=format&fit=crop&w=600&q=80",
-      specs: {
-        length: "600 mm",
-        width: "300 mm",
-        height: "20 mm",
-        weight: "8.5 kg",
-        density: "2100 kg/m³",
-        waterAbsorption: "5.5%",
-        compStrength: "25 N/mm²",
-        thermalInsulation: "0.38 W/mK",
-        fireResistance: "Class A1 (2 Hours)",
-      },
-    },
-    {
-      id: "p3",
-      name: "Tuscan Roman Roofing Tile",
-      category: "Roofing Tiles",
-      desc: "Interlocking clay roofing tiles designed to withstand severe weather, offering classic Mediterranean architectural style.",
-      image: "https://images.unsplash.com/photo-1613665813446-82a78c468a1d?auto=format&fit=crop&w=600&q=80",
-      specs: {
-        length: "420 mm",
-        width: "270 mm",
-        height: "30 mm",
-        weight: "3.4 kg",
-        density: "1850 kg/m³",
-        waterAbsorption: "9.2%",
-        compStrength: "1.8 kN (Bending)",
-        fireResistance: "Class A1 (Non-combustible)",
-      },
-    },
-    {
-      id: "p4",
-      name: "Heavy-Duty Interlocking Paver",
-      category: "Pavers",
-      desc: "High-density clay pavers engineered for civic squares, driveways, and heavy vehicular traffic applications.",
-      image: "https://images.unsplash.com/photo-1599809275671-b5941cabc7a5?auto=format&fit=crop&w=600&q=80",
-      specs: {
-        length: "200 mm",
-        width: "100 mm",
-        height: "80 mm",
-        weight: "3.6 kg",
-        density: "2350 kg/m³",
-        waterAbsorption: "4.8%",
-        compStrength: "55 N/mm²",
-        thermalInsulation: "N/A",
-        fireResistance: "Class A1 (4 Hours)",
-      },
-    },
-    {
-      id: "p5",
-      name: "Thermolite Structural Hollow Block",
-      category: "Hollow Blocks",
-      desc: "Multicellular clay blocks designed for thermal-insulating loadbearing and non-loadbearing wall masonry.",
-      image: "https://images.unsplash.com/photo-1590069261209-f8e9b8642343?auto=format&fit=crop&w=600&q=80",
-      specs: {
-        length: "400 mm",
-        width: "200 mm",
-        height: "200 mm",
-        weight: "11.5 kg",
-        density: "850 kg/m³",
-        waterAbsorption: "11.5%",
-        compStrength: "8.5 N/mm²",
-        thermalInsulation: "0.22 W/mK",
-        fireResistance: "Class A1 (4 Hours)",
-      },
-    },
-    {
-      id: "p6",
-      name: "Supreme Insulated AAC Block",
-      category: "AAC Blocks",
-      desc: "Autoclaved Aerated Concrete blocks providing ultimate lightweight efficiency, speed of work, and acoustic control.",
-      image: "https://images.unsplash.com/photo-1581094288338-2314dddb7ecc?auto=format&fit=crop&w=600&q=80",
-      specs: {
-        length: "600 mm",
-        width: "200 mm",
-        height: "150 mm",
-        weight: "7.8 kg",
-        density: "600 kg/m³",
-        waterAbsorption: "15.0%",
-        compStrength: "4.5 N/mm²",
-        thermalInsulation: "0.15 W/mK",
-        fireResistance: "Class A1 (4 Hours)",
-      },
-    },
-  ];
-
-  const filteredProducts = selectedCategory === "All" 
-    ? products 
-    : products.filter(p => p.category === selectedCategory);
+  const filteredProducts = teaser
+    ? products.slice(0, 3)
+    : (selectedCategory === "All" ? products : products.filter(p => p.category === selectedCategory));
 
   const handleDownload = (docType: string, productName: string) => {
     toast(`Successfully started download: ${productName} - ${docType}`, "success");
@@ -180,21 +53,23 @@ export const FeaturedProducts: React.FC = () => {
         </div>
 
         {/* Category Filters */}
-        <div className="flex flex-wrap justify-center gap-2 mb-12">
-          {categories.map((cat) => (
-            <button
-              key={cat}
-              onClick={() => setSelectedCategory(cat)}
-              className={`px-5 py-2.5 rounded-xl text-sm font-semibold transition-all cursor-pointer ${
-                selectedCategory === cat
-                  ? "bg-brand-terracotta-600 text-white shadow-lg shadow-brand-terracotta-600/30"
-                  : "bg-brand-slate-950 text-brand-slate-400 hover:text-white border border-brand-slate-800"
-              }`}
-            >
-              {cat}
-            </button>
-          ))}
-        </div>
+        {!teaser && (
+          <div className="flex flex-wrap justify-center gap-2 mb-12">
+            {categories.map((cat) => (
+              <button
+                key={cat}
+                onClick={() => setSelectedCategory(cat)}
+                className={`px-5 py-2.5 rounded-xl text-sm font-semibold transition-all cursor-pointer ${
+                  selectedCategory === cat
+                    ? "bg-brand-terracotta-600 text-white shadow-lg shadow-brand-terracotta-600/30"
+                    : "bg-brand-slate-950 text-brand-slate-400 hover:text-white border border-brand-slate-800"
+                }`}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
+        )}
 
         {/* Products Grid */}
         <motion.div 
@@ -238,9 +113,11 @@ export const FeaturedProducts: React.FC = () => {
                 {/* Content */}
                 <div className="p-6 flex-grow flex flex-col justify-between">
                   <div>
-                    <h3 className="text-xl font-bold text-white group-hover:text-brand-terracotta-400 transition-colors">
-                      {p.name}
-                    </h3>
+                    <Link href={`/products/${p.id}`}>
+                      <h3 className="text-xl font-bold text-white group-hover:text-brand-terracotta-400 transition-colors">
+                        {p.name}
+                      </h3>
+                    </Link>
                     <p className="text-sm text-brand-slate-400 mt-2 leading-relaxed">
                       {p.desc}
                     </p>
@@ -248,12 +125,12 @@ export const FeaturedProducts: React.FC = () => {
 
                   {/* Actions */}
                   <div className="mt-6 flex items-center gap-3 pt-4 border-t border-brand-slate-900">
-                    <button
-                      onClick={() => setActiveQuickView(p)}
+                    <Link
+                      href={`/products/${p.id}`}
                       className="flex-1 text-center py-2.5 rounded-xl text-xs font-bold bg-brand-slate-900 text-brand-slate-300 hover:text-white hover:bg-brand-slate-800 border border-brand-slate-800 transition-colors cursor-pointer"
                     >
                       Technical Specs
-                    </button>
+                    </Link>
                     <button
                       onClick={() => handleQuickInquiry(p.name)}
                       className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-xs font-bold bg-brand-terracotta-600/20 text-brand-terracotta-400 hover:bg-brand-terracotta-600 hover:text-white transition-all cursor-pointer"
@@ -267,6 +144,18 @@ export const FeaturedProducts: React.FC = () => {
             ))}
           </AnimatePresence>
         </motion.div>
+
+        {teaser && (
+          <div className="text-center mt-16">
+            <Link
+              href="/products"
+              className="inline-flex items-center gap-2 bg-brand-terracotta-600 hover:bg-brand-terracotta-700 text-white px-8 py-4 rounded-xl font-bold transition-all shadow-lg shadow-brand-terracotta-600/20 cursor-pointer"
+            >
+              Explore Full Clay Catalog
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
+        )}
       </div>
 
       {/* Quick View Detailed Modal Overlay */}
@@ -406,15 +295,23 @@ export const FeaturedProducts: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="flex gap-3 mt-2">
+                <div className="flex gap-3 mt-2 w-full">
+                  <Link
+                    href={`/products/${activeQuickView.id}`}
+                    onClick={() => setActiveQuickView(null)}
+                    className="flex-1 bg-brand-slate-950 border border-brand-slate-800 hover:bg-brand-slate-900 text-brand-slate-200 font-bold py-3.5 rounded-xl transition-all text-center text-sm cursor-pointer flex items-center justify-center gap-1.5"
+                  >
+                    Full Details Page
+                    <ArrowRight className="w-4 h-4 text-brand-terracotta-500" />
+                  </Link>
                   <button
                     onClick={() => {
                       setActiveQuickView(null);
                       handleQuickInquiry(activeQuickView.name);
                     }}
-                    className="flex-grow bg-brand-terracotta-600 hover:bg-brand-terracotta-700 text-white font-bold py-3.5 rounded-xl shadow-lg shadow-brand-terracotta-600/30 transition-all text-center text-sm cursor-pointer"
+                    className="flex-1 bg-brand-terracotta-600 hover:bg-brand-terracotta-700 text-white font-bold py-3.5 rounded-xl shadow-lg shadow-brand-terracotta-600/30 transition-all text-center text-sm cursor-pointer"
                   >
-                    Request Technical Pricing
+                    Request Pricing
                   </button>
                 </div>
               </div>

@@ -5,9 +5,19 @@ import { Phone, Mail, Building, MapPin, Send, MessageSquare, ArrowRight } from "
 import { Logo } from "./Logo";
 import { useToast } from "../ui/Toast";
 import confetti from "canvas-confetti";
+import { usePathname } from "next/navigation";
+import Link from "next/link";
 
 export const ContactUs: React.FC = () => {
   const { toast } = useToast();
+  const pathname = usePathname();
+
+  const getHref = (href: string) => {
+    if (href.startsWith("#")) {
+      return pathname === "/" ? href : `/${href}`;
+    }
+    return href;
+  };
   
   // Form state
   const [name, setName] = useState("");
@@ -281,7 +291,7 @@ export const ContactUs: React.FC = () => {
           {/* Logo Brand Info */}
           <div className="col-span-2 flex flex-col gap-4">
             <div className="flex items-center gap-2">
-              <Logo height="44" inverseText={true} />
+              <Logo height="48" inverseText={true} />
             </div>
             <p className="text-xs text-brand-slate-450 leading-relaxed max-w-sm">
               We design and fire industrial-grade building ceramics, paving stones, and aerated blocks. Leading the construction industry toward structural resilience and zero-waste manufacturing.
@@ -313,12 +323,12 @@ export const ContactUs: React.FC = () => {
           <div>
             <h4 className="text-xs uppercase font-extrabold text-white tracking-widest mb-4">Products</h4>
             <ul className="flex flex-col gap-2.5 text-xs text-brand-slate-400">
-              <li><a href="#products" className="hover:text-brand-terracotta-500 transition-colors">Clay Facing Bricks</a></li>
-              <li><a href="#products" className="hover:text-brand-terracotta-500 transition-colors">Terracotta Facades</a></li>
-              <li><a href="#products" className="hover:text-brand-terracotta-500 transition-colors">Roofing Roman Tiles</a></li>
-              <li><a href="#products" className="hover:text-brand-terracotta-500 transition-colors">Engineering Pavers</a></li>
-              <li><a href="#products" className="hover:text-brand-terracotta-500 transition-colors">Hollow Block Units</a></li>
-              <li><a href="#products" className="hover:text-brand-terracotta-500 transition-colors">Lightweight AAC Blocks</a></li>
+              <li><Link href="/products?category=Clay Bricks" className="hover:text-brand-terracotta-500 transition-colors">Clay Facing Bricks</Link></li>
+              <li><Link href="/products?category=Terracotta" className="hover:text-brand-terracotta-500 transition-colors">Terracotta Facades</Link></li>
+              <li><Link href="/products?category=Roofing Tiles" className="hover:text-brand-terracotta-500 transition-colors">Roofing Roman Tiles</Link></li>
+              <li><Link href="/products?category=Pavers" className="hover:text-brand-terracotta-500 transition-colors">Engineering Pavers</Link></li>
+              <li><Link href="/products?category=Hollow Blocks" className="hover:text-brand-terracotta-500 transition-colors">Hollow Block Units</Link></li>
+              <li><Link href="/products?category=AAC Blocks" className="hover:text-brand-terracotta-500 transition-colors">Lightweight AAC Blocks</Link></li>
             </ul>
           </div>
 
@@ -326,12 +336,13 @@ export const ContactUs: React.FC = () => {
           <div>
             <h4 className="text-xs uppercase font-extrabold text-white tracking-widest mb-4">Engineers Portal</h4>
             <ul className="flex flex-col gap-2.5 text-xs text-brand-slate-400">
-              <li><a href="#calculators" className="hover:text-brand-terracotta-500 transition-colors">Brick Qty Calculator</a></li>
-              <li><a href="#calculators" className="hover:text-brand-terracotta-500 transition-colors">House Cost Calculator</a></li>
-              <li><a href="#calculators" className="hover:text-brand-terracotta-500 transition-colors">Wall Net Area Tool</a></li>
-              <li><a href="#calculators" className="hover:text-brand-terracotta-500 transition-colors">Roof Tile Calculator</a></li>
-              <li><a href="#recommender" className="hover:text-brand-terracotta-500 transition-colors">Material Recommendation Quiz</a></li>
-              <li><a href="#dealers" className="hover:text-brand-terracotta-500 transition-colors">Distributor Locations Map</a></li>
+              <li><Link href="/calculators?id=brick-quantity" className="hover:text-brand-terracotta-500 transition-colors">Brick Qty Calculator</Link></li>
+              <li><Link href="/calculators?id=house-estimator" className="hover:text-brand-terracotta-500 transition-colors">House Cost Calculator</Link></li>
+              <li><Link href="/calculators?id=wall-net-area" className="hover:text-brand-terracotta-500 transition-colors">Wall Net Area Tool</Link></li>
+              <li><Link href="/calculators?id=roofing-tile" className="hover:text-brand-terracotta-500 transition-colors">Roof Tile Calculator</Link></li>
+              <li><Link href="/calculators?id=paver" className="hover:text-brand-terracotta-500 transition-colors">Paver Calculator</Link></li>
+              <li><Link href={getHref("#recommender")} className="hover:text-brand-terracotta-500 transition-colors">Material Recommendation Quiz</Link></li>
+              <li><Link href={getHref("#dealers")} className="hover:text-brand-terracotta-500 transition-colors">Distributor Locations Map</Link></li>
             </ul>
           </div>
 
@@ -339,11 +350,11 @@ export const ContactUs: React.FC = () => {
           <div>
             <h4 className="text-xs uppercase font-extrabold text-white tracking-widest mb-4">PCP Clay Corp</h4>
             <ul className="flex flex-col gap-2.5 text-xs text-brand-slate-400">
-              <li><a href="#sustainability" className="hover:text-brand-terracotta-500 transition-colors">Sustainability Commitments</a></li>
-              <li><a href="#projects" className="hover:text-brand-terracotta-500 transition-colors">Architectural Portfolio</a></li>
-              <li><a href="#blogs" className="hover:text-brand-terracotta-500 transition-colors">Knowledge Base Blogs</a></li>
-              <li><a href="#sustainability" className="hover:text-brand-terracotta-500 transition-colors">Green Certifications</a></li>
-              <li><a href="#contact" className="hover:text-brand-terracotta-500 transition-colors">Career Pathways</a></li>
+              <li><Link href={getHref("#sustainability")} className="hover:text-brand-terracotta-500 transition-colors">Sustainability Commitments</Link></li>
+              <li><Link href="/projects" className="hover:text-brand-terracotta-500 transition-colors">Architectural Portfolio</Link></li>
+              <li><Link href={getHref("#blogs")} className="hover:text-brand-terracotta-500 transition-colors">Knowledge Base Blogs</Link></li>
+              <li><Link href={getHref("#sustainability")} className="hover:text-brand-terracotta-500 transition-colors">Green Certifications</Link></li>
+              <li><Link href={getHref("#contact")} className="hover:text-brand-terracotta-500 transition-colors">Career Pathways</Link></li>
             </ul>
           </div>
 
