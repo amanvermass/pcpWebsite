@@ -1,20 +1,27 @@
 "use client";
 
-import React, { useState, useEffect, Suspense } from "react";
+import React, { useState, useEffect, useRef, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { Header } from "@/components/homepage/Header";
-import { ContactUs } from "@/components/homepage/ContactUs";
+import { Footer } from "@/components/homepage/Footer";
 import { products, Product } from "@/data/products";
 import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
-import { Eye, X, ArrowRight, Download, Filter } from "lucide-react";
+import { motion, AnimatePresence, useScroll, useTransform, useMotionValue, useSpring } from "framer-motion";
+import { Eye, X, ArrowRight, Download, Filter, Ruler, FileText, HardHat } from "lucide-react";
 import { ToastProvider, useToast } from "@/components/ui/Toast";
+import { Magnetic } from "@/components/ui/Magnetic";
 
 function CatalogContent() {
   const { toast } = useToast();
   const searchParams = useSearchParams();
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [activeQuickView, setActiveQuickView] = useState<Product | null>(null);
+
+  // Parallax Scroll Tracking for Hero
+  const heroRef = useRef<HTMLDivElement>(null);
+  const { scrollY } = useScroll();
+  const heroImageY = useTransform(scrollY, [0, 500], [0, 120]);
+  const heroTextY = useTransform(scrollY, [0, 500], [0, -40]);
 
   useEffect(() => {
     const category = searchParams.get("category");
@@ -35,45 +42,60 @@ function CatalogContent() {
     toast(`Successfully started download: ${productName} - ${docType}`, "success");
   };
 
-  // Render products continuously when All is selected
-
   return (
-    <div className="flex flex-col min-h-screen bg-brand-slate-950">
-      <div className="pt-24 pb-12 bg-brand-slate-900 bg-grid-pattern border-b border-brand-slate-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="flex flex-col min-h-screen bg-brand-black text-brand-offwhite">
+      
+      {/* Parallax Hero Banner */}
+      <div 
+        ref={heroRef}
+        className="relative h-[55vh] md:h-[65vh] w-full flex items-center overflow-hidden bg-brand-black"
+      >
+        <motion.div 
+          style={{ y: heroImageY }}
+          className="absolute inset-0 z-0 scale-[1.08] opacity-35"
+        >
+          <img 
+            src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1920&q=80" 
+            alt="Luxury modern architecture facade grid" 
+            className="w-full h-full object-cover"
+          />
+        </motion.div>
+        
+        {/* Dark Vignette Mask */}
+        <div className="absolute inset-0 bg-gradient-to-t from-brand-black via-brand-black/70 to-brand-black/20 z-10" />
 
-
-          {/* Section title */}
-          <div className="max-w-3xl">
-            <span className="text-xs uppercase font-extrabold tracking-widest text-brand-terracotta-500 bg-brand-terracotta-500/10 px-3 py-1 rounded-full">
+        {/* Hero content */}
+        <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+          <motion.div style={{ y: heroTextY }} className="max-w-3xl">
+            <span className="text-[10px] uppercase font-bold tracking-[0.35em] text-brand-gold bg-brand-gold/5 px-4 py-1.5 border border-brand-gold/20 rounded-none w-fit block mb-4">
               PCP Materials Library
             </span>
-            <h1 className="text-4xl sm:text-5xl font-extrabold text-white mt-4 tracking-tight">
-              Architectural Product Range
+            <h1 className="text-4xl sm:text-6xl font-normal font-cormorant text-brand-offwhite tracking-wide leading-tight mt-2">
+              Architectural Product Catalog
             </h1>
-            <p className="text-brand-slate-400 mt-4 text-base sm:text-lg leading-relaxed">
+            <p className="text-brand-sand/75 mt-4 text-sm sm:text-base font-poppins leading-relaxed max-w-2xl">
               Browse our high-performance building materials, structural components, and masonry solutions designed for next-generation architectural projects.
             </p>
-          </div>
+          </motion.div>
         </div>
       </div>
 
-      {/* Category filter panel */}
-      <div className="sticky top-[72px] z-30 bg-brand-slate-950/80 backdrop-blur-md border-b border-brand-slate-800/60 py-4 shadow-sm">
+      {/* Category Filter Sticky Bar */}
+      <div className="sticky top-[72px] z-30 bg-brand-charcoal/95 border-y border-brand-gold/10 py-4.5 backdrop-blur-md">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-4 overflow-x-auto scrollbar-none">
-          <div className="flex items-center gap-2 text-brand-slate-400 text-sm font-bold shrink-0">
-            <Filter className="w-4 h-4 text-brand-terracotta-500" />
-            <span>Filter Categories:</span>
+          <div className="flex items-center gap-2 text-brand-sand/50 text-xs font-bold uppercase tracking-widest shrink-0 font-poppins">
+            <Filter className="w-4 h-4 text-brand-gold" />
+            <span>Filter Category:</span>
           </div>
-          <div className="flex gap-2">
+          <div className="flex gap-2.5 relative">
             {categories.map((cat) => (
               <button
                 key={cat}
                 onClick={() => setSelectedCategory(cat)}
-                className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer whitespace-nowrap border ${
+                className={`relative px-5 py-2.5 rounded-none text-[10px] uppercase tracking-wider font-poppins font-medium transition-colors cursor-pointer border ${
                   selectedCategory === cat
-                    ? "bg-brand-terracotta-600 border-brand-terracotta-600 text-white shadow-md shadow-brand-terracotta-600/20"
-                    : "bg-brand-slate-900 border-brand-slate-800 text-brand-slate-400 hover:text-white"
+                    ? "bg-brand-gold text-brand-black border-brand-gold"
+                    : "bg-brand-black border-brand-gold/10 text-brand-sand hover:text-brand-offwhite hover:border-brand-gold/40"
                 }`}
               >
                 {cat}
@@ -84,149 +106,149 @@ function CatalogContent() {
       </div>
 
       {/* Main catalog view */}
-      <main className="flex-grow max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-12">
+      <main className="flex-grow max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-16 z-10">
         <div className="space-y-8">
           {filteredProducts.length === 0 ? (
-            <div className="text-center py-20 bg-brand-slate-900 rounded-3xl border border-brand-slate-800">
-              <p className="text-brand-slate-400 font-semibold">No products found in this category.</p>
+            <div className="text-center py-20 bg-brand-charcoal border border-brand-gold/10 rounded-none">
+              <p className="text-brand-sand/60 text-sm font-poppins">No products found in this category.</p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {filteredProducts.map((p) => (
-                <ProductCard key={p.id} product={p} onQuickView={setActiveQuickView} />
+            /* Staggered masonry layout columns */
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-start">
+              {filteredProducts.map((p, index) => (
+                <ProductCard 
+                  key={p.id} 
+                  product={p} 
+                  index={index}
+                  onQuickView={setActiveQuickView} 
+                />
               ))}
             </div>
           )}
         </div>
       </main>
 
-      {/* Technical Spec Quick View Overlay */}
+      {/* Right Slide-out Specifications Panel Drawer */}
       <AnimatePresence>
         {activeQuickView && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div className="fixed inset-0 z-50 overflow-hidden flex justify-end">
+            {/* Backdrop */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setActiveQuickView(null)}
-              className="absolute inset-0 bg-brand-slate-950/80 backdrop-blur-md"
+              className="absolute inset-0 bg-brand-black/80 backdrop-blur-sm"
             />
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="relative w-full max-w-4xl bg-brand-slate-900 rounded-3xl overflow-hidden border border-brand-slate-800 shadow-2xl flex flex-col md:flex-row max-h-[90vh] md:max-h-none overflow-y-auto md:overflow-visible z-10"
-            >
-              <div className="md:w-1/2 relative min-h-[250px] md:min-h-full bg-brand-slate-950">
-                <img src={activeQuickView.image} alt={activeQuickView.name} className="object-cover w-full h-full" />
-                <div className="absolute inset-0 bg-gradient-to-t from-brand-slate-900 md:bg-gradient-to-r md:from-transparent md:to-brand-slate-900" />
-                <button
-                  onClick={() => setActiveQuickView(null)}
-                  className="absolute top-4 left-4 p-2 bg-brand-slate-950/70 text-white rounded-full md:hidden border border-brand-slate-800"
-                >
-                  <X className="w-5 h-5" />
-                </button>
-              </div>
 
-              <div className="p-6 md:p-8 md:w-1/2 flex flex-col justify-between gap-6 max-h-[70vh] md:max-h-[85vh] overflow-y-auto">
-                <div className="hidden md:flex justify-between items-center">
-                  <span className="text-[10px] uppercase tracking-widest text-brand-terracotta-500 font-bold">
-                    {activeQuickView.category} Specifications File
+            {/* Spec Drawer Container */}
+            <motion.div
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ type: "tween", ease: [0.16, 1, 0.3, 1], duration: 0.6 }}
+              className="relative w-full max-w-md md:max-w-lg h-full bg-brand-charcoal border-l border-brand-gold/15 shadow-2xl flex flex-col justify-between z-10 text-left p-6 md:p-8"
+            >
+              <div>
+                {/* Header Row */}
+                <div className="flex justify-between items-center pb-4 border-b border-brand-gold/10 mb-6">
+                  <span className="text-[9px] uppercase tracking-widest text-brand-gold font-bold font-poppins">
+                    {activeQuickView.category} spec panel
                   </span>
                   <button
                     onClick={() => setActiveQuickView(null)}
-                    className="p-1.5 hover:bg-brand-slate-800 text-brand-slate-400 hover:text-white rounded-lg transition-colors cursor-pointer"
+                    className="p-1.5 hover:bg-brand-black border border-transparent hover:border-brand-gold/15 text-brand-sand hover:text-brand-offwhite transition-colors cursor-pointer"
                   >
                     <X className="w-5 h-5" />
                   </button>
                 </div>
 
-                <div>
-                  <h3 className="text-2xl font-extrabold text-white leading-tight">{activeQuickView.name}</h3>
-                  <p className="text-sm text-brand-slate-400 mt-2 leading-relaxed">{activeQuickView.desc}</p>
-                </div>
+                {/* Details layout */}
+                <div className="space-y-6">
+                  <div className="aspect-[16/10] w-full overflow-hidden border border-brand-gold/10 bg-brand-black">
+                    <img src={activeQuickView.image} alt={activeQuickView.name} className="object-cover w-full h-full" />
+                  </div>
 
-                {/* Specs Grid */}
-                <div>
-                  <h4 className="text-xs uppercase font-extrabold tracking-widest text-brand-slate-400 border-b border-brand-slate-800 pb-2 mb-3">
-                    Technical Specifications
-                  </h4>
-                  <div className="grid grid-cols-2 gap-y-3 gap-x-4">
-                    <div>
-                      <span className="block text-[10px] text-brand-slate-500 uppercase font-bold">Dimensions</span>
-                      <span className="text-sm font-semibold text-white">
-                        {activeQuickView.specs.length} × {activeQuickView.specs.width} × {activeQuickView.specs.height}
-                      </span>
-                    </div>
-                    <div>
-                      <span className="block text-[10px] text-brand-slate-500 uppercase font-bold">Dry Weight</span>
-                      <span className="text-sm font-semibold text-white">{activeQuickView.specs.weight}</span>
-                    </div>
-                    <div>
-                      <span className="block text-[10px] text-brand-slate-500 uppercase font-bold">Density</span>
-                      <span className="text-sm font-semibold text-white">{activeQuickView.specs.density}</span>
-                    </div>
-                    <div>
-                      <span className="block text-[10px] text-brand-slate-500 uppercase font-bold">Water Absorption</span>
-                      <span className="text-sm font-semibold text-white">{activeQuickView.specs.waterAbsorption}</span>
-                    </div>
-                    <div>
-                      <span className="block text-[10px] text-brand-slate-500 uppercase font-bold">Compressive Strength</span>
-                      <span className="text-sm font-semibold text-white text-brand-terracotta-400">{activeQuickView.specs.compStrength}</span>
-                    </div>
-                    <div>
-                      <span className="block text-[10px] text-brand-slate-500 uppercase font-bold">Fire Resistance</span>
-                      <span className="text-sm font-semibold text-white">{activeQuickView.specs.fireResistance}</span>
-                    </div>
-                    {activeQuickView.specs.thermalInsulation && (
-                      <div className="col-span-2">
-                        <span className="block text-[10px] text-brand-slate-500 uppercase font-bold">Thermal Conductivity (λ)</span>
-                        <span className="text-sm font-semibold text-brand-emerald-500">{activeQuickView.specs.thermalInsulation}</span>
+                  <div>
+                    <h3 className="text-2xl sm:text-3xl font-normal font-cormorant text-brand-offwhite leading-tight">
+                      {activeQuickView.name}
+                    </h3>
+                    <p className="text-xs font-poppins text-brand-sand/70 mt-3 leading-relaxed">
+                      {activeQuickView.desc}
+                    </p>
+                  </div>
+
+                  {/* Specs Table */}
+                  <div>
+                    <h4 className="text-[10px] uppercase font-bold tracking-[0.2em] text-brand-gold border-b border-brand-gold/10 pb-2 mb-3 font-poppins">
+                      Technical specs file
+                    </h4>
+                    <div className="grid grid-cols-2 gap-y-2 gap-x-4 text-xs font-poppins text-brand-sand/85">
+                      <div className="border-b border-brand-gold/5 pb-2">
+                        <span className="block text-[8px] text-brand-sand/40 uppercase font-semibold">Dimensions</span>
+                        <span className="font-semibold text-brand-offwhite">{activeQuickView.specs.length}x{activeQuickView.specs.width}x{activeQuickView.specs.height}</span>
                       </div>
-                    )}
+                      <div className="border-b border-brand-gold/5 pb-2">
+                        <span className="block text-[8px] text-brand-sand/40 uppercase font-semibold">Dry Weight</span>
+                        <span className="font-semibold text-brand-offwhite">{activeQuickView.specs.weight}</span>
+                      </div>
+                      <div className="border-b border-brand-gold/5 pb-2">
+                        <span className="block text-[8px] text-brand-sand/40 uppercase font-semibold">Density</span>
+                        <span className="font-semibold text-brand-offwhite">{activeQuickView.specs.density}</span>
+                      </div>
+                      <div className="border-b border-brand-gold/5 pb-2">
+                        <span className="block text-[8px] text-brand-sand/40 uppercase font-semibold">Water Absorption</span>
+                        <span className="font-semibold text-brand-offwhite">{activeQuickView.specs.waterAbsorption}</span>
+                      </div>
+                      <div className="border-b border-brand-gold/5 pb-2 col-span-2">
+                        <span className="block text-[8px] text-brand-sand/40 uppercase font-semibold">Compressive Strength</span>
+                        <span className="font-semibold text-brand-gold">{activeQuickView.specs.compStrength}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* CAD Tab triggers */}
+                  <div>
+                    <h4 className="text-[10px] uppercase font-bold tracking-[0.2em] text-brand-gold border-b border-brand-gold/10 pb-2 mb-3 font-poppins">
+                      Architect CAD resources
+                    </h4>
+                    <div className="grid grid-cols-2 gap-2">
+                      <button
+                        onClick={() => handleDownload("Datasheet (PDF)", activeQuickView.name)}
+                        className="flex items-center justify-between px-3 py-2 bg-brand-black border border-brand-gold/10 rounded-none text-[9px] uppercase tracking-wider font-poppins font-medium hover:border-brand-gold/40 text-brand-sand hover:text-brand-offwhite transition-colors cursor-pointer"
+                      >
+                        <span className="truncate">Datasheet (PDF)</span>
+                        <Download className="w-3.5 h-3.5 text-brand-gold" />
+                      </button>
+                      <button
+                        onClick={() => handleDownload("Revit (RVT)", activeQuickView.name)}
+                        className="flex items-center justify-between px-3 py-2 bg-brand-black border border-brand-gold/10 rounded-none text-[9px] uppercase tracking-wider font-poppins font-medium hover:border-brand-gold/40 text-brand-sand hover:text-brand-offwhite transition-colors cursor-pointer"
+                      >
+                        <span className="truncate">Revit BIM (RVT)</span>
+                        <Download className="w-3.5 h-3.5 text-brand-gold" />
+                      </button>
+                    </div>
                   </div>
                 </div>
+              </div>
 
-                {/* Downloads Action Panel */}
-                <div>
-                  <h4 className="text-xs uppercase font-extrabold tracking-widest text-brand-slate-400 border-b border-brand-slate-800 pb-2 mb-3">
-                    CAD & BIM Resources
-                  </h4>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                    <button
-                      onClick={() => handleDownload("Datasheet (PDF)", activeQuickView.name)}
-                      className="flex items-center justify-between px-3 py-2 bg-brand-slate-950 border border-brand-slate-800 rounded-xl text-xs font-semibold hover:border-brand-slate-700 hover:bg-brand-slate-900 text-brand-slate-300 hover:text-white transition-all text-left cursor-pointer"
-                    >
-                      <span className="truncate">Product Datasheet (PDF)</span>
-                      <Download className="w-3.5 h-3.5 text-brand-terracotta-500 shrink-0 ml-2" />
-                    </button>
-                    <button
-                      onClick={() => handleDownload("Revit Object (RVT)", activeQuickView.name)}
-                      className="flex items-center justify-between px-3 py-2 bg-brand-slate-950 border border-brand-slate-800 rounded-xl text-xs font-semibold hover:border-brand-slate-700 hover:bg-brand-slate-900 text-brand-slate-300 hover:text-white transition-all text-left cursor-pointer"
-                    >
-                      <span className="truncate">Revit BIM Object (RVT)</span>
-                      <Download className="w-3.5 h-3.5 text-brand-terracotta-500 shrink-0 ml-2" />
-                    </button>
-                  </div>
-                </div>
-
-                <div className="flex gap-3 mt-2 w-full">
-                  <Link
-                    href={`/products/${activeQuickView.id}`}
-                    onClick={() => setActiveQuickView(null)}
-                    className="flex-1 bg-brand-slate-950 border border-brand-slate-800 hover:bg-brand-slate-900 text-brand-slate-200 font-bold py-3.5 rounded-xl transition-all text-center text-sm cursor-pointer flex items-center justify-center gap-1.5"
-                  >
-                    Full Details Page
-                    <ArrowRight className="w-4 h-4 text-brand-terracotta-500" />
-                  </Link>
-                  <Link
-                    href={`/products/${activeQuickView.id}#inquire`}
-                    onClick={() => setActiveQuickView(null)}
-                    className="flex-grow flex items-center justify-center bg-brand-terracotta-600 hover:bg-brand-terracotta-700 text-white font-bold py-3.5 rounded-xl shadow-lg shadow-brand-terracotta-600/30 transition-all text-center text-sm cursor-pointer"
-                  >
-                    Request Quote
-                  </Link>
-                </div>
+              {/* Action buttons */}
+              <div className="flex gap-3 mt-6 border-t border-brand-gold/10 pt-6">
+                <Link
+                  href={`/products/${activeQuickView.id}`}
+                  onClick={() => setActiveQuickView(null)}
+                  className="flex-1 bg-brand-black border border-brand-gold/20 hover:bg-brand-charcoal text-brand-sand font-poppins uppercase tracking-wider font-semibold py-3.5 rounded-none transition-colors text-center text-[10px] cursor-none flex items-center justify-center gap-1"
+                >
+                  Full Details Page
+                  <ArrowRight className="w-3.5 h-3.5 text-brand-gold" />
+                </Link>
+                <Link
+                  href={`/products/${activeQuickView.id}#inquire`}
+                  onClick={() => setActiveQuickView(null)}
+                  className="flex-1 bg-brand-gold hover:bg-brand-sand text-brand-black font-poppins uppercase tracking-wider font-bold py-3.5 rounded-none transition-colors border border-brand-gold text-center text-[10px] cursor-none"
+                >
+                  Request Quote
+                </Link>
               </div>
             </motion.div>
           </div>
@@ -236,57 +258,106 @@ function CatalogContent() {
   );
 }
 
-function ProductCard({ product, onQuickView }: { product: Product; onQuickView: (p: Product) => void }) {
+function ProductCard({ product, index, onQuickView }: { product: Product; index: number; onQuickView: (p: Product) => void }) {
+  const cardRef = useRef<HTMLDivElement>(null);
+  
+  // 3D tilt coordinates
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+
+  const springX = useSpring(x, { stiffness: 150, damping: 20 });
+  const springY = useSpring(y, { stiffness: 150, damping: 20 });
+
+  const rotateX = useTransform(springY, [-0.5, 0.5], [10, -10]);
+  const rotateY = useTransform(springX, [-0.5, 0.5], [-10, 10]);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    const relativeX = (e.clientX - rect.left) / rect.width - 0.5;
+    const relativeY = (e.clientY - rect.top) / rect.height - 0.5;
+    x.set(relativeX);
+    y.set(relativeY);
+  };
+
+  const handleMouseLeave = () => {
+    x.set(0);
+    y.set(0);
+  };
+
+  // Vary aspect ratios dynamically based on catalog grid index to create a clean masonry layout
+  const aspectRatios = ["aspect-[4/3]", "aspect-[16/10]", "aspect-[1/1]"];
+  const aspectClass = aspectRatios[index % aspectRatios.length];
+
   return (
-    <motion.div
-      layout
-      initial={{ opacity: 0, scale: 0.95 }}
-      animate={{ opacity: 1, scale: 1 }}
-      exit={{ opacity: 0, scale: 0.95 }}
-      transition={{ duration: 0.3 }}
-      className="group rounded-2xl overflow-hidden border border-brand-slate-800 bg-brand-slate-900/50 hover:bg-brand-slate-900 flex flex-col justify-between hover:border-brand-slate-700 transition-all hover:shadow-2xl hover:shadow-brand-terracotta-500/5 hover:-translate-y-1"
+    <div 
+      className="perspective-[1000px] w-full"
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
     >
-      <div className="relative aspect-[4/3] w-full overflow-hidden bg-brand-slate-950">
-        <img src={product.image} alt={product.name} className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500" />
-        <div className="absolute top-4 left-4 bg-brand-slate-950/85 backdrop-blur-md text-brand-terracotta-400 border border-brand-slate-850 text-[10px] uppercase font-bold tracking-widest px-2.5 py-1 rounded-md">
-          {product.category}
+      <motion.div
+        ref={cardRef}
+        style={{
+          rotateX,
+          rotateY,
+          transformStyle: "preserve-3d"
+        }}
+        className="group rounded-none border border-brand-gold/10 bg-brand-charcoal flex flex-col justify-between hover:border-brand-gold/45 hover:shadow-[0_0_25px_rgba(197,139,69,0.12)] transition-all cursor-none duration-300"
+      >
+        <div className={`relative ${aspectClass} w-full overflow-hidden bg-brand-black border-b border-brand-gold/10`}>
+          <img 
+            src={product.image} 
+            alt={product.name} 
+            className="object-cover w-full h-full group-hover:scale-108 transition-transform duration-700" 
+            style={{ transform: "translateZ(-10px)" }}
+          />
+          <div className="absolute top-4 left-4 bg-brand-black/90 text-brand-gold border border-brand-gold/15 text-[9px] uppercase font-bold tracking-widest px-3 py-1.5 rounded-none">
+            {product.category}
+          </div>
+          
+          {/* Quick view spec trigger */}
+          <div className="absolute inset-0 bg-brand-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+            <button
+              onClick={() => onQuickView(product)}
+              className="p-3 bg-brand-gold border border-brand-gold text-brand-black hover:scale-110 transition-transform cursor-none rounded-none"
+              title="Quick View Technical Specs"
+            >
+              <Eye className="w-5 h-5" />
+            </button>
+          </div>
         </div>
-        <div className="absolute inset-0 bg-brand-slate-950/45 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
-          <button
-            onClick={() => onQuickView(product)}
-            className="p-3 bg-white text-brand-slate-950 rounded-full hover:scale-110 transition-transform shadow-lg cursor-pointer animate-fade-in"
-            title="Quick View Technical Details"
-          >
-            <Eye className="w-5 h-5" />
-          </button>
-        </div>
-      </div>
 
-      <div className="p-6 flex-grow flex flex-col justify-between">
-        <div>
-          <Link href={`/products/${product.id}`}>
-            <h3 className="text-xl font-bold text-white group-hover:text-brand-terracotta-400 transition-colors">{product.name}</h3>
-          </Link>
-          <p className="text-sm text-brand-slate-400 mt-2 leading-relaxed">{product.desc}</p>
-        </div>
+        <div className="p-6 flex-grow flex flex-col justify-between" style={{ transform: "translateZ(20px)" }}>
+          <div>
+            <Link href={`/products/${product.id}`}>
+              <h3 className="text-xl font-normal font-cormorant text-brand-offwhite group-hover:text-brand-gold transition-colors leading-tight">
+                {product.name}
+              </h3>
+            </Link>
+            <p className="text-xs font-poppins text-brand-sand/70 mt-3 leading-relaxed">
+              {product.desc}
+            </p>
+          </div>
 
-        <div className="mt-6 flex items-center gap-3 pt-4 border-t border-brand-slate-900">
-          <Link
-            href={`/products/${product.id}`}
-            className="flex-1 text-center py-2.5 rounded-xl text-xs font-bold bg-brand-slate-950 text-brand-slate-300 hover:text-white hover:bg-brand-slate-900 border border-brand-slate-850 transition-colors cursor-pointer"
-          >
-            Technical Specs
-          </Link>
-          <Link
-            href={`/products/${product.id}#inquire`}
-            className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-xs font-bold bg-brand-terracotta-600/20 text-brand-terracotta-400 hover:bg-brand-terracotta-600 hover:text-white transition-all cursor-pointer"
-          >
-            Request Quote
-            <ArrowRight className="w-3.5 h-3.5" />
-          </Link>
+          <div className="mt-6 flex items-center gap-3 pt-4 border-t border-brand-gold/10">
+            <Link
+              href={`/products/${product.id}`}
+              className="flex-1 text-center py-3 rounded-none text-[10px] uppercase font-poppins tracking-wider font-semibold bg-brand-black text-brand-sand hover:text-brand-offwhite border border-brand-gold/15 hover:border-brand-gold/50 transition-colors cursor-none"
+            >
+              Full details
+            </Link>
+            
+            <button
+              onClick={() => onQuickView(product)}
+              className="flex-1 flex items-center justify-center gap-1.5 py-3 rounded-none text-[10px] uppercase font-poppins tracking-wider font-semibold bg-brand-gold/10 text-brand-gold hover:bg-brand-gold hover:text-brand-black transition-colors border border-brand-gold/30 hover:border-brand-gold cursor-none"
+            >
+              Specs Info
+              <ArrowRight className="w-3.5 h-3.5" />
+            </button>
+          </div>
         </div>
-      </div>
-    </motion.div>
+      </motion.div>
+    </div>
   );
 }
 
@@ -306,13 +377,13 @@ export default function CatalogPage() {
       <div className="flex flex-col min-h-screen">
         <Header darkMode={darkMode} setDarkMode={setDarkMode} />
         <Suspense fallback={
-          <div className="flex-grow flex items-center justify-center min-h-[50vh] bg-brand-slate-950 text-brand-slate-400">
-            <span className="w-8 h-8 rounded-full border-2 border-brand-terracotta-600 border-t-transparent animate-spin" />
+          <div className="flex-grow flex items-center justify-center min-h-[50vh] bg-brand-black text-brand-sand">
+            <span className="w-8 h-8 rounded-full border-2 border-brand-gold border-t-transparent animate-spin" />
           </div>
         }>
           <CatalogContent />
         </Suspense>
-        <ContactUs />
+        <Footer />
       </div>
     </ToastProvider>
   );

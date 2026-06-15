@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, notFound } from "next/navigation";
 import { Header } from "@/components/homepage/Header";
-import { ContactUs } from "@/components/homepage/ContactUs";
+import { Footer } from "@/components/homepage/Footer";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { ToastProvider } from "@/components/ui/Toast";
@@ -64,28 +64,36 @@ export default function CalculatorDetailPage() {
 
   return (
     <ToastProvider>
-      <div className="flex flex-col min-h-screen bg-brand-slate-950">
+      <div className="flex flex-col min-h-screen bg-brand-black text-brand-offwhite">
         <Header darkMode={darkMode} setDarkMode={setDarkMode} />
 
-        <div className="pt-24 pb-10 bg-brand-slate-900 bg-grid-pattern border-b border-brand-slate-800">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="pt-32 pb-12 bg-brand-black border-b border-brand-gold/10 relative">
+          <div className="absolute inset-0 pointer-events-none z-0 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-4 h-full opacity-5">
+            <div className="border-l border-brand-slate h-full" />
+            <div className="border-l border-brand-slate h-full" />
+            <div className="border-l border-brand-slate h-full" />
+            <div className="border-l border-brand-slate h-full border-r" />
+          </div>
 
-
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             {/* Back link */}
-            <Link href="/calculators" className="inline-flex items-center gap-2 text-sm font-bold text-brand-slate-350 hover:text-white mb-6 transition-colors group">
-              <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-              Back to Tools Dashboard
+            <Link 
+              href="/calculators" 
+              className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-brand-sand hover:text-brand-gold mb-6 transition-colors group font-poppins"
+            >
+              <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1.5 transition-transform text-brand-gold" />
+              <span>Back to Tools Dashboard</span>
             </Link>
 
             {/* Heading */}
             <div className="max-w-4xl">
-              <span className="text-xs uppercase font-extrabold tracking-widest text-brand-terracotta-500 bg-brand-terracotta-500/10 px-3 py-1 rounded-full">
-                Engineering Estimators
+              <span className="text-[10px] uppercase font-bold tracking-[0.35em] text-brand-gold bg-brand-gold/5 px-4 py-1.5 border border-brand-gold/20 rounded-none w-fit block mb-4 font-poppins">
+                Engineering Estimator
               </span>
-              <h1 className="text-3xl sm:text-5xl font-extrabold text-white mt-4 tracking-tight leading-tight">
+              <h1 className="text-3xl sm:text-5xl font-normal font-cormorant text-brand-offwhite tracking-wide leading-none">
                 {activeCalc.name}
               </h1>
-              <p className="text-brand-slate-400 mt-3 text-sm sm:text-base leading-relaxed">
+              <p className="text-brand-sand/70 mt-4 text-xs sm:text-sm font-poppins leading-relaxed max-w-xl">
                 {activeCalc.desc}
               </p>
             </div>
@@ -93,11 +101,11 @@ export default function CalculatorDetailPage() {
         </div>
 
         {/* Form area */}
-        <main className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-12 flex-grow">
+        <main className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-16 flex-grow z-10">
           {activeCalc.component}
         </main>
 
-        <ContactUs />
+        <Footer />
       </div>
     </ToastProvider>
   );

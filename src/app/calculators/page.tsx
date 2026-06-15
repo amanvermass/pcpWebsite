@@ -3,7 +3,7 @@
 import React, { useState, useEffect, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { Header } from "@/components/homepage/Header";
-import { ContactUs } from "@/components/homepage/ContactUs";
+import { Footer } from "@/components/homepage/Footer";
 import { Calculator, Layers, Hammer, Compass } from "lucide-react";
 import { ToastProvider } from "@/components/ui/Toast";
 
@@ -78,42 +78,49 @@ function CalculatorsPageContent() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-brand-slate-950">
-      {/* Header spacing / Top banner */}
-      <div className="pt-24 pb-10 bg-brand-slate-900 bg-grid-pattern border-b border-brand-slate-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="flex flex-col min-h-screen bg-brand-black text-brand-offwhite">
+      {/* Top Banner section */}
+      <div className="pt-32 pb-12 bg-brand-black relative border-b border-brand-gold/10">
+        <div className="absolute inset-0 pointer-events-none z-0 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-4 h-full opacity-5">
+          <div className="border-l border-brand-slate h-full" />
+          <div className="border-l border-brand-slate h-full" />
+          <div className="border-l border-brand-slate h-full" />
+          <div className="border-l border-brand-slate h-full border-r" />
+        </div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="max-w-3xl">
-            <span className="text-xs uppercase font-extrabold tracking-widest text-brand-terracotta-500 bg-brand-terracotta-500/10 px-3 py-1 rounded-full">
-              Engineering Tools
+            <span className="text-[10px] uppercase font-bold tracking-[0.35em] text-brand-gold bg-brand-gold/5 px-4 py-1.5 border border-brand-gold/20 rounded-none w-fit block mb-4 font-poppins">
+              Engineering Estimators Desk
             </span>
-            <h1 className="text-4xl sm:text-5xl font-extrabold text-white mt-4 tracking-tight">
-              Construction Calculators
+            <h1 className="text-4xl sm:text-6xl font-normal font-cormorant text-brand-offwhite mt-4 tracking-wide leading-none">
+              Material Calculators.
             </h1>
-            <p className="text-brand-slate-400 mt-4 text-sm sm:text-base leading-relaxed">
-              Estimate material volumes, concrete structure requirements, paving grids, and roofing counts in real-time.
+            <p className="text-brand-sand/70 mt-6 text-sm sm:text-base leading-relaxed font-poppins max-w-xl">
+              Estimate structural material volumes, interlocking paving arrays, sloped roof layouts, and net structural dimensions in real-time.
             </p>
           </div>
         </div>
       </div>
 
-      {/* Tabs navigation panel */}
-      <div className="sticky top-[72px] z-30 bg-brand-slate-950/80 backdrop-blur-md border-b border-brand-slate-800/60 py-4 shadow-sm">
+      {/* Tabs Menu Panel */}
+      <div className="sticky top-[72px] z-30 bg-brand-black/95 border-b border-brand-gold/10 py-5 backdrop-blur-md">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-center">
-          <div className="flex gap-1 bg-brand-slate-900/60 p-1.5 rounded-2xl border border-brand-slate-850 w-full md:w-auto overflow-x-auto scrollbar-none">
+          <div className="flex gap-2.5 bg-brand-charcoal p-2 border border-brand-gold/10 w-full md:w-auto overflow-x-auto scrollbar-none rounded-none">
             {calculatorsList.map((calc) => {
               const isActive = calc.id === activeCalc.id;
               return (
                 <button
                   key={calc.id}
                   onClick={() => handleSelectTab(calc.id)}
-                  className={`flex items-center gap-2 px-5 py-3 rounded-xl text-xs sm:text-sm font-bold transition-all whitespace-nowrap cursor-pointer flex-grow md:flex-grow-0 justify-center ${
+                  className={`flex items-center gap-2 px-5 py-3 rounded-none text-[10px] uppercase tracking-wider font-poppins font-semibold transition-colors whitespace-nowrap cursor-pointer flex-grow md:flex-grow-0 justify-center border ${
                     isActive
-                      ? "bg-brand-terracotta-600 text-white shadow-lg shadow-brand-terracotta-600/25"
-                      : "text-brand-slate-400 hover:text-white"
+                      ? "bg-brand-gold border-brand-gold text-brand-black"
+                      : "bg-brand-black border-brand-gold/5 text-brand-sand hover:text-brand-offwhite"
                   }`}
                 >
                   {calc.icon}
-                  {calc.name}
+                  <span>{calc.name}</span>
                 </button>
               );
             })}
@@ -121,13 +128,13 @@ function CalculatorsPageContent() {
         </div>
       </div>
 
-      {/* Main active form container */}
-      <main className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-12 flex-grow">
-        <div className="max-w-4xl mx-auto mb-10 text-center space-y-2">
-          <h2 className="text-2xl font-extrabold text-white tracking-tight">
+      {/* Main active calculator */}
+      <main className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-16 flex-grow z-10">
+        <div className="max-w-4xl mx-auto mb-12 text-center space-y-4">
+          <h2 className="text-3xl font-normal font-cormorant text-brand-offwhite">
             {activeCalc.fullName}
           </h2>
-          <p className="text-xs sm:text-sm text-brand-slate-400 leading-relaxed max-w-2xl mx-auto">
+          <p className="text-xs sm:text-sm text-brand-sand/70 leading-relaxed max-w-xl mx-auto font-poppins">
             {activeCalc.desc}
           </p>
         </div>
@@ -153,16 +160,16 @@ export default function CalculatorsPage() {
 
   return (
     <ToastProvider>
-      <div className="flex flex-col min-h-screen">
+      <div className="flex flex-col min-h-screen bg-brand-black text-brand-offwhite">
         <Header darkMode={darkMode} setDarkMode={setDarkMode} />
         <Suspense fallback={
-          <div className="flex-grow flex items-center justify-center min-h-[50vh] bg-brand-slate-950 text-brand-slate-400">
-            <span className="w-8 h-8 rounded-full border-2 border-brand-terracotta-600 border-t-transparent animate-spin" />
+          <div className="flex-grow flex items-center justify-center min-h-[50vh] bg-brand-black text-brand-sand/50">
+            <span className="w-8 h-8 rounded-none border-2 border-brand-gold border-t-transparent animate-spin" />
           </div>
         }>
           <CalculatorsPageContent />
         </Suspense>
-        <ContactUs />
+        <Footer />
       </div>
     </ToastProvider>
   );

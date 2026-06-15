@@ -21,7 +21,7 @@ export const Header: React.FC<HeaderProps> = ({ darkMode, setDarkMode }) => {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 20) {
+      if (window.scrollY > 50) {
         setScrolled(true);
       } else {
         setScrolled(false);
@@ -90,10 +90,10 @@ export const Header: React.FC<HeaderProps> = ({ darkMode, setDarkMode }) => {
 
   return (
     <header
-      className={`fixed top-0 left-0 w-full z-40 transition-all duration-300 ${
+      className={`fixed top-0 left-0 w-full z-40 transition-all duration-500 border-b ${
         scrolled
-          ? "py-3 glass-panel shadow-lg bg-brand-slate-950/80"
-          : "py-5 bg-transparent"
+          ? "py-3 bg-brand-slate-950/90 backdrop-blur-md shadow-lg border-brand-terracotta-600/40"
+          : "py-5 bg-transparent border-transparent"
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -247,28 +247,20 @@ export const Header: React.FC<HeaderProps> = ({ darkMode, setDarkMode }) => {
               </AnimatePresence>
             </div>
 
-            {/* Sustainability */}
+            {/* About */}
             <button
-              onClick={() => handleLinkClick("#sustainability")}
-              className="text-sm font-semibold text-brand-slate-200 hover:text-brand-terracotta-500 transition-colors py-2 cursor-pointer"
+              onClick={() => handleLinkClick("/about")}
+              className={`text-sm font-semibold transition-colors py-2 cursor-pointer ${pathname.startsWith("/about") ? "text-brand-terracotta-500" : "text-brand-slate-200 hover:text-brand-terracotta-500"}`}
             >
-              Sustainability
+              About
             </button>
 
-            {/* Dealer Locator */}
+            {/* Contact */}
             <button
-              onClick={() => handleLinkClick("#dealers")}
-              className="text-sm font-semibold text-brand-slate-200 hover:text-brand-terracotta-500 transition-colors py-2 cursor-pointer"
+              onClick={() => handleLinkClick("/contact")}
+              className={`text-sm font-semibold transition-colors py-2 cursor-pointer ${pathname.startsWith("/contact") ? "text-brand-terracotta-500" : "text-brand-slate-200 hover:text-brand-terracotta-500"}`}
             >
-              Dealers
-            </button>
-
-            {/* Blog */}
-            <button
-              onClick={() => handleLinkClick("#blogs")}
-              className="text-sm font-semibold text-brand-slate-200 hover:text-brand-terracotta-500 transition-colors py-2 cursor-pointer"
-            >
-              Knowledge Base
+              Contact
             </button>
           </nav>
 
@@ -284,7 +276,7 @@ export const Header: React.FC<HeaderProps> = ({ darkMode, setDarkMode }) => {
 
             {/* Contact CTA */}
             <button
-              onClick={() => handleLinkClick("#contact")}
+              onClick={() => handleLinkClick("/contact")}
               className="flex items-center gap-2 bg-brand-terracotta-600 hover:bg-brand-terracotta-700 text-white px-5 py-2.5 rounded-xl font-semibold shadow-md shadow-brand-terracotta-600/30 transition-all hover:-translate-y-0.5 cursor-pointer text-sm"
             >
               <PhoneCall className="w-4 h-4" />
@@ -361,21 +353,21 @@ export const Header: React.FC<HeaderProps> = ({ darkMode, setDarkMode }) => {
                 Sustainability Programs
               </button>
               <button
-                onClick={() => handleLinkClick("#dealers")}
-                className="w-full text-left font-semibold text-brand-slate-200 py-2.5 px-3 rounded-lg hover:bg-brand-slate-900 transition-colors"
+                onClick={() => handleLinkClick("/about")}
+                className={`w-full text-left font-semibold py-2.5 px-3 rounded-lg hover:bg-brand-slate-900 transition-colors ${pathname.startsWith("/about") ? "text-brand-terracotta-500 bg-brand-slate-900/50 font-bold" : "text-brand-slate-200"}`}
               >
-                Dealer Network Locator
+                About PCP India
               </button>
               <button
-                onClick={() => handleLinkClick("#blogs")}
-                className="w-full text-left font-semibold text-brand-slate-200 py-2.5 px-3 rounded-lg hover:bg-brand-slate-900 transition-colors"
+                onClick={() => handleLinkClick("/contact")}
+                className={`w-full text-left font-semibold py-2.5 px-3 rounded-lg hover:bg-brand-slate-900 transition-colors ${pathname.startsWith("/contact") ? "text-brand-terracotta-500 bg-brand-slate-900/50 font-bold" : "text-brand-slate-200"}`}
               >
-                Blog & News
+                Contact & Dealer Enquiry
               </button>
             </div>
 
             <button
-              onClick={() => handleLinkClick("#contact")}
+              onClick={() => handleLinkClick("/contact")}
               className="flex items-center justify-center gap-2 bg-brand-terracotta-600 hover:bg-brand-terracotta-700 text-white w-full py-3 rounded-xl font-bold transition-all text-center"
             >
               <PhoneCall className="w-4 h-4" />

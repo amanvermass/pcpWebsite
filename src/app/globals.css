@@ -1,37 +1,49 @@
 @import "tailwindcss";
 
 @theme {
-  --color-brand-terracotta-50: #fbf6f5;
-  --color-brand-terracotta-100: #f7edea;
-  --color-brand-terracotta-200: #f0dbd5;
-  --color-brand-terracotta-300: #e4bfb4;
-  --color-brand-terracotta-400: #d29a8a;
-  --color-brand-terracotta-500: #c57e6a;
-  --color-brand-terracotta-600: #af6752; /* Logo Terracotta */
-  --color-brand-terracotta-700: #905141;
-  --color-brand-terracotta-800: #774235;
-  --color-brand-terracotta-900: #63392f;
-  --color-brand-terracotta-950: #351b15;
+  --color-brand-black: var(--brand-black);
+  --color-brand-charcoal: var(--brand-charcoal);
+  --color-brand-slate: var(--brand-slate);
+  --color-brand-offwhite: var(--brand-offwhite);
+  --color-brand-sand: var(--brand-sand);
+  --color-brand-sand-400: var(--brand-sand-400);
+  --color-brand-sand-500: var(--brand-sand-500);
+  --color-brand-sand-600: var(--brand-sand-600);
+  --color-brand-gold: var(--brand-gold);
+  --color-brand-gold-400: var(--brand-gold-400);
+  --color-brand-gold-500: var(--brand-gold-500);
+  --color-brand-gold-600: var(--brand-gold-600);
+  --color-brand-terracotta: var(--brand-terracotta);
+  --color-brand-terracotta-400: var(--brand-terracotta-400);
+  --color-brand-terracotta-500: var(--brand-terracotta-500);
+  --color-brand-terracotta-600: var(--brand-terracotta-600);
+  --color-brand-white: #ffffff;
 
-  --color-brand-slate-50: #ffffff;
-  --color-brand-slate-100: #faf8f7;
-  --color-brand-slate-200: #171514; /* Logo Dark Charcoal - mapped to low values for text */
-  --color-brand-slate-300: #352f2c; /* Warm dark brown text */
-  --color-brand-slate-400: #544b47;
-  --color-brand-slate-500: #7c6f69;
-  --color-brand-slate-600: #a3948d;
-  --color-brand-slate-700: #7c6f69;
-  --color-brand-slate-750: #c4b7b0; /* Logo Gray */
-  --color-brand-slate-800: #eae6e3; /* Light warm gray border */
-  --color-brand-slate-850: #ded8d5;
-  --color-brand-slate-900: #ffffff; /* White card background */
-  --color-brand-slate-950: #faf8f7; /* Very light warm beige section background */
+  /* Dynamic body/layout slate backgrounds */
+  --color-brand-slate-950: var(--brand-slate-950);
+  --color-brand-slate-900: var(--brand-slate-900);
+  --color-brand-slate-800: var(--brand-slate-800);
+  --color-brand-slate-700: var(--brand-slate-700);
+  --color-brand-slate-600: var(--brand-slate-600);
+  --color-brand-slate-500: var(--brand-slate-500);
+  --color-brand-slate-400: var(--brand-slate-400);
+  --color-brand-slate-300: var(--brand-slate-300);
+  --color-brand-slate-200: var(--brand-slate-200);
+  --color-brand-slate-100: var(--brand-slate-100);
+  --color-brand-slate-50: var(--brand-slate-50);
 
-  --color-brand-emerald-50: #f4f6f0;
-  --color-brand-emerald-100: #e5ebdb;
-  --color-brand-emerald-500: #606c38; /* Earthy Moss Green */
-  --color-brand-emerald-600: #4d572c;
-  --color-brand-emerald-700: #3b4221;
+  /* Override standard Tailwind slate utility colors */
+  --color-slate-50: var(--brand-slate-50);
+  --color-slate-100: var(--brand-slate-100);
+  --color-slate-200: var(--brand-slate-200);
+  --color-slate-300: var(--brand-slate-300);
+  --color-slate-400: var(--brand-slate-400);
+  --color-slate-500: var(--brand-slate-500);
+  --color-slate-600: var(--brand-slate-600);
+  --color-slate-700: var(--brand-slate-700);
+  --color-slate-800: var(--brand-slate-800);
+  --color-slate-900: var(--brand-slate-900);
+  --color-slate-950: var(--brand-slate-950);
 
   --animate-fade-in: fade-in 0.5s ease-out forwards;
   --animate-fade-in-up: fade-in-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
@@ -66,20 +78,87 @@
 }
 
 :root {
-  --background: #faf8f7; /* Logo Background light beige default */
-  --foreground: #171514; /* Dark charcoal text */
-  --card: #ffffff;
-  --card-foreground: #171514;
-  --border: #eae6e3;
+  /* Override font variables to use Poppins globally */
+  --font-inter: var(--font-poppins), sans-serif;
+  --font-playfair: var(--font-poppins), sans-serif;
+  --font-cormorant: var(--font-poppins), sans-serif;
+
+  --background: #faf6f2; /* Warm paper logo cream background */
+  --foreground: #121110; /* Dark charcoal logo text */
+  --card: #ffffff; /* Card background */
+  --card-foreground: #121110;
+  --border: #e7e5e4;
   scroll-behavior: smooth;
+
+  /* Theme variables for default Warm Cream theme */
+  --brand-black: #faf6f2;
+  --brand-charcoal: #ffffff;
+  --brand-slate: #e7e5e4;
+  --brand-offwhite: #121110;
+  --brand-sand: #78716c;
+  --brand-sand-400: #a8a29e;
+  --brand-sand-500: #78716c;
+  --brand-sand-600: #57524f;
+  --brand-gold: #ce9456;
+  --brand-gold-400: #fadca1;
+  --brand-gold-500: #e28522;
+  --brand-gold-600: #ce9456;
+  --brand-terracotta: #af6752;
+  --brand-terracotta-400: #c1816e;
+  --brand-terracotta-500: #af6752;
+  --brand-terracotta-600: #ae624c;
+
+  /* Scale mappings */
+  --brand-slate-950: #faf6f2; /* Body bg */
+  --brand-slate-900: #ffffff; /* Card/alt bg */
+  --brand-slate-800: #f5f5f4; /* Section bg */
+  --brand-slate-700: #e7e5e4;
+  --brand-slate-600: #d6d3d1;
+  --brand-slate-500: #a8a29e;
+  --brand-slate-400: #78716c;
+  --brand-slate-300: #57524f;
+  --brand-slate-200: #44403c;
+  --brand-slate-100: #292524; /* Primary text */
+  --brand-slate-50: #121110;
 }
 
 .light {
-  --background: #ffffff; /* Pure white alternate */
-  --foreground: #171514;
-  --card: #faf8f7;
-  --card-foreground: #171514;
-  --border: #eae6e3;
+  --background: #ffffff; /* Crisp white background */
+  --foreground: #111111;
+  --card: #f9f9f9;
+  --card-foreground: #111111;
+  --border: #e2e8f0;
+
+  /* Theme variables for Pure White theme */
+  --brand-black: #ffffff;
+  --brand-charcoal: #f9f9f9;
+  --brand-slate: #cbd5e1;
+  --brand-offwhite: #111111;
+  --brand-sand: #64748b;
+  --brand-sand-400: #94a3b8;
+  --brand-sand-500: #64748b;
+  --brand-sand-600: #475569;
+  --brand-gold: #ce9456;
+  --brand-gold-400: #fadca1;
+  --brand-gold-500: #e28522;
+  --brand-gold-600: #ce9456;
+  --brand-terracotta: #af6752;
+  --brand-terracotta-400: #c1816e;
+  --brand-terracotta-500: #af6752;
+  --brand-terracotta-600: #ae624c;
+
+  /* Scale mappings */
+  --brand-slate-950: #ffffff;
+  --brand-slate-900: #f9f9f9;
+  --brand-slate-800: #f1f5f9;
+  --brand-slate-700: #cbd5e1;
+  --brand-slate-600: #94a3b8;
+  --brand-slate-500: #64748b;
+  --brand-slate-400: #475569;
+  --brand-slate-300: #334155;
+  --brand-slate-200: #1e293b;
+  --brand-slate-100: #0f172a;
+  --brand-slate-50: #020617;
 }
 
 body {
@@ -87,137 +166,53 @@ body {
   color: var(--foreground);
   font-family: var(--font-inter), sans-serif;
   overflow-x: hidden;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition: background-color 0.4s cubic-bezier(0.16, 1, 0.3, 1), color 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-playfair), serif !important;
+  color: var(--foreground) !important;
+}
+
+.font-cormorant {
+  font-family: var(--font-cormorant), serif !important;
+}
+
+.font-poppins {
+  font-family: var(--font-poppins), sans-serif !important;
 }
 
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
 }
 ::-webkit-scrollbar-track {
   background: var(--background);
 }
 ::-webkit-scrollbar-thumb {
-  background: #c4b7b0; /* Logo Gray */
-  border-radius: 4px;
+  background: var(--border);
+  border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #af6752; /* Logo Terracotta */
+  background: #ce9456;
 }
 
-/* Architectural Grid Pattern Background */
-.bg-grid-pattern {
-  background-size: 40px 40px;
-  background-image: 
-    linear-gradient(to right, rgba(196, 183, 176, 0.08) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(196, 183, 176, 0.08) 1px, transparent 1px);
-}
-
-.light .bg-grid-pattern {
-  background-image: 
-    linear-gradient(to right, rgba(23, 21, 20, 0.03) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(23, 21, 20, 0.03) 1px, transparent 1px);
-}
-
-/* Glassmorphism Classes */
-.glass-panel {
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(196, 183, 176, 0.2);
-}
-
-.light .glass-panel {
-  background: rgba(255, 255, 255, 0.9);
-  border: 1px solid rgba(23, 21, 20, 0.06);
-}
-
-/* Text clipping helper */
-.text-gradient-clay {
-  background: linear-gradient(135deg, #c29153 0%, #af6752 100%);
+/* Custom classes */
+.text-gradient-gold {
+  background: linear-gradient(135deg, #ae624c 0%, #ce9456 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-/* --- Global Theme overrides to ensure NO BLACK backgrounds and proper contrast --- */
-
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-poppins), sans-serif !important;
+.border-gold-subtle {
+  border-color: rgba(206, 148, 86, 0.15);
 }
 
-h1, h2, h3, h4, h5, h6,
-.text-white:not(button, a, .bg-brand-terracotta-600 *, .bg-brand-terracotta-700 *, .bg-brand-emerald-500 *, .bg-brand-emerald-600 *, .bg-brand-emerald-700 *, .text-white-force) {
-  color: #171514 !important;
-}
-
-/* Force light themes on elements styled as dark boxes */
-.bg-brand-slate-950,
-.bg-brand-slate-900,
-.bg-brand-slate-950\/60,
-.bg-brand-slate-950\/80,
-.bg-brand-slate-950\/95 {
-  background-color: var(--background) !important;
-}
-
-.bg-brand-slate-900\/60,
-.bg-brand-slate-900\/40,
-.bg-brand-slate-950\/40 {
-  background-color: #ffffff !important;
-  border-color: #eae6e3 !important;
-}
-
-/* Keep text on terracotta and moss green buttons white */
-.bg-brand-terracotta-600,
-.bg-brand-terracotta-700,
-.bg-brand-emerald-500,
-.bg-brand-emerald-600,
-.bg-brand-emerald-700,
-.bg-brand-terracotta-600 *,
-.bg-brand-terracotta-700 *,
-.bg-brand-emerald-500 *,
-.bg-brand-emerald-600 *,
-.bg-brand-emerald-700 *,
-button.bg-brand-terracotta-600,
-button.bg-brand-terracotta-700,
-button.bg-brand-emerald-600,
-button.bg-brand-emerald-700,
-a.bg-brand-terracotta-600,
-a.bg-brand-terracotta-700 {
-  color: #ffffff !important;
-}
-
-/* Style secondary buttons inside hero and maps */
-button.bg-brand-slate-900,
-a.bg-brand-slate-900,
-button.bg-brand-slate-900 *,
-a.bg-brand-slate-900 * {
-  color: #171514 !important;
-  background-color: #ffffff !important;
-  border-color: #eae6e3 !important;
-}
-
-/* Style background tint tags */
-span.bg-brand-terracotta-600\/20,
-span.bg-brand-terracotta-500\/10 {
-  background-color: rgba(175, 103, 82, 0.1) !important;
-  color: #af6752 !important;
-}
-
-span.bg-brand-emerald-500\/10 {
-  background-color: rgba(96, 108, 56, 0.1) !important;
-  color: #606c38 !important;
-}
-
-/* General text overrides for slate-mappings */
-.text-brand-slate-100 { color: #171514 !important; }
-.text-brand-slate-200 { color: #171514 !important; }
-.text-brand-slate-300 { color: #352f2c !important; }
-.text-brand-slate-400 { color: #544b47 !important; }
-.text-brand-slate-450 { color: #7c6f69 !important; }
-
-/* Invert map outline elements to be visible in light mode */
-svg.text-brand-slate-850 {
-  color: #c4b7b0 !important;
+.glass-panel {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(18, 17, 16, 0.08);
 }
 
 /* Global cursor overrides for interactive elements */
@@ -231,4 +226,48 @@ input[type="reset"],
   cursor: pointer !important;
 }
 
+/* Restore standard browser cursor globally and override cursor-none utilities */
+.cursor-none {
+  cursor: auto !important;
+}
+button,
+a,
+select,
+input,
+[role="button"],
+.cursor-pointer,
+.cursor-pointer * {
+  cursor: pointer !important;
+}
 
+/* Typography and layout text overrides for light themes */
+:root *:not(
+  button, button *, 
+  a.bg-brand-terracotta-600, a.bg-brand-terracotta-600 *, 
+  .bg-brand-terracotta-600, .bg-brand-terracotta-600 *,
+  .bg-brand-ochre-600, .bg-brand-ochre-600 *,
+  .bg-brand-gold, .bg-brand-gold *,
+  .bg-black, .bg-black *,
+  .page-loader, .page-loader *
+).text-white {
+  color: var(--foreground) !important;
+}
+
+/* Ensure inputs/selects inside white/cream cards render readable dark text */
+:root input, :root select, :root textarea {
+  color: var(--foreground) !important;
+  background-color: var(--card) !important;
+}
+
+/* Ensure dark text is always dark on gold/terracotta backgrounds or hover states */
+.bg-brand-gold, .bg-brand-sand, .bg-brand-terracotta-600, .bg-brand-ochre-600 {
+  &.text-brand-black, & .text-brand-black {
+    color: #121110 !important;
+  }
+}
+.hover\:text-brand-black:hover {
+  color: #121110 !important;
+}
+.hover\:bg-brand-gold:hover {
+  color: #121110 !important;
+}

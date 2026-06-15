@@ -13,7 +13,7 @@ interface Dealer {
   phone: string;
   email: string;
   web: string;
-  coordinates: { x: number; y: number }; // Simulated map layout relative %
+  coordinates: { x: number; y: number }; // relative %
 }
 
 export const DealerLocator: React.FC = () => {
@@ -22,52 +22,63 @@ export const DealerLocator: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [hoveredDealerId, setHoveredDealerId] = useState<string | null>(null);
 
-  const states = ["All", "California", "Oregon", "Washington"];
+  const states = ["All", "Uttar Pradesh", "Delhi NCR", "Maharashtra", "Karnataka", "West Bengal"];
 
   const dealers: Dealer[] = [
     {
       id: "d1",
-      name: "PCP California Depot",
-      state: "California",
-      city: "Los Angeles",
-      address: "1420 Industrial Pkwy, Los Angeles, CA 90021",
-      phone: "+1 (213) 555-0182",
-      email: "la.depot@prayagclay.com",
-      web: "www.prayagclay.com/la",
-      coordinates: { x: 35, y: 75 },
+      name: "PCP Corporate Headquarters & Kilns",
+      state: "Uttar Pradesh",
+      city: "Noida",
+      address: "Sector 62, Noida, Uttar Pradesh 201301",
+      phone: "+91 120 555 0180",
+      email: "up.hub@prayagclay.com",
+      web: "www.prayagclay.com/up",
+      coordinates: { x: 45, y: 32 },
     },
     {
       id: "d2",
-      name: "Bay Area Terracotta Hub",
-      state: "California",
-      city: "San Francisco",
-      address: "520 Bayshore Blvd, San Francisco, CA 94124",
-      phone: "+1 (415) 555-0177",
-      email: "sf.sales@prayagclay.com",
-      web: "www.prayagclay.com/sf",
-      coordinates: { x: 25, y: 55 },
+      name: "Delhi NCR Distribution Depot",
+      state: "Delhi NCR",
+      city: "New Delhi",
+      address: "Okhla Industrial Area Phase III, New Delhi 110020",
+      phone: "+91 11 555 0177",
+      email: "delhi.depot@prayagclay.com",
+      web: "www.prayagclay.com/delhi",
+      coordinates: { x: 41, y: 29 },
     },
     {
       id: "d3",
-      name: "Pacific Brick & Tile Co.",
-      state: "Oregon",
-      city: "Portland",
-      address: "890 Willamette Blvd, Portland, OR 97203",
-      phone: "+1 (503) 555-0199",
-      email: "pdx.dist@pacificbrick.com",
-      web: "www.pacificbrick.com",
-      coordinates: { x: 45, y: 35 },
+      name: "Mumbai Architectural Hub",
+      state: "Maharashtra",
+      city: "Mumbai",
+      address: "Bandra Kurla Complex, Mumbai, Maharashtra 400051",
+      phone: "+91 22 555 0199",
+      email: "mumbai.sales@prayagclay.com",
+      web: "www.prayagclay.com/mumbai",
+      coordinates: { x: 26, y: 62 },
     },
     {
       id: "d4",
-      name: "Seattle Block Distributors",
-      state: "Washington",
-      city: "Seattle",
-      address: "3410 King St S, Seattle, WA 98144",
-      phone: "+1 (206) 555-0144",
-      email: "seattle.store@seattleblock.com",
-      web: "www.seattleblock.com",
-      coordinates: { x: 40, y: 15 },
+      name: "Bengaluru Materials Depot",
+      state: "Karnataka",
+      city: "Bengaluru",
+      address: "Whitefield Industrial Area, Bengaluru, Karnataka 560066",
+      phone: "+91 80 555 0144",
+      email: "blr.depot@prayagclay.com",
+      web: "www.prayagclay.com/blr",
+      coordinates: { x: 38, y: 82 },
+    },
+    {
+      id: "d5",
+      name: "Kolkata Facades Depot",
+      state: "West Bengal",
+      city: "Kolkata",
+      address: "Salt Lake Sector V, Kolkata, West Bengal 700091",
+      phone: "+91 33 555 0122",
+      email: "kol.sales@prayagclay.com",
+      web: "www.prayagclay.com/kolkata",
+      coordinates: { x: 74, y: 44 },
     },
   ];
 
@@ -81,56 +92,64 @@ export const DealerLocator: React.FC = () => {
   });
 
   const handleGetDirections = (dealerName: string) => {
-    toast(`Routing requests: Simulating GPS path calculation to ${dealerName}.`, "info");
+    toast(`Simulating Indian GPS map coordinates for ${dealerName}.`, "info");
   };
 
   return (
-    <section id="dealers" className="py-24 bg-brand-slate-950 relative">
+    <section id="dealers" className="py-24 bg-brand-black relative">
+      {/* Background guide lines */}
+      <div className="absolute inset-0 pointer-events-none z-0 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-4 h-full opacity-5">
+        <div className="border-l border-brand-slate h-full" />
+        <div className="border-l border-brand-slate h-full" />
+        <div className="border-l border-brand-slate h-full" />
+        <div className="border-l border-brand-slate h-full border-r" />
+      </div>
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <span className="text-xs uppercase font-extrabold tracking-widest text-brand-terracotta-500 bg-brand-terracotta-500/10 px-3 py-1 rounded-full">
-            Partners & Network
+        <div className="text-center max-w-3xl mx-auto mb-16 flex flex-col items-center">
+          <span className="text-[10px] uppercase font-bold tracking-[0.35em] text-brand-gold bg-brand-gold/5 px-4 py-1.5 border border-brand-gold/20 rounded-none w-fit block">
+            PARTNERS & NETWORK
           </span>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-white mt-4 tracking-tight">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-normal font-cormorant text-brand-offwhite mt-6 tracking-wide">
             Dealer Network Locator
           </h2>
-          <p className="text-brand-slate-400 mt-3">
-            Find certified PCP distributors near you to check material stock, view physical samples, and arrange wholesale bulk deliveries.
+          <p className="text-brand-sand/70 text-xs sm:text-sm font-poppins mt-4 max-w-xl leading-relaxed">
+            Find certified PCP distributors across India's metropolitan hubs to inspect clay brick physical samples and request quote deliveries.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-stretch">
           
           {/* Filters & Dealers list column */}
           <div className="lg:col-span-5 flex flex-col gap-6">
             
             {/* Search filter panels */}
-            <div className="bg-brand-slate-900 border border-brand-slate-800 rounded-3xl p-5 flex flex-col gap-4">
+            <div className="bg-brand-charcoal border border-brand-gold/10 rounded-none p-6 flex flex-col gap-4">
               <div className="relative">
-                <Search className="absolute left-4 top-3.5 w-4 h-4 text-brand-slate-500" />
+                <Search className="absolute left-4 top-3.5 w-4 h-4 text-brand-sand/50" />
                 <input
                   type="text"
-                  placeholder="Search by city or name..."
+                  placeholder="Search by city or depot name..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full bg-brand-slate-950 border border-brand-slate-850 rounded-2xl pl-11 pr-4 py-3 text-sm text-white focus:outline-none focus:border-brand-terracotta-500"
+                  className="w-full bg-brand-black border border-brand-gold/10 rounded-none pl-11 pr-4 py-3 text-xs uppercase tracking-wider font-poppins text-brand-offwhite focus:outline-none focus:border-brand-gold"
                 />
               </div>
 
-              <div className="flex gap-2">
+              <div className="flex flex-wrap gap-2">
                 {states.map((st) => (
                   <button
                     key={st}
                     onClick={() => setSelectedState(st)}
-                    className={`flex-1 py-2 rounded-xl text-xs font-semibold border cursor-pointer text-center transition-all ${
+                    className={`px-3 py-2 rounded-none text-[9px] uppercase tracking-wider font-poppins font-medium border cursor-pointer text-center transition-all ${
                       selectedState === st
-                        ? "bg-brand-terracotta-600 border-brand-terracotta-600 text-white shadow-md"
-                        : "bg-brand-slate-950 border-brand-slate-850 text-brand-slate-400 hover:text-white"
+                        ? "bg-brand-gold border-brand-gold text-brand-black"
+                        : "bg-brand-black border-brand-gold/10 text-brand-sand hover:text-brand-offwhite"
                     }`}
                   >
-                    {st === "All" ? "All States" : st}
+                    {st === "All" ? "All India" : st}
                   </button>
                 ))}
               </div>
@@ -139,7 +158,7 @@ export const DealerLocator: React.FC = () => {
             {/* Scrollable list */}
             <div className="flex flex-col gap-3 max-h-[500px] overflow-y-auto pr-2">
               {filteredDealers.length === 0 ? (
-                <div className="bg-brand-slate-900 border border-brand-slate-800 rounded-2xl p-8 text-center text-brand-slate-500 text-sm">
+                <div className="bg-brand-charcoal border border-brand-gold/10 rounded-none p-8 text-center text-brand-sand/50 text-xs font-poppins">
                   No registered distributors found matching the criteria.
                 </div>
               ) : (
@@ -148,34 +167,34 @@ export const DealerLocator: React.FC = () => {
                     key={d.id}
                     onMouseEnter={() => setHoveredDealerId(d.id)}
                     onMouseLeave={() => setHoveredDealerId(null)}
-                    className={`p-5 rounded-2xl border transition-all cursor-pointer flex flex-col justify-between gap-4 ${
+                    className={`p-5 rounded-none border transition-all cursor-none flex flex-col justify-between gap-4 ${
                       hoveredDealerId === d.id
-                        ? "bg-brand-slate-900 border-brand-terracotta-500/50 shadow-lg"
-                        : "bg-brand-slate-900/50 border-brand-slate-800 hover:border-brand-slate-700"
+                        ? "bg-brand-charcoal border-brand-gold/50 shadow-lg"
+                        : "bg-brand-charcoal/40 border-brand-gold/10 hover:border-brand-gold/25"
                     }`}
                   >
                     <div>
                       <div className="flex justify-between items-start">
-                        <h3 className="font-extrabold text-white text-base">{d.name}</h3>
-                        <span className="text-[10px] text-brand-terracotta-500 font-bold uppercase tracking-widest">
+                        <h3 className="font-normal font-cormorant text-brand-offwhite text-lg">{d.name}</h3>
+                        <span className="text-[9px] text-brand-gold font-bold uppercase tracking-widest font-poppins">
                           {d.city}
                         </span>
                       </div>
-                      <p className="text-xs text-brand-slate-400 mt-2 flex items-start gap-1.5 leading-snug">
-                        <MapPin className="w-3.5 h-3.5 text-brand-terracotta-500 shrink-0 mt-0.5" />
+                      <p className="text-[11px] text-brand-sand/70 mt-2 flex items-start gap-1.5 leading-snug font-poppins">
+                        <MapPin className="w-3.5 h-3.5 text-brand-gold shrink-0 mt-0.5" />
                         {d.address}
                       </p>
                     </div>
 
-                    <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-xs text-brand-slate-400 border-t border-brand-slate-850 pt-3">
-                      <span className="flex items-center gap-1.5"><Phone className="w-3.5 h-3.5 text-brand-slate-500" /> {d.phone}</span>
-                      <span className="flex items-center gap-1.5"><Mail className="w-3.5 h-3.5 text-brand-slate-500 truncate" /> {d.email}</span>
+                    <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-[10px] text-brand-sand/60 border-t border-brand-gold/10 pt-3 font-poppins">
+                      <span className="flex items-center gap-1.5"><Phone className="w-3.5 h-3.5 text-brand-gold/60" /> {d.phone}</span>
+                      <span className="flex items-center gap-1.5"><Mail className="w-3.5 h-3.5 text-brand-gold/60 truncate" /> {d.email}</span>
                     </div>
 
-                    <div className="flex gap-2">
+                    <div className="flex gap-3">
                       <button
                         onClick={() => handleGetDirections(d.name)}
-                        className="flex-1 bg-brand-terracotta-600/20 hover:bg-brand-terracotta-600 text-brand-terracotta-400 hover:text-white py-2 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1 cursor-pointer"
+                        className="flex-1 bg-brand-gold/10 hover:bg-brand-gold text-brand-gold hover:text-brand-black border border-brand-gold/30 hover:border-brand-gold py-2 rounded-none text-[10px] uppercase font-poppins tracking-wider transition-colors flex items-center justify-center gap-1 cursor-none"
                       >
                         <Navigation className="w-3.5 h-3.5" />
                         Directions
@@ -184,10 +203,10 @@ export const DealerLocator: React.FC = () => {
                         href={`https://${d.web}`}
                         target="_blank"
                         rel="noreferrer"
-                        className="flex-1 bg-brand-slate-950 hover:bg-brand-slate-850 border border-brand-slate-850 hover:border-brand-slate-750 text-brand-slate-300 hover:text-white py-2 rounded-xl text-xs font-bold transition-all text-center flex items-center justify-center gap-1"
+                        className="flex-1 bg-brand-black hover:bg-brand-charcoal border border-brand-gold/10 text-brand-sand hover:text-brand-offwhite py-2 rounded-none text-[10px] uppercase font-poppins tracking-wider transition-colors text-center flex items-center justify-center gap-1 cursor-none"
                       >
                         <Globe className="w-3.5 h-3.5" />
-                        Visit Website
+                        Website
                       </a>
                     </div>
                   </div>
@@ -197,33 +216,31 @@ export const DealerLocator: React.FC = () => {
 
           </div>
 
-          {/* Styled Map visualization column */}
-          <div className="lg:col-span-7 bg-brand-slate-900 border border-brand-slate-800 rounded-3xl p-6 flex flex-col justify-between relative overflow-hidden min-h-[400px] lg:min-h-0">
+          {/* Interactive India Map Panel */}
+          <div className="lg:col-span-7 bg-brand-charcoal border border-brand-gold/10 rounded-none p-6 flex flex-col justify-between relative overflow-hidden min-h-[450px] lg:min-h-0">
+            <div className="absolute inset-0 bg-brand-black/25 z-0" />
             
-            {/* Custom Interactive SVG Map representing Regional West Coast Map */}
-            <div className="absolute inset-0 bg-brand-slate-950/20 z-0 bg-grid-pattern" />
-            
-            <div className="relative z-10 w-full flex justify-between items-center pb-4 border-b border-brand-slate-850">
-              <span className="text-xs font-bold text-brand-slate-400 uppercase tracking-widest flex items-center gap-1.5">
-                <Compass className="w-4 h-4 text-brand-terracotta-500 shrink-0" />
-                Distribution Coverage Map
+            <div className="relative z-10 w-full flex justify-between items-center pb-4 border-b border-brand-gold/10">
+              <span className="text-[10px] font-bold text-brand-sand/60 uppercase tracking-widest flex items-center gap-1.5 font-poppins">
+                <Compass className="w-4 h-4 text-brand-gold shrink-0 animate-spin-slow" />
+                Distribution Coverage Map (India)
               </span>
-              <span className="text-[10px] bg-brand-emerald-500/10 text-brand-emerald-400 px-2 py-0.5 rounded border border-brand-emerald-500/20 font-bold uppercase">
-                Active Nodes
+              <span className="text-[9px] bg-brand-gold/10 text-brand-gold px-2.5 py-0.5 border border-brand-gold/30 font-bold uppercase tracking-widest font-poppins">
+                Active State Nodes
               </span>
             </div>
 
-            {/* Simulated Map Board */}
-            <div className="relative flex-grow flex items-center justify-center w-full h-64 lg:h-full z-10 py-8">
-              {/* Fake US Coast Outline SVG */}
-              <svg className="w-full h-full text-brand-slate-850 opacity-40" viewBox="0 0 100 100" fill="none">
-                {/* Simulated shoreline */}
-                <path d="M10,0 C12,25 5,50 15,75 C20,85 10,95 20,100" stroke="currentColor" strokeWidth="2" strokeDasharray="3 3" />
-                {/* Coastal state bounds */}
-                <path d="M15,25 L50,28 L60,35 C65,40 50,55 52,65 L35,75 M35,75 L38,100" stroke="currentColor" strokeWidth="0.75" />
+            {/* India Map Board */}
+            <div className="relative flex-grow flex items-center justify-center w-full h-80 lg:h-full z-10 py-8">
+              {/* Minimal SVG representing India Map Outline */}
+              <svg className="w-4/5 h-4/5 text-brand-gold/10" viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="1">
+                {/* Simplified outline paths of India */}
+                <path d="M42,10 L47,5 L50,11 L49,20 L57,25 L58,32 L66,35 L74,38 L72,45 L82,45 L80,52 L74,53 L70,58 L63,60 L62,65 L55,75 L50,85 L48,93 L44,82 L38,82 L34,70 L26,62 L28,52 L18,48 L22,38 L30,38 L34,25 L38,20 Z" />
+                <path d="M49,20 L55,25" strokeDasharray="2 2" />
+                <path d="M34,25 L38,20" strokeDasharray="2 2" />
               </svg>
 
-              {/* Interactive pins */}
+              {/* Interactive State Highlight nodes */}
               {filteredDealers.map((d) => (
                 <div
                   key={d.id}
@@ -231,26 +248,29 @@ export const DealerLocator: React.FC = () => {
                   style={{ left: `${d.coordinates.x}%`, top: `${d.coordinates.y}%` }}
                   onMouseEnter={() => setHoveredDealerId(d.id)}
                   onMouseLeave={() => setHoveredDealerId(null)}
+                  onClick={() => setSelectedState(d.state)}
                 >
                   <div className="relative flex items-center justify-center">
                     {/* Ring animation on hover */}
                     <span
-                      className={`absolute w-8 h-8 rounded-full bg-brand-terracotta-600/30 transition-all ${
+                      className={`absolute w-8 h-8 rounded-full bg-brand-gold/20 transition-all ${
                         hoveredDealerId === d.id ? "scale-150 opacity-100" : "scale-0 opacity-0"
                       }`}
                     />
                     
                     {/* Solid pin indicator */}
-                    <MapPin
-                      className={`w-7 h-7 cursor-pointer transition-all ${
-                        hoveredDealerId === d.id ? "text-brand-terracotta-500 -translate-y-1 scale-110" : "text-brand-slate-500"
+                    <div
+                      className={`w-3.5 h-3.5 rounded-full border border-brand-black transition-all ${
+                        hoveredDealerId === d.id 
+                          ? "bg-brand-gold scale-125 shadow-[0_0_15px_#C58B45]" 
+                          : "bg-brand-sand/40"
                       }`}
                     />
                     
-                    {/* Tiny popup labels */}
+                    {/* Tooltip labels */}
                     {hoveredDealerId === d.id && (
-                      <div className="absolute bottom-8 bg-brand-slate-900 border border-brand-slate-800 text-white text-[10px] font-bold py-1 px-2.5 rounded-lg shadow-2xl whitespace-nowrap z-50">
-                        {d.name}
+                      <div className="absolute bottom-6 bg-brand-black border border-brand-gold/30 text-brand-offwhite text-[9px] uppercase tracking-wider font-poppins py-1.5 px-3 rounded-none shadow-2xl whitespace-nowrap z-50">
+                        {d.name} ({d.city})
                       </div>
                     )}
                   </div>
@@ -258,9 +278,9 @@ export const DealerLocator: React.FC = () => {
               ))}
             </div>
 
-            <div className="relative z-10 text-[10px] text-brand-slate-500 font-medium border-t border-brand-slate-850 pt-4 flex justify-between">
-              <span>Interactive Nodes: Highlight to view coordinates.</span>
-              <span>Mock GPS Module Active</span>
+            <div className="relative z-10 text-[9px] text-brand-sand/40 font-poppins border-t border-brand-gold/10 pt-4 flex justify-between">
+              <span>Interactive Nodes: Highlight state nodes to filter list details.</span>
+              <span>Active Coverage Est. 1983</span>
             </div>
 
           </div>
@@ -270,3 +290,5 @@ export const DealerLocator: React.FC = () => {
     </section>
   );
 };
+
+export default DealerLocator;

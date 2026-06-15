@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
-import { Inter, Poppins } from "next/font/google";
+import { Inter, Poppins, Playfair_Display, Cormorant_Garamond } from "next/font/google";
 import "./globals.css";
 import { ToastProvider } from "../components/ui/Toast";
+import { SmoothScroll } from "../components/ui/SmoothScroll";
+import { PageLoader } from "../components/ui/PageLoader";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -12,6 +14,18 @@ const poppins = Poppins({
   variable: "--font-poppins",
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700", "800"],
+});
+
+const playfair = Playfair_Display({
+  variable: "--font-playfair",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800", "900"],
+});
+
+const cormorant = Cormorant_Garamond({
+  variable: "--font-cormorant",
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -32,9 +46,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${poppins.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col bg-brand-slate-950 text-slate-100">
+    <html lang="en" className={`${inter.variable} ${poppins.variable} ${playfair.variable} ${cormorant.variable} h-full antialiased`}>
+      <body className="min-h-full flex flex-col bg-brand-slate-950 text-slate-100 relative">
+        <PageLoader />
+
+        {/* Global Dessau-inspired Background Grid Guide Lines */}
+        <div className="fixed inset-0 z-0 pointer-events-none max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-4 h-full opacity-25">
+          <div className="border-l border-brand-slate-800/10 dark:border-brand-slate-200/5 h-full" />
+          <div className="border-l border-brand-slate-800/10 dark:border-brand-slate-200/5 h-full" />
+          <div className="border-l border-brand-slate-800/10 dark:border-brand-slate-200/5 h-full" />
+          <div className="border-l border-brand-slate-800/10 dark:border-brand-slate-200/5 h-full border-r" />
+        </div>
+
         <ToastProvider>
+          <SmoothScroll />
           {children}
         </ToastProvider>
       </body>

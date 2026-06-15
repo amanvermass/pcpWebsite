@@ -2,10 +2,12 @@
 
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FileText, Eye, Check, X, ArrowRight, Download } from "lucide-react";
+import { Eye, ArrowRight, Download, X } from "lucide-react";
 import { useToast } from "../ui/Toast";
+import { ImageReveal, TextReveal } from "../ui/ScrollReveal";
 import Link from "next/link";
 import { products, Product } from "../../data/products";
+import { Magnetic } from "../ui/Magnetic";
 
 export const FeaturedProducts: React.FC<{ teaser?: boolean }> = ({ teaser = false }) => {
   const { toast } = useToast();
@@ -27,7 +29,6 @@ export const FeaturedProducts: React.FC<{ teaser?: boolean }> = ({ teaser = fals
     const contactSection = document.querySelector("#contact");
     if (contactSection) {
       contactSection.scrollIntoView({ behavior: "smooth" });
-      // Pre-fill enquiry fields if possible (we will handle state in contact component)
       const messageTextarea = document.querySelector("#contact-message") as HTMLTextAreaElement;
       if (messageTextarea) {
         messageTextarea.value = `I am interested in ordering/inquiring about the: ${productName}. Please provide availability and a cost quotation.`;
@@ -36,33 +37,42 @@ export const FeaturedProducts: React.FC<{ teaser?: boolean }> = ({ teaser = fals
   };
 
   return (
-    <section id="products" className="py-24 bg-brand-slate-900 bg-grid-pattern relative">
+    <section id="products" className="py-24 bg-brand-black relative">
+      {/* Structural Lines */}
+      <div className="absolute inset-0 pointer-events-none z-0 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-4 h-full opacity-10">
+        <div className="border-l border-brand-slate h-full" />
+        <div className="border-l border-brand-slate h-full" />
+        <div className="border-l border-brand-slate h-full" />
+        <div className="border-l border-brand-slate h-full border-r" />
+      </div>
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <span className="text-xs uppercase font-extrabold tracking-widest text-brand-terracotta-500 bg-brand-terracotta-500/10 px-3 py-1 rounded-full">
+        <div className="text-center max-w-3xl mx-auto mb-16 flex flex-col items-center">
+          <span className="text-[10px] uppercase font-bold tracking-[0.35em] text-brand-gold bg-brand-gold/5 px-4 py-1.5 border border-brand-gold/20 rounded-none w-fit">
             Product Catalog
           </span>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-white mt-4 tracking-tight">
-            High-Performance Materials
-          </h2>
-          <p className="text-brand-slate-400 mt-3 text-base sm:text-lg">
+          <TextReveal
+            text="High-Performance Materials"
+            className="text-3xl sm:text-4xl lg:text-5xl font-normal font-cormorant text-brand-offwhite mt-6 tracking-wide justify-center text-center w-full"
+          />
+          <p className="text-brand-sand/70 mt-4 text-sm sm:text-base font-poppins max-w-2xl leading-relaxed">
             Explore our architectural-grade product ranges engineered for structural endurance, thermal insulation, and visual brilliance.
           </p>
         </div>
 
         {/* Category Filters */}
         {!teaser && (
-          <div className="flex flex-wrap justify-center gap-2 mb-12">
+          <div className="flex flex-wrap justify-center gap-3 mb-12">
             {categories.map((cat) => (
               <button
                 key={cat}
                 onClick={() => setSelectedCategory(cat)}
-                className={`px-5 py-2.5 rounded-xl text-sm font-semibold transition-all cursor-pointer ${
+                className={`px-6 py-3 rounded-none text-xs uppercase font-poppins tracking-[0.2em] font-medium transition-colors cursor-pointer border ${
                   selectedCategory === cat
-                    ? "bg-brand-terracotta-600 text-white shadow-lg shadow-brand-terracotta-600/30"
-                    : "bg-brand-slate-950 text-brand-slate-400 hover:text-white border border-brand-slate-800"
+                    ? "bg-brand-gold text-brand-black border-brand-gold"
+                    : "bg-brand-charcoal text-brand-sand border-brand-gold/15 hover:border-brand-gold/50"
                 }`}
               >
                 {cat}
@@ -81,28 +91,30 @@ export const FeaturedProducts: React.FC<{ teaser?: boolean }> = ({ teaser = fals
               <motion.div
                 key={p.id}
                 layout
-                initial={{ opacity: 0, scale: 0.9 }}
+                initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
+                exit={{ opacity: 0, scale: 0.95 }}
                 transition={{ duration: 0.3 }}
-                className="group rounded-2xl overflow-hidden border border-brand-slate-800 bg-brand-slate-950 flex flex-col justify-between hover:border-brand-slate-700 transition-all hover:shadow-2xl hover:shadow-brand-terracotta-500/5 hover:-translate-y-1"
+                className="group rounded-none border border-brand-gold/10 bg-brand-charcoal flex flex-col justify-between hover:border-brand-gold/40 transition-colors shadow-xl"
               >
                 {/* Product Image */}
-                <div className="relative aspect-[4/3] w-full overflow-hidden bg-brand-slate-900">
-                  <img
-                    src={p.image}
-                    alt={p.name}
-                    className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <div className="absolute top-4 left-4 bg-brand-slate-950/80 backdrop-blur-md text-brand-terracotta-400 border border-brand-slate-800 text-[10px] uppercase font-bold tracking-widest px-2.5 py-1 rounded-md">
+                <div className="relative aspect-[4/3] w-full overflow-hidden bg-brand-black border-b border-brand-gold/10">
+                  <ImageReveal>
+                    <img
+                      src={p.image}
+                      alt={p.name}
+                      className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-700"
+                    />
+                  </ImageReveal>
+                  <div className="absolute top-4 left-4 bg-brand-black/85 text-brand-gold border border-brand-gold/20 text-[9px] uppercase font-bold tracking-widest px-3 py-1.5 rounded-none z-10">
                     {p.category}
                   </div>
                   
                   {/* Hover Quick View Overlay */}
-                  <div className="absolute inset-0 bg-brand-slate-950/45 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+                  <div className="absolute inset-0 bg-brand-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2 z-10">
                     <button
                       onClick={() => setActiveQuickView(p)}
-                      className="p-3 bg-white text-brand-slate-950 rounded-full hover:scale-110 transition-transform shadow-lg cursor-pointer"
+                      className="p-3.5 bg-brand-gold text-brand-black hover:scale-110 transition-transform shadow-lg cursor-pointer rounded-none border border-brand-gold"
                       title="Quick View Technical Details"
                     >
                       <Eye className="w-5 h-5" />
@@ -114,28 +126,28 @@ export const FeaturedProducts: React.FC<{ teaser?: boolean }> = ({ teaser = fals
                 <div className="p-6 flex-grow flex flex-col justify-between">
                   <div>
                     <Link href={`/products/${p.id}`}>
-                      <h3 className="text-xl font-bold text-white group-hover:text-brand-terracotta-400 transition-colors">
+                      <h3 className="text-xl font-normal font-cormorant text-brand-offwhite group-hover:text-brand-gold transition-colors leading-tight">
                         {p.name}
                       </h3>
                     </Link>
-                    <p className="text-sm text-brand-slate-400 mt-2 leading-relaxed">
+                    <p className="text-xs font-poppins text-brand-sand/70 mt-3 leading-relaxed">
                       {p.desc}
                     </p>
                   </div>
 
                   {/* Actions */}
-                  <div className="mt-6 flex items-center gap-3 pt-4 border-t border-brand-slate-900">
+                  <div className="mt-6 flex items-center gap-3 pt-4 border-t border-brand-gold/10">
                     <Link
                       href={`/products/${p.id}`}
-                      className="flex-1 text-center py-2.5 rounded-xl text-xs font-bold bg-brand-slate-900 text-brand-slate-300 hover:text-white hover:bg-brand-slate-800 border border-brand-slate-800 transition-colors cursor-pointer"
+                      className="flex-1 text-center py-3 rounded-none text-[10px] uppercase font-poppins tracking-wider font-semibold bg-brand-black text-brand-sand hover:text-brand-offwhite border border-brand-gold/15 hover:border-brand-gold/50 transition-colors cursor-pointer"
                     >
-                      Technical Specs
+                      Specs
                     </Link>
                     <button
                       onClick={() => handleQuickInquiry(p.name)}
-                      className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-xs font-bold bg-brand-terracotta-600/20 text-brand-terracotta-400 hover:bg-brand-terracotta-600 hover:text-white transition-all cursor-pointer"
+                      className="flex-1 flex items-center justify-center gap-1.5 py-3 rounded-none text-[10px] uppercase font-poppins tracking-wider font-semibold bg-brand-gold/10 text-brand-gold hover:bg-brand-gold hover:text-brand-black transition-colors border border-brand-gold/30 hover:border-brand-gold cursor-pointer"
                     >
-                      Request Quote
+                      Quote
                       <ArrowRight className="w-3.5 h-3.5" />
                     </button>
                   </div>
@@ -147,13 +159,15 @@ export const FeaturedProducts: React.FC<{ teaser?: boolean }> = ({ teaser = fals
 
         {teaser && (
           <div className="text-center mt-16">
-            <Link
-              href="/products"
-              className="inline-flex items-center gap-2 bg-brand-terracotta-600 hover:bg-brand-terracotta-700 text-white px-8 py-4 rounded-xl font-bold transition-all shadow-lg shadow-brand-terracotta-600/20 cursor-pointer"
-            >
-              Explore Full Clay Catalog
-              <ArrowRight className="w-4 h-4" />
-            </Link>
+            <Magnetic>
+              <Link
+                href="/products"
+                className="inline-flex items-center gap-2 bg-brand-gold hover:bg-brand-sand text-brand-black px-8 py-4 rounded-none font-semibold uppercase tracking-[0.2em] font-poppins text-xs transition-colors border border-brand-gold cursor-pointer"
+              >
+                Explore Full Clay Catalog
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+            </Magnetic>
           </div>
         )}
       </div>
@@ -168,7 +182,7 @@ export const FeaturedProducts: React.FC<{ teaser?: boolean }> = ({ teaser = fals
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setActiveQuickView(null)}
-              className="absolute inset-0 bg-brand-slate-950/80 backdrop-blur-md"
+              className="absolute inset-0 bg-brand-black/90 backdrop-blur-md"
             />
 
             {/* Modal Body */}
@@ -176,19 +190,19 @@ export const FeaturedProducts: React.FC<{ teaser?: boolean }> = ({ teaser = fals
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="relative w-full max-w-4xl bg-brand-slate-900 rounded-3xl overflow-hidden border border-brand-slate-800 shadow-2xl flex flex-col md:flex-row max-h-[90vh] md:max-h-none overflow-y-auto md:overflow-visible"
+              className="relative w-full max-w-4xl bg-brand-charcoal rounded-none overflow-hidden border border-brand-gold/25 shadow-2xl flex flex-col md:flex-row max-h-[90vh] md:max-h-none overflow-y-auto md:overflow-visible"
             >
               {/* Image half */}
-              <div className="md:w-1/2 relative min-h-[250px] md:min-h-full bg-brand-slate-950">
+              <div className="md:w-1/2 relative min-h-[250px] md:min-h-full bg-brand-black">
                 <img
                   src={activeQuickView.image}
                   alt={activeQuickView.name}
                   className="object-cover w-full h-full"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-brand-slate-900 md:bg-gradient-to-r md:from-transparent md:to-brand-slate-900" />
+                <div className="absolute inset-0 bg-gradient-to-t from-brand-charcoal md:bg-gradient-to-r md:from-transparent md:to-brand-charcoal" />
                 <button
                   onClick={() => setActiveQuickView(null)}
-                  className="absolute top-4 left-4 p-2 bg-brand-slate-950/70 text-white rounded-full md:hidden border border-brand-slate-800"
+                  className="absolute top-4 left-4 p-2 bg-brand-black/70 text-brand-offwhite rounded-none md:hidden border border-brand-gold/20"
                 >
                   <X className="w-5 h-5" />
                 </button>
@@ -197,62 +211,62 @@ export const FeaturedProducts: React.FC<{ teaser?: boolean }> = ({ teaser = fals
               {/* Data Specifications half */}
               <div className="p-6 md:p-8 md:w-1/2 flex flex-col justify-between gap-6 max-h-[70vh] md:max-h-[85vh] overflow-y-auto">
                 <div className="hidden md:flex justify-between items-center">
-                  <span className="text-[10px] uppercase tracking-widest text-brand-terracotta-500 font-bold">
+                  <span className="text-[9px] uppercase tracking-widest text-brand-gold font-bold font-poppins">
                     {activeQuickView.category} TECHNICAL FILE
                   </span>
                   <button
                     onClick={() => setActiveQuickView(null)}
-                    className="p-1.5 hover:bg-brand-slate-800 text-brand-slate-400 hover:text-white rounded-lg transition-colors cursor-pointer"
+                    className="p-1.5 hover:bg-brand-black text-brand-sand hover:text-brand-offwhite border border-transparent hover:border-brand-gold/20 rounded-none transition-colors cursor-pointer"
                   >
                     <X className="w-5 h-5" />
                   </button>
                 </div>
 
                 <div>
-                  <h3 className="text-2xl font-extrabold text-white leading-tight">
+                  <h3 className="text-3xl font-normal font-cormorant text-brand-offwhite leading-tight">
                     {activeQuickView.name}
                   </h3>
-                  <p className="text-sm text-brand-slate-400 mt-2 leading-relaxed">
+                  <p className="text-xs font-poppins text-brand-sand/75 mt-3 leading-relaxed">
                     {activeQuickView.desc}
                   </p>
                 </div>
 
                 {/* Specs Grid */}
                 <div>
-                  <h4 className="text-xs uppercase font-extrabold tracking-widest text-brand-slate-400 border-b border-brand-slate-800 pb-2 mb-3">
+                  <h4 className="text-[10px] uppercase font-bold tracking-[0.2em] text-brand-gold border-b border-brand-gold/10 pb-2 mb-4 font-poppins">
                     Structural Specifications
                   </h4>
                   <div className="grid grid-cols-2 gap-y-3 gap-x-4">
                     <div>
-                      <span className="block text-[10px] text-brand-slate-500 uppercase font-bold">Dimensions</span>
-                      <span className="text-sm font-semibold text-white">
+                      <span className="block text-[9px] text-brand-sand/50 uppercase font-semibold font-poppins">Dimensions</span>
+                      <span className="text-sm font-semibold text-brand-offwhite font-poppins">
                         {activeQuickView.specs.length} × {activeQuickView.specs.width} × {activeQuickView.specs.height}
                       </span>
                     </div>
                     <div>
-                      <span className="block text-[10px] text-brand-slate-500 uppercase font-bold">Dry Weight</span>
-                      <span className="text-sm font-semibold text-white">{activeQuickView.specs.weight}</span>
+                      <span className="block text-[9px] text-brand-sand/50 uppercase font-semibold font-poppins">Dry Weight</span>
+                      <span className="text-sm font-semibold text-brand-offwhite font-poppins">{activeQuickView.specs.weight}</span>
                     </div>
                     <div>
-                      <span className="block text-[10px] text-brand-slate-500 uppercase font-bold">Density</span>
-                      <span className="text-sm font-semibold text-white">{activeQuickView.specs.density}</span>
+                      <span className="block text-[9px] text-brand-sand/50 uppercase font-semibold font-poppins">Density</span>
+                      <span className="text-sm font-semibold text-brand-offwhite font-poppins">{activeQuickView.specs.density}</span>
                     </div>
                     <div>
-                      <span className="block text-[10px] text-brand-slate-500 uppercase font-bold">Water Absorption</span>
-                      <span className="text-sm font-semibold text-white">{activeQuickView.specs.waterAbsorption}</span>
+                      <span className="block text-[9px] text-brand-sand/50 uppercase font-semibold font-poppins">Water Absorption</span>
+                      <span className="text-sm font-semibold text-brand-offwhite font-poppins">{activeQuickView.specs.waterAbsorption}</span>
                     </div>
                     <div>
-                      <span className="block text-[10px] text-brand-slate-500 uppercase font-bold">Compressive Strength</span>
-                      <span className="text-sm font-semibold text-white text-brand-terracotta-400">{activeQuickView.specs.compStrength}</span>
+                      <span className="block text-[9px] text-brand-sand/50 uppercase font-semibold font-poppins">Compressive Strength</span>
+                      <span className="text-sm font-semibold text-brand-gold font-poppins">{activeQuickView.specs.compStrength}</span>
                     </div>
                     <div>
-                      <span className="block text-[10px] text-brand-slate-500 uppercase font-bold">Fire Resistance</span>
-                      <span className="text-sm font-semibold text-white">{activeQuickView.specs.fireResistance}</span>
+                      <span className="block text-[9px] text-brand-sand/50 uppercase font-semibold font-poppins">Fire Resistance</span>
+                      <span className="text-sm font-semibold text-brand-offwhite font-poppins">{activeQuickView.specs.fireResistance}</span>
                     </div>
                     {activeQuickView.specs.thermalInsulation && (
                       <div className="col-span-2">
-                        <span className="block text-[10px] text-brand-slate-500 uppercase font-bold">Thermal Conductivity (λ)</span>
-                        <span className="text-sm font-semibold text-brand-emerald-500">{activeQuickView.specs.thermalInsulation}</span>
+                        <span className="block text-[9px] text-brand-sand/50 uppercase font-semibold font-poppins">Thermal Conductivity (λ)</span>
+                        <span className="text-sm font-semibold text-brand-gold font-poppins">{activeQuickView.specs.thermalInsulation}</span>
                       </div>
                     )}
                   </div>
@@ -260,37 +274,37 @@ export const FeaturedProducts: React.FC<{ teaser?: boolean }> = ({ teaser = fals
 
                 {/* Downloads Action Panel */}
                 <div>
-                  <h4 className="text-xs uppercase font-extrabold tracking-widest text-brand-slate-400 border-b border-brand-slate-800 pb-2 mb-3">
+                  <h4 className="text-[10px] uppercase font-bold tracking-[0.2em] text-brand-gold border-b border-brand-gold/10 pb-2 mb-4 font-poppins">
                     Architect CAD & BIM Downloads
                   </h4>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                     <button
                       onClick={() => handleDownload("Datasheet (PDF)", activeQuickView.name)}
-                      className="flex items-center justify-between px-3 py-2 bg-brand-slate-950 border border-brand-slate-800 rounded-xl text-xs font-semibold hover:border-brand-slate-700 hover:bg-brand-slate-900 text-brand-slate-300 hover:text-white transition-all text-left cursor-pointer"
+                      className="flex items-center justify-between px-3 py-2.5 bg-brand-black border border-brand-gold/10 rounded-none text-[10px] uppercase tracking-wider font-poppins font-medium hover:border-brand-gold/40 text-brand-sand hover:text-brand-offwhite transition-colors text-left cursor-pointer"
                     >
-                      <span className="truncate">Product Datasheet (PDF)</span>
-                      <Download className="w-3.5 h-3.5 text-brand-terracotta-500 shrink-0 ml-2" />
+                      <span className="truncate">Datasheet (PDF)</span>
+                      <Download className="w-3.5 h-3.5 text-brand-gold shrink-0 ml-2" />
                     </button>
                     <button
                       onClick={() => handleDownload("Revit Object (RVT)", activeQuickView.name)}
-                      className="flex items-center justify-between px-3 py-2 bg-brand-slate-950 border border-brand-slate-800 rounded-xl text-xs font-semibold hover:border-brand-slate-700 hover:bg-brand-slate-900 text-brand-slate-300 hover:text-white transition-all text-left cursor-pointer"
+                      className="flex items-center justify-between px-3 py-2.5 bg-brand-black border border-brand-gold/10 rounded-none text-[10px] uppercase tracking-wider font-poppins font-medium hover:border-brand-gold/40 text-brand-sand hover:text-brand-offwhite transition-colors text-left cursor-pointer"
                     >
-                      <span className="truncate">Revit BIM Object (RVT)</span>
-                      <Download className="w-3.5 h-3.5 text-brand-terracotta-500 shrink-0 ml-2" />
+                      <span className="truncate">Revit BIM (RVT)</span>
+                      <Download className="w-3.5 h-3.5 text-brand-gold shrink-0 ml-2" />
                     </button>
                     <button
                       onClick={() => handleDownload("CAD Details (DWG)", activeQuickView.name)}
-                      className="flex items-center justify-between px-3 py-2 bg-brand-slate-950 border border-brand-slate-800 rounded-xl text-xs font-semibold hover:border-brand-slate-700 hover:bg-brand-slate-900 text-brand-slate-300 hover:text-white transition-all text-left cursor-pointer"
+                      className="flex items-center justify-between px-3 py-2.5 bg-brand-black border border-brand-gold/10 rounded-none text-[10px] uppercase tracking-wider font-poppins font-medium hover:border-brand-gold/40 text-brand-sand hover:text-brand-offwhite transition-colors text-left cursor-pointer"
                     >
-                      <span className="truncate">CAD Detail Drawing (DWG)</span>
-                      <Download className="w-3.5 h-3.5 text-brand-terracotta-500 shrink-0 ml-2" />
+                      <span className="truncate">CAD Details (DWG)</span>
+                      <Download className="w-3.5 h-3.5 text-brand-gold shrink-0 ml-2" />
                     </button>
                     <button
                       onClick={() => handleDownload("Installation Guide (PDF)", activeQuickView.name)}
-                      className="flex items-center justify-between px-3 py-2 bg-brand-slate-950 border border-brand-slate-800 rounded-xl text-xs font-semibold hover:border-brand-slate-700 hover:bg-brand-slate-900 text-brand-slate-300 hover:text-white transition-all text-left cursor-pointer"
+                      className="flex items-center justify-between px-3 py-2.5 bg-brand-black border border-brand-gold/10 rounded-none text-[10px] uppercase tracking-wider font-poppins font-medium hover:border-brand-gold/40 text-brand-sand hover:text-brand-offwhite transition-colors text-left cursor-pointer"
                     >
-                      <span className="truncate">Installation Manual</span>
-                      <Download className="w-3.5 h-3.5 text-brand-terracotta-500 shrink-0 ml-2" />
+                      <span className="truncate">Installation Guide</span>
+                      <Download className="w-3.5 h-3.5 text-brand-gold shrink-0 ml-2" />
                     </button>
                   </div>
                 </div>
@@ -299,19 +313,19 @@ export const FeaturedProducts: React.FC<{ teaser?: boolean }> = ({ teaser = fals
                   <Link
                     href={`/products/${activeQuickView.id}`}
                     onClick={() => setActiveQuickView(null)}
-                    className="flex-1 bg-brand-slate-950 border border-brand-slate-800 hover:bg-brand-slate-900 text-brand-slate-200 font-bold py-3.5 rounded-xl transition-all text-center text-sm cursor-pointer flex items-center justify-center gap-1.5"
+                    className="flex-1 bg-brand-black border border-brand-gold/20 hover:bg-brand-charcoal text-brand-sand font-poppins uppercase tracking-wider font-semibold py-3.5 rounded-none transition-colors text-center text-xs cursor-pointer flex items-center justify-center gap-1.5"
                   >
-                    Full Details Page
-                    <ArrowRight className="w-4 h-4 text-brand-terracotta-500" />
+                    Full Details
+                    <ArrowRight className="w-4 h-4 text-brand-gold" />
                   </Link>
                   <button
                     onClick={() => {
                       setActiveQuickView(null);
                       handleQuickInquiry(activeQuickView.name);
                     }}
-                    className="flex-1 bg-brand-terracotta-600 hover:bg-brand-terracotta-700 text-white font-bold py-3.5 rounded-xl shadow-lg shadow-brand-terracotta-600/30 transition-all text-center text-sm cursor-pointer"
+                    className="flex-1 bg-brand-gold hover:bg-brand-sand text-brand-black font-poppins uppercase tracking-wider font-bold py-3.5 rounded-none transition-colors border border-brand-gold text-center text-xs cursor-pointer"
                   >
-                    Request Pricing
+                    Request Quote
                   </button>
                 </div>
               </div>

@@ -1,51 +1,40 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, Flame, Shield, HelpCircle, HardHat, FileText } from "lucide-react";
+import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 
-export const Hero: React.FC = () => {
+const slides = [
+  {
+    image: "https://images.unsplash.com/photo-1590069261209-f8e9b8642343?auto=format&fit=crop&w=1920&q=80",
+    alt: "Brick Architecture Facade detail",
+  },
+  {
+    image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1920&q=80",
+    alt: "Luxury Villa Pathway paving",
+  },
+  {
+    image: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1920&q=80",
+    alt: "Commercial Building facade",
+  },
+  {
+    image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1920&q=80",
+    alt: "PCP Kiln Factory manufacturing excellence",
+  },
+];
+
+interface HeroProps {
+  darkMode?: boolean;
+}
+
+export const Hero: React.FC<HeroProps> = ({ darkMode = true }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
-
-  const slides = [
-    {
-      image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1920&q=80",
-      tagline: "FIRING THE FUTURE OF DESIGN",
-      title: "Premium Terracotta & Clay Brick Architectural Systems",
-      desc: "Crafting durable, thermal-efficient, and aesthetically unmatched clay products for modern facades and heavy-duty masonry projects.",
-      btn1: "Explore Brick Catalog",
-      btn2: "Brick Quantity Calculator",
-      link1: "#products",
-      link2: "#calculators",
-    },
-    {
-      image: "https://images.unsplash.com/photo-1590381105924-c72589b9ef3f?auto=format&fit=crop&w=1920&q=80",
-      tagline: "SUSTAINABLE STRUCTURAL EXCELLENCE",
-      title: "Eco-Friendly AAC Blocks & Hollow Structural Tiles",
-      desc: "Build lighter and smarter. High compressive strength combined with superior fire-rating and insulation for green buildings.",
-      btn1: "Technical Documents",
-      btn2: "Material Recommendation Quiz",
-      link1: "#resources",
-      link2: "#recommender",
-    },
-    {
-      image: "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=1920&q=80",
-      tagline: "LANDSCAPING & CIVIL PAVEMENT",
-      title: "High-Traffic Engineering Pavers & Slate Tiles",
-      desc: "Designed for resilience. Extreme load capabilities, frost resistance, and custom textures matching high-traffic public squares.",
-      btn1: "Paving Solutions",
-      btn2: "Paver Cost Calculator",
-      link1: "#products",
-      link2: "#calculators",
-    },
-  ];
 
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % slides.length);
     }, 6000);
     return () => clearInterval(timer);
-  }, [slides.length]);
+  }, []);
 
   const handleScrollTo = (selector: string) => {
     const element = document.querySelector(selector);
@@ -54,130 +43,172 @@ export const Hero: React.FC = () => {
     }
   };
 
-  const whyChooseUsData = [
-    {
-      icon: <Flame className="w-5 h-5 text-brand-terracotta-500" />,
-      title: "Fired clay precision",
-      desc: "Fired at 1200°C for extreme durability, low absorption, and natural hues.",
+  // Scroll linked animations for the background slideshow container
+  const { scrollY } = useScroll();
+  const scale = useTransform(scrollY, [0, 600], [1, 0.95]);
+  const borderRadius = useTransform(scrollY, [0, 600], [0, 24]);
+  const contentY = useTransform(scrollY, [0, 600], [0, 80]);
+  const contentOpacity = useTransform(scrollY, [0, 450], [1, 0]);
+
+  // Entrance animations timed to trigger after the 2.5s page loader
+  const containerVariants = {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: 0.15,
+        delayChildren: 2.6,
+      },
     },
-    {
-      icon: <Shield className="w-5 h-5 text-brand-emerald-500" />,
-      title: "ECO certifications",
-      desc: "ISO 14001 certified eco-friendly processes with recycled fly ash and clay mix.",
+  };
+
+  const blockVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 1.2,
+        ease: [0.16, 1, 0.3, 1] as any, // easeOutExpo
+      },
     },
-    {
-      icon: <HardHat className="w-5 h-5 text-brand-terracotta-500" />,
-      title: "Architect Grade",
-      desc: "Full structural datasheets, BIM objects, and strict dimensional tolerances.",
-    },
-  ];
+  };
 
   return (
-    <section className="relative min-h-[92vh] flex flex-col justify-between pt-24 lg:pt-0 overflow-hidden bg-brand-slate-950">
-      {/* Background slider with fade transitions */}
-      <div className="absolute inset-0 z-0">
-        <AnimatePresence mode="wait">
+    <section className="relative h-screen w-full flex flex-col justify-between overflow-hidden bg-[var(--background)] select-none">
+      
+      {/* Scroll-driven Scale Slideshow Container */}
+      <motion.div 
+        style={{ scale, borderRadius }}
+        className="absolute inset-0 z-0 overflow-hidden origin-center bg-black"
+      >
+        <AnimatePresence initial={false}>
           <motion.div
             key={currentSlide}
-            initial={{ opacity: 0, scale: 1.05 }}
-            animate={{ opacity: 1, scale: 1 }}
+            initial={{ opacity: 0, scale: 1.15 }}
+            animate={{ opacity: 1, scale: 1.0 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 1 }}
-            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-            style={{ backgroundImage: `url(${slides[currentSlide].image})` }}
+            transition={{ 
+              opacity: { duration: 1.5, ease: "easeInOut" },
+              scale: { duration: 6.5, ease: "easeOut" }
+            }}
+            className="absolute inset-0 w-full h-full"
           >
-            {/* Immersive overlay gradients */}
-            <div className="absolute inset-0 bg-gradient-to-t from-brand-slate-950 via-brand-slate-950/70 to-brand-slate-950/20" />
-            <div className="absolute inset-0 bg-gradient-to-r from-brand-slate-950/90 via-transparent to-brand-slate-950/30" />
+            <img
+              src={slides[currentSlide].image}
+              alt={slides[currentSlide].alt}
+              className="w-full h-full object-cover"
+            />
           </motion.div>
         </AnimatePresence>
+
+        {/* Clean Theme-Adaptive Overlay */}
+        <div className="absolute inset-0 bg-brand-black/75 z-10" />
+      </motion.div>
+
+      {/* Main Centered Hero Contents */}
+      <div className="relative z-20 max-w-7xl mx-auto px-6 lg:px-8 w-full flex-grow flex items-center justify-center text-center">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          style={{ y: contentY, opacity: contentOpacity }}
+          className="max-w-5xl flex flex-col items-center"
+        >
+          {/* Top Tagline */}
+          <motion.p 
+            variants={blockVariants}
+            className="text-[10px] sm:text-xs tracking-[0.45em] uppercase text-brand-gold font-semibold font-poppins mb-6"
+          >
+            PRAYAG CLAY PRODUCTS
+          </motion.p>
+
+          {/* Intrio-style Massive Serif Heading */}
+          <motion.h1 
+            variants={blockVariants}
+            className="text-white text-center leading-none tracking-tight mb-8"
+            style={{
+              fontFamily: "var(--font-poppins), sans-serif",
+              fontWeight: 300,
+              fontSize: "clamp(2.5rem, 5.5vw, 5.5rem)",
+              lineHeight: 0.95,
+              letterSpacing: "-0.03em"
+            }}
+          >
+            Building Tomorrow's Infrastructure
+          </motion.h1>
+
+          {/* Subheading Description */}
+          <motion.p
+            variants={blockVariants}
+            className="text-xs sm:text-sm md:text-base font-poppins text-brand-offwhite/70 max-w-xl leading-relaxed mb-12"
+          >
+            Premium Bricks, Pavers & Solutions
+          </motion.p>
+
+          {/* Staggered CTA Buttons */}
+          <motion.div
+            variants={blockVariants}
+            className="flex flex-wrap items-center justify-center gap-6"
+          >
+            <button
+              onClick={() => handleScrollTo("#categories")}
+              className="bg-brand-gold hover:bg-brand-gold-500 text-brand-black font-semibold tracking-[0.2em] font-poppins uppercase text-xs px-8 py-4 border border-brand-gold transition-colors cursor-pointer"
+            >
+              Explore Products
+            </button>
+
+            <button
+              onClick={() => handleScrollTo("#projects")}
+              className="bg-transparent hover:bg-brand-gold/5 text-brand-offwhite tracking-[0.2em] font-poppins uppercase text-xs px-8 py-4 border border-brand-offwhite/20 hover:border-brand-gold hover:text-brand-gold transition-colors cursor-pointer"
+            >
+              View Projects
+            </button>
+          </motion.div>
+        </motion.div>
       </div>
 
-      {/* Hero Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex-grow flex items-center">
-        <div className="max-w-3xl py-12 lg:py-24">
-          <AnimatePresence mode="wait">
-            <motion.div
+      {/* Large Vertical Project Counter (Right Side) */}
+      <div className="absolute right-10 lg:right-20 top-1/2 -translate-y-1/2 flex flex-col items-center gap-2.5 z-25 text-xs font-poppins tracking-[0.2em] select-none">
+        <div className="h-8 overflow-hidden relative w-8 flex items-center justify-center">
+          <AnimatePresence mode="popLayout">
+            <motion.span 
               key={currentSlide}
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -30 }}
-              transition={{ duration: 0.6 }}
-              className="flex flex-col gap-5"
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: -20, opacity: 0 }}
+              transition={{ duration: 0.5, ease: "easeOut" }}
+              className="text-brand-gold font-light text-xl block"
             >
-              <div className="inline-flex items-center gap-2 px-3.5 py-1 bg-brand-terracotta-600/20 border border-brand-terracotta-500/30 rounded-full text-brand-terracotta-400 font-bold text-xs uppercase tracking-widest w-fit">
-                <span className="w-1.5 h-1.5 rounded-full bg-brand-terracotta-500 animate-pulse" />
-                {slides[currentSlide].tagline}
-              </div>
-
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-none drop-shadow-md">
-                {slides[currentSlide].title}
-              </h1>
-
-              <p className="text-base sm:text-lg text-brand-slate-300 leading-relaxed drop-shadow">
-                {slides[currentSlide].desc}
-              </p>
-
-              <div className="flex flex-wrap gap-4 mt-2">
-                <button
-                  onClick={() => handleScrollTo(slides[currentSlide].link1)}
-                  className="flex items-center gap-2 bg-brand-terracotta-600 hover:bg-brand-terracotta-700 text-white font-bold px-7 py-3.5 rounded-xl shadow-lg shadow-brand-terracotta-600/30 transition-all hover:-translate-y-0.5 cursor-pointer text-sm"
-                >
-                  {slides[currentSlide].btn1}
-                  <ArrowRight className="w-4 h-4" />
-                </button>
-                <button
-                  onClick={() => handleScrollTo(slides[currentSlide].link2)}
-                  className="flex items-center gap-2 bg-brand-slate-900 hover:bg-brand-slate-800 text-brand-slate-200 border border-brand-slate-700 font-semibold px-7 py-3.5 rounded-xl transition-all hover:-translate-y-0.5 cursor-pointer text-sm"
-                >
-                  {slides[currentSlide].btn2}
-                </button>
-              </div>
-            </motion.div>
+              0{currentSlide + 1}
+            </motion.span>
           </AnimatePresence>
         </div>
+        <span className="text-brand-offwhite/25 text-sm -mt-1">/</span>
+        <span className="text-brand-offwhite/45 text-sm">0{slides.length}</span>
       </div>
 
-      {/* Slide Indicators & Why Choose Us Banner */}
-      <div className="relative z-10 w-full bg-brand-slate-950/60 border-t border-brand-slate-900/60 backdrop-blur-md">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 items-center">
-            {/* Why choose us text */}
-            <div className="lg:border-r border-brand-slate-800/80 pr-4">
-              <span className="text-[10px] uppercase font-bold tracking-widest text-brand-terracotta-500">WHY CONTRACTORS CHOOSE US</span>
-              <h3 className="text-lg font-bold text-white mt-0.5">Built on Structural Integrity</h3>
-            </div>
-
-            {/* Features list */}
-            <div className="grid grid-cols-1 md:grid-cols-3 lg:col-span-3 gap-6">
-              {whyChooseUsData.map((item, idx) => (
-                <div key={idx} className="flex gap-3">
-                  <div className="p-2 bg-brand-slate-900/80 rounded-lg shrink-0 w-fit h-fit border border-brand-slate-800">
-                    {item.icon}
-                  </div>
-                  <div>
-                    <h4 className="text-sm font-semibold text-white">{item.title}</h4>
-                    <p className="text-xs text-brand-slate-400 mt-0.5 leading-snug">{item.desc}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Slider dots */}
-          <div className="flex justify-center gap-2 mt-6">
-            {slides.map((_, idx) => (
-              <button
-                key={idx}
-                onClick={() => setCurrentSlide(idx)}
-                className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
-                  currentSlide === idx ? "w-8 bg-brand-terracotta-600" : "w-2 bg-brand-slate-700 hover:bg-brand-slate-500"
-                }`}
-              />
-            ))}
-          </div>
+      {/* Vertical Scroll Text (Bottom Left) */}
+      <div 
+        className="absolute bottom-16 left-10 lg:left-20 z-25 flex flex-col items-center gap-4 cursor-pointer text-brand-offwhite/50 hover:text-brand-gold transition-colors"
+        onClick={() => handleScrollTo("#intro")}
+      >
+        <span 
+          className="text-[9px] font-semibold tracking-[0.3em] uppercase block"
+          style={{ writingMode: "vertical-rl" }}
+        >
+          SCROLL TO EXPLORE
+        </span>
+        <div className="w-[1px] h-12 bg-brand-offwhite/15 relative overflow-hidden">
+          <motion.div 
+            animate={{ y: ["-100%", "100%"] }}
+            transition={{ repeat: Infinity, duration: 1.8, ease: "easeInOut" }}
+            className="absolute left-0 top-0 w-full h-1/2 bg-brand-gold"
+          />
         </div>
       </div>
+
     </section>
   );
 };
+
+export default Hero;

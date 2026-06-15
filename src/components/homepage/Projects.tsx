@@ -1,120 +1,117 @@
-import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { MapPin, User, HardHat, Calendar, Layers, Eye, X, ArrowRight } from "lucide-react";
+"use client";
+
+import React from "react";
+import { MapPin, User, Calendar, ArrowRight } from "lucide-react";
 import Link from "next/link";
-import { projects, Project } from "../../data/projects";
+import { ImageReveal, TextReveal } from "../ui/ScrollReveal";
+import { projects } from "../../data/projects";
+import { Magnetic } from "../ui/Magnetic";
 
 export const Projects: React.FC<{ teaser?: boolean }> = ({ teaser = false }) => {
-  const [selectedType, setSelectedType] = useState("All");
-  const [activeProjectModal, setActiveProjectModal] = useState<Project | null>(null);
-
-  const projectTypes = ["All", "Commercial", "Residential", "Industrial", "Civic"];
-
-  const filteredProjects = teaser
-    ? projects.slice(0, 2)
-    : (selectedType === "All" ? projects : projects.filter(p => p.type === selectedType));
+  // Use a curated set of projects for the homepage showcase
+  const featuredList = teaser ? projects.slice(0, 3) : projects;
 
   return (
-    <section id="projects" className="py-24 bg-brand-slate-950 relative">
+    <section id="projects" className="py-24 bg-brand-black relative border-t border-brand-gold/10">
+      {/* Structural Guidelines */}
+      <div className="absolute inset-0 pointer-events-none z-0 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-4 h-full opacity-5">
+        <div className="border-l border-brand-slate h-full" />
+        <div className="border-l border-brand-slate h-full" />
+        <div className="border-l border-brand-slate h-full" />
+        <div className="border-l border-brand-slate h-full border-r" />
+      </div>
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <span className="text-xs uppercase font-extrabold tracking-widest text-brand-terracotta-500 bg-brand-terracotta-500/10 px-3 py-1 rounded-full">
-            Case Studies
+        <div className="text-center max-w-3xl mx-auto mb-20 flex flex-col items-center">
+          <span className="text-[10px] uppercase font-bold tracking-[0.35em] text-brand-gold bg-brand-gold/5 px-4 py-1.5 border border-brand-gold/20 rounded-none w-fit">
+            SIGNATURE PORTFOLIO
           </span>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-white mt-4 tracking-tight">
-            Architectural Projects
-          </h2>
-          <p className="text-brand-slate-400 mt-3">
-            See our high-performance materials in action. From modern office towers to zero-energy residential concepts, we engineer structural durability.
+          <TextReveal
+            text="Architectural Showcase"
+            className="text-3xl sm:text-4xl lg:text-5xl font-normal font-cormorant text-brand-offwhite mt-6 tracking-wide justify-center text-center w-full"
+          />
+          <p className="text-brand-sand/70 mt-4 text-xs sm:text-sm font-poppins max-w-xl leading-relaxed">
+            See our architectural building envelopes in action. From corporate depots to luxury residences, we configure clay performance with high design.
           </p>
         </div>
 
-        {/* Project Filters */}
-        {!teaser && (
-          <div className="flex flex-wrap justify-center gap-2 mb-12">
-            {projectTypes.map((type) => (
-              <button
-                key={type}
-                onClick={() => setSelectedType(type)}
-                className={`px-5 py-2.5 rounded-xl text-sm font-semibold transition-all cursor-pointer ${
-                  selectedType === type
-                    ? "bg-brand-terracotta-600 text-white shadow-lg shadow-brand-terracotta-600/30"
-                    : "bg-brand-slate-900 text-brand-slate-400 hover:text-white border border-brand-slate-800"
+        {/* Alternating Projects Layout */}
+        <div className="flex flex-col gap-28">
+          {featuredList.map((p, idx) => {
+            const isEven = idx % 2 === 0;
+            return (
+              <div 
+                key={p.id}
+                className={`flex flex-col lg:flex-row items-center gap-12 lg:gap-20 ${
+                  isEven ? "" : "lg:flex-row-reverse"
                 }`}
               >
-                {type}
-              </button>
-            ))}
-          </div>
-        )}
-
-        {/* Projects Grid */}
-        <motion.div 
-          layout
-          className="grid grid-cols-1 md:grid-cols-2 gap-8"
-        >
-          <AnimatePresence mode="popLayout">
-            {filteredProjects.map((p) => (
-              <Link
-                key={p.id}
-                href={`/projects/${p.id}`}
-                className="group relative rounded-3xl overflow-hidden border border-brand-slate-800 bg-brand-slate-900/40 aspect-[16/10] w-full cursor-pointer hover:border-brand-slate-700 hover:shadow-2xl hover:shadow-brand-terracotta-500/5 transition-all"
-              >
-                {/* Background Image */}
-                <img
-                  src={p.image}
-                  alt={p.name}
-                  className="absolute inset-0 object-cover w-full h-full group-hover:scale-105 transition-transform duration-500"
-                />
-                
-                {/* Overlays */}
-                <div className="absolute inset-0 bg-gradient-to-t from-brand-slate-950 via-brand-slate-950/60 to-brand-slate-950/10" />
-                
-                {/* Details layout */}
-                <div className="absolute inset-0 p-6 md:p-8 flex flex-col justify-between z-10">
-                  <div className="flex justify-between items-start">
-                    <span className="bg-brand-terracotta-600 text-white text-[10px] uppercase font-bold tracking-widest px-3 py-1 rounded-md">
-                      {p.type}
-                    </span>
-                    <span className="p-2 bg-brand-slate-950/70 border border-brand-slate-800 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
-                      <Eye className="w-4 h-4" />
-                    </span>
-                  </div>
-
-                  <div>
-                    <div className="flex items-center gap-1.5 text-xs text-brand-terracotta-400 font-bold">
-                      <MapPin className="w-3.5 h-3.5 shrink-0" />
-                      {p.location}
-                    </div>
-                    <h3 className="text-xl md:text-2xl font-extrabold text-white mt-1 leading-tight group-hover:text-brand-terracotta-400 transition-colors">
-                      {p.name}
-                    </h3>
-                    
-                    <div className="flex flex-wrap items-center gap-x-4 gap-y-2 mt-4 pt-4 border-t border-brand-slate-800/80 text-xs text-brand-slate-400">
-                      <span className="flex items-center gap-1"><User className="w-3.5 h-3.5 text-brand-terracotta-500 shrink-0" /> {p.architect}</span>
-                      <span className="flex items-center gap-1"><Calendar className="w-3.5 h-3.5 text-brand-terracotta-500 shrink-0" /> Completed {p.year}</span>
-                    </div>
+                {/* Left/Right Column: Image with Wipe reveal & Parallax Scale */}
+                <div className="w-full lg:w-1/2 aspect-[16/10] overflow-hidden border border-brand-gold/15 bg-brand-charcoal relative group">
+                  <ImageReveal>
+                    <img
+                      src={p.image}
+                      alt={p.name}
+                      className="w-full h-full object-cover origin-center transition-transform duration-[1.2s] group-hover:scale-105"
+                      loading="lazy"
+                    />
+                  </ImageReveal>
+                  <div className="absolute top-4 left-4 z-10 text-[9px] font-bold tracking-widest text-brand-gold bg-brand-black/90 px-3 py-1.5 border border-brand-gold/20">
+                    0{idx + 1} / 0{featuredList.length}
                   </div>
                 </div>
-              </Link>
-            ))}
-          </AnimatePresence>
-        </motion.div>
 
-        {teaser && (
-          <div className="text-center mt-16">
-            <Link
-              href="/projects"
-              className="inline-flex items-center gap-2 bg-brand-terracotta-600 hover:bg-brand-terracotta-700 text-white px-8 py-4 rounded-xl font-bold transition-all shadow-lg shadow-brand-terracotta-600/20 cursor-pointer"
-            >
-              View All Architectural Cases
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-          </div>
-        )}
+                {/* Right/Left Column: Story Content */}
+                <div className="w-full lg:w-1/2 flex flex-col gap-4 text-left">
+                  <span className="text-[10px] tracking-[0.3em] font-semibold text-brand-gold uppercase block font-poppins">
+                    {p.type} Architectural envelope
+                  </span>
+                  
+                  <h3 className="text-2xl sm:text-3xl lg:text-4xl font-normal font-cormorant text-brand-offwhite leading-tight">
+                    {p.name}
+                  </h3>
+                  
+                  <p className="text-xs sm:text-sm font-poppins text-brand-sand/75 leading-relaxed">
+                    This signature layout integrates PCP's high-insulating materials to construct modern ventilated cladding facade surfaces, demonstrating premium aesthetic execution and weather-resistant performance.
+                  </p>
+
+                  <div className="grid grid-cols-2 gap-y-3 gap-x-4 border-t border-brand-gold/10 pt-6 mt-2 max-w-md">
+                    <div className="flex items-center gap-2 text-xs font-poppins text-brand-sand/70">
+                      <MapPin className="w-4 h-4 text-brand-gold shrink-0" />
+                      <span>{p.location}</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-xs font-poppins text-brand-sand/70">
+                      <User className="w-4 h-4 text-brand-gold shrink-0" />
+                      <span>{p.architect}</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-xs font-poppins text-brand-sand/70 col-span-2">
+                      <Calendar className="w-4 h-4 text-brand-gold shrink-0" />
+                      <span>Completed in {p.year}</span>
+                    </div>
+                  </div>
+
+                  <div className="mt-6">
+                    <Magnetic>
+                      <Link
+                        href={`/projects/${p.id}`}
+                        className="inline-flex items-center gap-2.5 bg-brand-gold hover:bg-brand-sand text-brand-black px-6 py-3.5 border border-brand-gold font-bold uppercase tracking-[0.2em] font-poppins text-[10px] transition-colors cursor-pointer"
+                      >
+                        View Case Details
+                        <ArrowRight className="w-4 h-4" />
+                      </Link>
+                    </Magnetic>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
       </div>
     </section>
   );
 };
+
+export default Projects;
