@@ -5,20 +5,24 @@ import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion"
 
 const slides = [
   {
-    image: "https://images.unsplash.com/photo-1590069261209-f8e9b8642343?auto=format&fit=crop&w=1920&q=80",
+    image: "/images/hero-1.jpg",
     alt: "Brick Architecture Facade detail",
   },
   {
-    image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1920&q=80",
+    image: "/images/hero-2.jpg",
     alt: "Luxury Villa Pathway paving",
   },
   {
-    image: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1920&q=80",
+    image: "/images/hero-3.jpg",
     alt: "Commercial Building facade",
   },
   {
-    image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1920&q=80",
+    image: "/images/hero-4.jpg",
     alt: "PCP Kiln Factory manufacturing excellence",
+  },
+  {
+    image: "/images/hero-5.jpg",
+    alt: "PCP Premium Bricks & Pavers Showcase",
   },
 ];
 

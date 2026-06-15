@@ -29,7 +29,7 @@ export const BlogsAndNews: React.FC = () => {
       date: "June 12, 2026",
       readTime: "5 min read",
       excerpt: "An engineering review of thermal lag in heavy fired clay brick walls, comparing cooling efficiency against standard concrete framework structures.",
-      image: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=600&q=80",
+      image: "/images/hero-1.jpg",
     },
     {
       id: "b2",
@@ -38,7 +38,7 @@ export const BlogsAndNews: React.FC = () => {
       date: "May 28, 2026",
       readTime: "7 min read",
       excerpt: "Exploring concrete aggregate substitutes and waste vitrification processes that let factories reuse production shards, achieving circularity certificates.",
-      image: "https://images.unsplash.com/photo-1590381105924-c72589b9ef3f?auto=format&fit=crop&w=600&q=80",
+      image: "/images/hero-4.jpg",
     },
     {
       id: "b3",
@@ -47,7 +47,7 @@ export const BlogsAndNews: React.FC = () => {
       date: "May 15, 2026",
       readTime: "9 min read",
       excerpt: "Best structural practices for anchoring brick veneers to steel/concrete framework, ensuring wind-load tolerances and seismic isolation compliance.",
-      image: "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=600&q=80",
+      image: "/images/hero-3.jpg",
     },
   ];
 

@@ -25,7 +25,7 @@ export const CompanyIntro: React.FC = () => {
           <div className="lg:col-span-6 w-full h-[450px] overflow-hidden border border-brand-gold/15 bg-brand-charcoal relative">
             <ImageReveal>
               <img
-                src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1200&q=80"
+                src="/images/hero-4.jpg"
                 alt="Prayag Clay Productions automated factory floor"
                 className="w-full h-full object-cover"
               />

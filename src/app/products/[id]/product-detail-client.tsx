@@ -21,9 +21,9 @@ function DetailContent({ product }: ProductDetailClientProps) {
   // Multi-image gallery state
   const galleryImages = [
     product.image,
-    "https://images.unsplash.com/photo-1590069261209-f8e9b8642343?auto=format&fit=crop&w=600&q=80", // Clay Close-up
-    "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=600&q=80", // Stacked units
-    "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=600&q=80"  // Applied facade
+    "/images/hero-1.jpg", // Clay Close-up
+    "/images/hero-4.jpg", // Stacked units
+    "/images/hero-3.jpg"  // Applied facade
   ];
   const [activeImageIdx, setActiveImageIdx] = useState(0);
 

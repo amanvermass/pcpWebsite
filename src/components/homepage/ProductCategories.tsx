@@ -106,31 +106,31 @@ export const ProductCategories: React.FC = () => {
     {
       title: "Bricks",
       desc: "Premium terracotta facing bricks fired at high temperatures for facades.",
-      image: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=600&q=80",
+      image: "/images/hero-1.jpg",
       link: "/products?category=Clay Bricks"
     },
     {
       title: "Pavers",
       desc: "Heavy-load paving units designed for industrial public walkways.",
-      image: "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=600&q=80",
+      image: "/images/hero-4.jpg",
       link: "/products?category=Pavers"
     },
     {
       title: "AAC Blocks",
       desc: "Thermal-insulating lightweight autoclaved cellular structural blocks.",
-      image: "https://images.unsplash.com/photo-1590381105924-c72589b9ef3f?auto=format&fit=crop&w=600&q=80",
+      image: "/images/hero-2.jpg",
       link: "/products?category=AAC Blocks"
     },
     {
       title: "Fly Ash Bricks",
       desc: "Organic fly-ash dense engineering bricks for structural columns.",
-      image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=600&q=80",
+      image: "/images/hero-3.jpg",
       link: "/products?category=Hollow Blocks"
     },
     {
       title: "Construction Products",
       desc: "Ventilated terracotta grids and custom concrete layout designs.",
-      image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=600&q=80",
+      image: "/images/hero-5.jpg",
       link: "/products"
     }
   ];

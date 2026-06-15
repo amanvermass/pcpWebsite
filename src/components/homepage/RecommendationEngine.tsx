@@ -59,7 +59,7 @@ export const RecommendationEngine: React.FC = () => {
         reason: "Luxury villas benefit from premium clay aesthetic finishes and natural ventilated terracotta facades that offer long-term UV resistance, structural thermal mass, and a timeless upscale appeal.",
         features: ["100% natural clay pigments", "Thermal dampening properties", "UV resistance", "Low maintenance facades"],
         techSpecs: "Compressive strength > 30 N/mm² | Absorption ~6.0%",
-        image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=600&q=80"
+        image: "/images/hero-3.jpg"
       };
     }
     
@@ -69,7 +69,7 @@ export const RecommendationEngine: React.FC = () => {
         reason: "Commercial high-rises require rapid build speeds, light dead-loads, and excellent fire ratings. AAC blocks reduce foundation loads while providing excellent sound dampening and thermal shielding.",
         features: ["Up to 3x lighter than standard brick", "Acoustic insulation (STC 44)", "Class A1 4-hour fire rating", "Rapid wall construction speed"],
         techSpecs: "Density ~600 kg/m³ | Thermal conductivity 0.15 W/mK",
-        image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80"
+        image: "/images/hero-1.jpg"
       };
     }
     
@@ -79,7 +79,7 @@ export const RecommendationEngine: React.FC = () => {
         reason: "Industrial plants need maximum durability, low moisture ingress, and high chemical resistance. Engineering fired bricks offer extreme load capacities and low water absorption rates.",
         features: ["Extreme compressive load limits", "Acid and industrial atmosphere resistant", "Highly dense microstructure", "Minimal water capillary action"],
         techSpecs: "Compressive strength > 45 N/mm² | Absorption < 5.0%",
-        image: "https://images.unsplash.com/photo-1581094288338-2314dddb7ecc?auto=format&fit=crop&w=600&q=80"
+        image: "/images/hero-4.jpg"
       };
     }
 
@@ -90,7 +90,7 @@ export const RecommendationEngine: React.FC = () => {
         reason: "Fired clay bricks and hollow blocks provide optimal temperature regulation, absorbing solar heat during the day and radiating it slowly at night, creating an ideal indoor microclimate.",
         features: ["High thermal mass regulation", "Naturally soundproofing clay walls", "Structural loading capability", "Sustainable traditional clay construction"],
         techSpecs: "Compressive strength ~35 N/mm² | Density ~1900 kg/m³",
-        image: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=600&q=80"
+        image: "/images/hero-2.jpg"
       };
     }
 
@@ -99,7 +99,7 @@ export const RecommendationEngine: React.FC = () => {
       reason: "Combining structural clay loadbearing outer walls with lightweight interior AAC blocks provides the perfect balance of budget efficiency, thermal insulation, and sturdy wall load capacity.",
       features: ["Optimal cost-to-performance ratio", "Fast masonry speed", "Balanced thermal envelope", "Green building compliant materials"],
       techSpecs: "Mixed compression rating | Standard load bearing compliant",
-      image: "https://images.unsplash.com/photo-1590069261209-f8e9b8642343?auto=format&fit=crop&w=600&q=80"
+      image: "/images/hero-5.jpg"
     };
   };
 

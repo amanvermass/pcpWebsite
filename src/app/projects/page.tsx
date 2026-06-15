@@ -51,7 +51,7 @@ const BeforeAfterSlider: React.FC = () => {
       {/* Before Image (Excavation/Framing) */}
       <div className="absolute inset-0 z-0">
         <img 
-          src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=1200&q=80" 
+          src="/images/hero-1.jpg" 
           alt="Raw excavation framing" 
           className="w-full h-full object-cover"
         />
@@ -66,7 +66,7 @@ const BeforeAfterSlider: React.FC = () => {
         style={{ clipPath: `inset(0 0 0 ${sliderPos}%)` }}
       >
         <img 
-          src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80" 
+          src="/images/hero-2.jpg" 
           alt="Completed luxury building facade" 
           className="absolute inset-0 w-full h-full object-cover"
           style={{ width: containerRef.current?.clientWidth || "100%" }}

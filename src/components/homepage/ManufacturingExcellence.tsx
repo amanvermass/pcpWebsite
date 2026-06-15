@@ -64,7 +64,7 @@ export const ManufacturingExcellence: React.FC = () => {
           initial={{ scale: 1.1 }}
           animate={isInView ? { scale: 1 } : { scale: 1.1 }}
           transition={{ duration: 10, ease: "easeOut" }}
-          src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1920&q=80"
+          src="/images/hero-2.jpg"
           alt="Prayag Clay Productions automated kiln facility drone view"
           className="w-full h-full object-cover opacity-35"
         />

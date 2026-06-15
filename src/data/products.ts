@@ -23,7 +23,7 @@ export const products: Product[] = [
     name: "Classic Clay Facing Brick",
     category: "Clay Bricks",
     desc: "Traditional extruded clay brick featuring high compressive strength and clean aesthetics for exterior facades.",
-    image: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=600&q=80",
+    image: "/images/hero-1.jpg",
     specs: {
       length: "230 mm",
       width: "110 mm",
@@ -41,7 +41,7 @@ export const products: Product[] = [
     name: "Natural Terracotta Cladding Tile",
     category: "Terracotta",
     desc: "Ventilated facade tiles made from 100% organic clay, offering natural UV stability and building envelope insulation.",
-    image: "https://images.unsplash.com/photo-1590381105924-c72589b9ef3f?auto=format&fit=crop&w=600&q=80",
+    image: "/images/hero-3.jpg",
     specs: {
       length: "600 mm",
       width: "300 mm",
@@ -59,7 +59,7 @@ export const products: Product[] = [
     name: "Tuscan Roman Roofing Tile",
     category: "Roofing Tiles",
     desc: "Interlocking clay roofing tiles designed to withstand severe weather, offering classic Mediterranean architectural style.",
-    image: "https://images.unsplash.com/photo-1613665813446-82a78c468a1d?auto=format&fit=crop&w=600&q=80",
+    image: "/images/hero-2.jpg",
     specs: {
       length: "420 mm",
       width: "270 mm",
@@ -76,7 +76,7 @@ export const products: Product[] = [
     name: "Heavy-Duty Interlocking Paver",
     category: "Pavers",
     desc: "High-density clay pavers engineered for civic squares, driveways, and heavy vehicular traffic applications.",
-    image: "https://images.unsplash.com/photo-1599809275671-b5941cabc7a5?auto=format&fit=crop&w=600&q=80",
+    image: "/images/hero-4.jpg",
     specs: {
       length: "200 mm",
       width: "100 mm",
@@ -94,7 +94,7 @@ export const products: Product[] = [
     name: "Thermolite Structural Hollow Block",
     category: "Hollow Blocks",
     desc: "Multicellular clay blocks designed for thermal-insulating loadbearing and non-loadbearing wall masonry.",
-    image: "https://images.unsplash.com/photo-1590069261209-f8e9b8642343?auto=format&fit=crop&w=600&q=80",
+    image: "/images/hero-5.jpg",
     specs: {
       length: "400 mm",
       width: "200 mm",
@@ -112,7 +112,7 @@ export const products: Product[] = [
     name: "Supreme Insulated AAC Block",
     category: "AAC Blocks",
     desc: "Autoclaved Aerated Concrete blocks providing ultimate lightweight efficiency, speed of work, and acoustic control.",
-    image: "https://images.unsplash.com/photo-1581094288338-2314dddb7ecc?auto=format&fit=crop&w=600&q=80",
+    image: "/images/hero-1.jpg",
     specs: {
       length: "600 mm",
       width: "200 mm",

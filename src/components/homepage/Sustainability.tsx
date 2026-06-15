@@ -99,7 +99,7 @@ export const Sustainability: React.FC = () => {
           <div className="lg:col-span-5 h-[320px] rounded-none overflow-hidden border border-brand-gold/15 bg-brand-charcoal">
             <ImageReveal>
               <img
-                src="https://images.unsplash.com/photo-1590069261209-f8e9b8642343?auto=format&fit=crop&w=800&q=80"
+                src="/images/hero-3.jpg"
                 alt="Terracotta facade architecture"
                 className="object-cover w-full h-full"
               />

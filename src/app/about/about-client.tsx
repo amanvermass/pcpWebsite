@@ -84,7 +84,7 @@ export default function AboutClient() {
         >
           {/* Parallax Landscape Cover */}
           <img 
-            src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1600&q=80" 
+            src="/images/hero-4.jpg" 
             alt="Premium corporate factory architecture" 
             className="w-full h-full object-cover opacity-40 scale-102" 
           />
@@ -247,7 +247,7 @@ export default function AboutClient() {
             <div className="lg:col-span-6 flex items-center justify-center">
               <div className="relative border border-brand-gold/20 p-2 max-w-md w-full bg-brand-black">
                 <img 
-                  src="https://images.unsplash.com/photo-1590069261209-f8e9b8642343?auto=format&fit=crop&w=700&q=80" 
+                  src="/images/hero-5.jpg" 
                   alt="Certified Terracotta product grid" 
                   className="w-full h-full object-cover" 
                 />
