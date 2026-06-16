@@ -7,6 +7,7 @@ import { ImageReveal } from "../ui/ScrollReveal";
 export const CompanyIntro: React.FC = () => {
   const storyRef = useRef<HTMLDivElement>(null);
   const isStoryInView = useInView(storyRef, { once: false, margin: "-80px" });
+  const [isHovered, setIsHovered] = React.useState(false);
 
   return (
     <section id="intro" className="py-24 bg-brand-black relative">
@@ -21,16 +22,45 @@ export const CompanyIntro: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
           
-          {/* Left Column - Large Factory Image with Wipe Mask Reveal */}
-          <div className="lg:col-span-6 w-full h-[450px] overflow-hidden border border-brand-gold/15 bg-brand-charcoal relative">
+          {/* Left Column - Large Factory Image with Hover Zoom and badge overlay */}
+          <motion.div 
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+            whileHover={{ scale: 1.03 }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            className="lg:col-span-6 w-full h-[450px] overflow-hidden border border-brand-gold/15 hover:border-brand-gold/50 bg-brand-charcoal relative cursor-pointer shadow-lg hover:shadow-brand-gold/10 transition-colors duration-500 group"
+          >
             <ImageReveal>
               <img
                 src="/images/hero-4.jpg"
                 alt="Prayag Clay Productions automated factory floor"
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
               />
             </ImageReveal>
-          </div>
+
+            {/* Glowing gold base gradient overlay on hover */}
+            <div className="absolute inset-0 bg-gradient-to-t from-brand-gold/15 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none z-10" />
+
+            {/* Center Golden Badge overlay */}
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-20">
+              <motion.div
+                initial={{ scale: 0, rotate: -45, opacity: 0 }}
+                animate={isHovered ? { scale: 1, rotate: 0, opacity: 1 } : { scale: 0, rotate: -45, opacity: 0 }}
+                transition={{ type: "spring", stiffness: 120, damping: 15 }}
+                className="w-24 h-24 rounded-full bg-brand-black/85 border-2 border-brand-gold flex flex-col items-center justify-center text-center p-2 backdrop-blur-sm shadow-2xl"
+              >
+                <span className="text-[7px] tracking-[0.3em] font-semibold text-brand-gold uppercase block font-poppins">
+                  ESTABLISHED
+                </span>
+                <span className="text-sm font-light text-brand-offwhite tracking-widest font-cormorant mt-1">
+                  1983
+                </span>
+                <span className="text-[6px] tracking-[0.2em] font-medium text-brand-gold/70 uppercase block font-poppins mt-1">
+                  PCP INDIA
+                </span>
+              </motion.div>
+            </div>
+          </motion.div>
 
           {/* Right Column - Company Story with staggered reveal */}
           <div ref={storyRef} className="lg:col-span-6 flex flex-col gap-6">

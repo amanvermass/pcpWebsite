@@ -10,6 +10,7 @@ import { ArrowLeft, ArrowRight, Download, Send, Ruler, FileText, HardHat, FileSp
 import { ToastProvider, useToast } from "@/components/ui/Toast";
 import confetti from "canvas-confetti";
 import { Magnetic } from "@/components/ui/Magnetic";
+import { ImageReveal } from "@/components/ui/ScrollReveal";
 
 interface ProductDetailClientProps {
   product: Product;
@@ -537,7 +538,9 @@ function DetailContent({ product }: ProductDetailClientProps) {
               {relatedProducts.map((p) => (
                 <div key={p.id} className="group rounded-none border border-brand-gold/10 bg-brand-charcoal flex flex-col justify-between hover:border-brand-gold/40 transition-colors shadow-lg">
                   <div className="aspect-[4/3] w-full overflow-hidden bg-brand-black border-b border-brand-gold/10">
-                    <img src={p.image} alt={p.name} className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500" />
+                    <ImageReveal>
+                      <img src={p.image} alt={p.name} className="object-cover w-full h-full" />
+                    </ImageReveal>
                   </div>
                   <div className="p-5 flex-grow flex flex-col justify-between">
                     <div>

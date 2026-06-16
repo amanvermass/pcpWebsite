@@ -53,6 +53,7 @@ export const Hero: React.FC<HeroProps> = ({ darkMode = true }) => {
   const borderRadius = useTransform(scrollY, [0, 600], [0, 24]);
   const contentY = useTransform(scrollY, [0, 600], [0, 80]);
   const contentOpacity = useTransform(scrollY, [0, 450], [1, 0]);
+  const backgroundY = useTransform(scrollY, [0, 1000], [0, 150]);
 
   // Entrance animations timed to trigger after the 2.5s page loader
   const containerVariants = {
@@ -77,6 +78,26 @@ export const Hero: React.FC<HeroProps> = ({ darkMode = true }) => {
     },
   };
 
+  const headingContainerVariants = {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: 0.08,
+        delayChildren: 2.7,
+      }
+    }
+  };
+
+  const wordVariants = {
+    hidden: { y: "100%" },
+    visible: { 
+      y: 0,
+      transition: { duration: 1.0, ease: [0.16, 1, 0.3, 1] as any }
+    }
+  };
+
+  const headingWords = "Building Tomorrow's Infrastructure".split(" ");
+
   return (
     <section className="relative h-screen w-full flex flex-col justify-between overflow-hidden bg-[var(--background)] select-none">
       
@@ -95,6 +116,7 @@ export const Hero: React.FC<HeroProps> = ({ darkMode = true }) => {
               opacity: { duration: 1.5, ease: "easeInOut" },
               scale: { duration: 6.5, ease: "easeOut" }
             }}
+            style={{ y: backgroundY }}
             className="absolute inset-0 w-full h-full"
           >
             <img
@@ -126,10 +148,10 @@ export const Hero: React.FC<HeroProps> = ({ darkMode = true }) => {
             PRAYAG CLAY PRODUCTS
           </motion.p>
 
-          {/* Intrio-style Massive Serif Heading */}
+          {/* Intrio-style Massive Serif Heading (Staggered Word Reveal) */}
           <motion.h1 
-            variants={blockVariants}
-            className="text-white text-center leading-none tracking-tight mb-8"
+            variants={headingContainerVariants}
+            className="text-white text-center leading-none tracking-tight mb-8 flex flex-wrap justify-center"
             style={{
               fontFamily: "var(--font-poppins), sans-serif",
               fontWeight: 300,
@@ -138,7 +160,16 @@ export const Hero: React.FC<HeroProps> = ({ darkMode = true }) => {
               letterSpacing: "-0.03em"
             }}
           >
-            Building Tomorrow's Infrastructure
+            {headingWords.map((word, i) => (
+              <span key={i} className="overflow-hidden inline-block mr-[0.25em] pb-1">
+                <motion.span
+                  variants={wordVariants}
+                  className="inline-block"
+                >
+                  {word}
+                </motion.span>
+              </span>
+            ))}
           </motion.h1>
 
           {/* Subheading Description */}
@@ -160,7 +191,7 @@ export const Hero: React.FC<HeroProps> = ({ darkMode = true }) => {
             >
               Explore Products
             </button>
-
+ 
             <button
               onClick={() => handleScrollTo("#projects")}
               className="bg-transparent hover:bg-brand-gold/5 text-brand-offwhite tracking-[0.2em] font-poppins uppercase text-xs px-8 py-4 border border-brand-offwhite/20 hover:border-brand-gold hover:text-brand-gold transition-colors cursor-pointer"
@@ -169,6 +200,26 @@ export const Hero: React.FC<HeroProps> = ({ darkMode = true }) => {
             </button>
           </motion.div>
         </motion.div>
+      </div>
+
+      {/* Slide Progress Indicator Lines at bottom */}
+      <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex gap-3.5 z-25">
+        {slides.map((_, idx) => (
+          <div 
+            key={idx} 
+            className="w-10 sm:w-14 h-[2px] bg-brand-offwhite/15 relative overflow-hidden cursor-pointer" 
+            onClick={() => setCurrentSlide(idx)}
+          >
+            {idx === currentSlide && (
+              <motion.div 
+                initial={{ scaleX: 0 }}
+                animate={{ scaleX: 1 }}
+                transition={{ duration: 6, ease: "linear" }}
+                className="absolute inset-0 bg-brand-gold origin-left w-full h-full"
+              />
+            )}
+          </div>
+        ))}
       </div>
 
       {/* Large Vertical Project Counter (Right Side) */}

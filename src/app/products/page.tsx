@@ -10,6 +10,7 @@ import { motion, AnimatePresence, useScroll, useTransform, useMotionValue, useSp
 import { Eye, X, ArrowRight, Download, Filter, Ruler, FileText, HardHat } from "lucide-react";
 import { ToastProvider, useToast } from "@/components/ui/Toast";
 import { Magnetic } from "@/components/ui/Magnetic";
+import { ImageReveal } from "@/components/ui/ScrollReveal";
 
 function CatalogContent() {
   const { toast } = useToast();
@@ -305,12 +306,13 @@ function ProductCard({ product, index, onQuickView }: { product: Product; index:
         className="group rounded-none border border-brand-gold/10 bg-brand-charcoal flex flex-col justify-between hover:border-brand-gold/45 hover:shadow-[0_0_25px_rgba(197,139,69,0.12)] transition-all cursor-none duration-300"
       >
         <div className={`relative ${aspectClass} w-full overflow-hidden bg-brand-black border-b border-brand-gold/10`}>
-          <img 
-            src={product.image} 
-            alt={product.name} 
-            className="object-cover w-full h-full group-hover:scale-108 transition-transform duration-700" 
-            style={{ transform: "translateZ(-10px)" }}
-          />
+          <ImageReveal>
+            <img 
+              src={product.image} 
+              alt={product.name} 
+              className="object-cover w-full h-full" 
+            />
+          </ImageReveal>
           <div className="absolute top-4 left-4 bg-brand-black/90 text-brand-gold border border-brand-gold/15 text-[9px] uppercase font-bold tracking-widest px-3 py-1.5 rounded-none">
             {product.category}
           </div>

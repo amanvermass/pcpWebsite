@@ -10,6 +10,7 @@ import { ArrowLeft, Calendar, MapPin, User, HardHat, Building, Send, ArrowUpRigh
 import { ToastProvider, useToast } from "@/components/ui/Toast";
 import confetti from "canvas-confetti";
 import { motion, useScroll, useTransform, useInView } from "framer-motion";
+import { ImageReveal } from "@/components/ui/ScrollReveal";
 
 interface ProjectDetailClientProps {
   project: Project;
@@ -208,7 +209,9 @@ function ProjectDetailContent({ project }: ProjectDetailClientProps) {
                 {matchedProducts.map((p) => (
                   <div key={p.id} className="bg-brand-charcoal border border-brand-gold/10 overflow-hidden flex flex-col md:flex-row hover:border-brand-gold/30 transition-colors group">
                     <div className="md:w-[250px] aspect-[16/10] md:aspect-auto overflow-hidden bg-brand-black relative shrink-0">
-                      <img src={p.image} alt={p.name} className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500" />
+                      <ImageReveal>
+                        <img src={p.image} alt={p.name} className="object-cover w-full h-full" />
+                      </ImageReveal>
                     </div>
                     <div className="p-6 flex-grow flex flex-col justify-between gap-4">
                       <div>
@@ -395,13 +398,15 @@ function ProjectDetailContent({ project }: ProjectDetailClientProps) {
                 className="bg-brand-charcoal border border-brand-gold/10 hover:border-brand-gold/30 transition-colors flex flex-col group"
               >
                 <Link href={`/projects/${p.id}`} className="block relative aspect-[16/10] overflow-hidden bg-brand-black">
-                  <img 
-                    src={p.image} 
-                    alt={p.name} 
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 animate-none" 
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-brand-black via-transparent to-transparent opacity-80" />
-                  <span className="absolute top-4 left-4 bg-brand-black border border-brand-gold/20 text-brand-gold text-[9px] uppercase font-bold tracking-widest px-2.5 py-1 font-poppins">
+                  <ImageReveal>
+                    <img 
+                      src={p.image} 
+                      alt={p.name} 
+                      className="w-full h-full object-cover" 
+                    />
+                  </ImageReveal>
+                  <div className="absolute inset-0 bg-gradient-to-t from-brand-black via-transparent to-transparent opacity-80 z-10" />
+                  <span className="absolute top-4 left-4 bg-brand-black border border-brand-gold/20 text-brand-gold text-[9px] uppercase font-bold tracking-widest px-2.5 py-1 font-poppins z-20">
                     {p.type}
                   </span>
                 </Link>

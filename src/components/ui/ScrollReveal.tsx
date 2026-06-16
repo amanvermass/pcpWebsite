@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 
 interface ScrollRevealProps {
   children: React.ReactNode;
@@ -56,23 +56,36 @@ interface ImageRevealProps {
 }
 
 export const ImageReveal: React.FC<ImageRevealProps> = ({ children, delay = 0 }) => {
+  const containerRef = React.useRef<HTMLDivElement>(null);
+  
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"],
+  });
+
+  // Map scroll progress to horizontal translation (left to right)
+  const x = useTransform(scrollYProgress, [0, 1], [-40, 40]);
+  
+  // Map scroll progress to image scaling (growing big as you scroll down)
+  const scale = useTransform(scrollYProgress, [0, 0.5, 1], [0.95, 1.05, 1.15]);
+
   return (
-    <div className="relative overflow-hidden w-full h-full">
+    <div ref={containerRef} className="relative overflow-hidden w-full h-full group">
       <motion.div
         initial={{ clipPath: "inset(0% 100% 0% 0%)" }}
         whileInView={{ clipPath: "inset(0% 0% 0% 0%)" }}
         viewport={{ once: false, margin: "-80px" }}
         transition={{ duration: 1.2, delay, ease: [0.16, 1, 0.3, 1] }}
-        className="w-full h-full"
+        className="w-full h-full overflow-hidden"
       >
         <motion.div
-          initial={{ scale: 1.15 }}
-          whileInView={{ scale: 1 }}
-          viewport={{ once: false, margin: "-80px" }}
-          transition={{ duration: 1.5, delay, ease: [0.16, 1, 0.3, 1] }}
-          className="w-full h-full"
+          style={{ x, scale }}
+          className="w-full h-full overflow-hidden"
         >
-          {children}
+          {/* Inner hover zoom layer */}
+          <div className="w-full h-full transition-transform duration-700 ease-out group-hover:scale-110">
+            {children}
+          </div>
         </motion.div>
       </motion.div>
     </div>

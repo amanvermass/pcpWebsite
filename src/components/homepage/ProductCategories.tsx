@@ -1,8 +1,7 @@
-"use client";
-
 import React, { useRef, useState } from "react";
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
+import { ImageReveal } from "../ui/ScrollReveal";
 import Link from "next/link";
 
 interface CategoryCardProps {
@@ -10,94 +9,146 @@ interface CategoryCardProps {
   desc: string;
   image: string;
   link: string;
+  index: number;
 }
 
-const CategoryCard: React.FC<CategoryCardProps> = ({ title, desc, image, link }) => {
-  const cardRef = useRef<HTMLDivElement>(null);
-  
-  // Track relative mouse position inside the card
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
+const CategoryCard: React.FC<CategoryCardProps> = ({ title, desc, image, link, index }) => {
+  const [isFlipped, setIsFlipped] = useState(false);
 
-  // Smooth springs for translation/rotation changes
-  const springX = useSpring(x, { stiffness: 150, damping: 20 });
-  const springY = useSpring(y, { stiffness: 150, damping: 20 });
-
-  // Map mouse positions to rotation degree values (-15 to 15 degrees)
-  const rotateX = useTransform(springY, [-0.5, 0.5], [15, -15]);
-  const rotateY = useTransform(springX, [-0.5, 0.5], [-15, 15]);
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!cardRef.current) return;
-    const rect = cardRef.current.getBoundingClientRect();
-    
-    // Calculate normalized position (between -0.5 and 0.5)
-    const normalizedX = (e.clientX - rect.left) / rect.width - 0.5;
-    const normalizedY = (e.clientY - rect.top) / rect.height - 0.5;
-
-    x.set(normalizedX);
-    y.set(normalizedY);
-  };
-
-  const handleMouseLeave = () => {
-    x.set(0);
-    y.set(0);
-  };
+  // Cards fall from the sky (large negative Y) and gather horizontally (dispersed X converging to 0)
+  const startX = (index - 2) * 70; // Dispersed horizontally
+  const startY = -600; // Falling from above
+  const startRotate = (index - 2) * 8; // Slanted rotation
 
   return (
-    <div 
-      className="perspective-[1000px] w-full"
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
+    <motion.div
+      initial={{ 
+        opacity: 0, 
+        x: startX, 
+        y: startY, 
+        scale: 0.15,
+        rotate: startRotate,
+        filter: "blur(8px)"
+      }}
+      whileInView={{ 
+        opacity: 1, 
+        x: 0, 
+        y: 0, 
+        scale: 1,
+        rotate: 0,
+        filter: "blur(0px)"
+      }}
+      viewport={{ once: false, margin: "-100px" }}
+      transition={{ 
+        type: "spring",
+        stiffness: 55,
+        damping: 14,
+        mass: 1.15,
+        delay: index * 0.15
+      }}
+      className="w-full h-[380px] [perspective:1000px] relative"
     >
-      <Link href={link}>
-        <motion.div
-          ref={cardRef}
-          style={{
-            rotateX,
-            rotateY,
-            transformStyle: "preserve-3d"
-          }}
-          className="group relative h-[380px] w-full bg-brand-charcoal overflow-hidden border border-brand-gold/10 hover:border-brand-gold/40 transition-colors flex flex-col justify-end p-6 shadow-xl"
-        >
-          {/* Card image container */}
-          <div className="absolute inset-0 z-0 bg-brand-black">
-            <img 
-              src={image} 
-              alt={title}
-              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-40 group-hover:opacity-55"
-              style={{ transform: "translateZ(-20px)" }}
-            />
-            {/* Dark & Gold Gradient overlays */}
-            <div className="absolute inset-0 bg-gradient-to-t from-brand-black via-brand-black/60 to-transparent z-10" />
-            <div className="absolute inset-0 bg-gradient-to-tr from-brand-gold/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10" />
-          </div>
+      {/* Falling star trail aura (bright initially, fades as it settles) */}
+      <motion.div
+        initial={{ opacity: 0.75, scale: 0.6 }}
+        whileInView={{ opacity: 0, scale: 1.25 }}
+        viewport={{ once: false, margin: "-100px" }}
+        transition={{ 
+          duration: 1.4, 
+          delay: index * 0.15 + 0.3, 
+          ease: "easeOut" 
+        }}
+        className="absolute -inset-8 bg-brand-gold/15 blur-2xl rounded-full pointer-events-none z-0"
+      />
 
-          {/* Card interactive content */}
+      <div 
+        className="w-full h-full cursor-pointer relative z-10"
+        onMouseEnter={() => setIsFlipped(true)}
+        onMouseLeave={() => setIsFlipped(false)}
+      >
+        <motion.div
+          animate={{ rotateY: isFlipped ? 180 : 0 }}
+          transition={{ duration: 0.6, ease: [0.2, 0.8, 0.2, 1] }}
+          className="w-full h-full relative [transform-style:preserve-3d]"
+        >
+          {/* FRONT FACE */}
           <div 
-            className="relative z-20 flex flex-col gap-2 translate-z-[40px] transition-transform duration-300"
-            style={{ transform: "translateZ(30px)" }}
+            style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden" }}
+            className="absolute inset-0 w-full h-full bg-brand-charcoal border border-brand-gold/10 overflow-hidden flex flex-col justify-end p-6 shadow-xl"
           >
-            {/* Top link arrow tag */}
-            <div className="self-end p-2 bg-brand-black/80 border border-brand-gold/20 text-brand-gold rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-2 group-hover:translate-y-0">
-              <ArrowUpRight className="w-4 h-4" />
+            {/* Card image container */}
+            <div className="absolute inset-0 z-0 bg-brand-black opacity-40 group-hover:opacity-55 transition-opacity duration-500">
+              <ImageReveal>
+                <img 
+                  src={image} 
+                  alt={title}
+                  className="w-full h-full object-cover"
+                />
+              </ImageReveal>
+              {/* Dark & Gold Gradient overlays */}
+              <div className="absolute inset-0 bg-gradient-to-t from-brand-black via-brand-black/60 to-transparent z-10" />
+              <div className="absolute inset-0 bg-gradient-to-tr from-brand-gold/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10" />
             </div>
 
-            <span className="text-[9px] tracking-[0.3em] font-semibold text-brand-gold uppercase block font-poppins">
-              explore collection
-            </span>
-            
-            <h3 className="text-2xl font-normal font-cormorant text-brand-offwhite mt-1 group-hover:text-brand-gold transition-colors">
-              {title}
-            </h3>
+            {/* Settle Sparkle Shine Sweep (runs when card hits its position) */}
+            <motion.div
+              initial={{ x: "-100%", opacity: 0 }}
+              whileInView={{ x: "100%", opacity: [0, 1, 1, 0] }}
+              viewport={{ once: false }}
+              transition={{ 
+                duration: 1.2, 
+                delay: index * 0.15 + 0.8, 
+                ease: "easeInOut" 
+              }}
+              className="absolute inset-0 bg-gradient-to-r from-transparent via-brand-gold/30 to-transparent -skew-x-12 pointer-events-none z-20"
+            />
 
-            <p className="text-[11px] font-poppins text-brand-sand/65 leading-relaxed mt-2 max-w-[240px]">
-              {desc}
-            </p>
+            {/* Front Content */}
+            <div className="relative z-20 flex flex-col gap-2">
+              <span className="text-[9px] tracking-[0.3em] font-semibold text-brand-gold uppercase block font-poppins">
+                explore collection
+              </span>
+              
+              <h3 className="text-3xl font-normal font-cormorant text-brand-offwhite mt-1">
+                {title}
+              </h3>
+            </div>
+          </div>
+
+          {/* BACK FACE */}
+          <div 
+            style={{ 
+              backfaceVisibility: "hidden", 
+              WebkitBackfaceVisibility: "hidden",
+              transform: "rotateY(180deg)" 
+            }}
+            className="absolute inset-0 w-full h-full bg-brand-charcoal border border-brand-gold/25 p-6 flex flex-col justify-between shadow-xl"
+          >
+            <div className="flex flex-col gap-4 text-left">
+              <span className="text-[9px] tracking-[0.3em] font-semibold text-brand-gold uppercase block font-poppins">
+                0{index + 1} / TECHNICAL SPEC
+              </span>
+              
+              <h3 className="text-2xl font-normal font-cormorant text-brand-offwhite">
+                {title}
+              </h3>
+
+              <p className="text-xs font-poppins text-brand-sand/80 leading-relaxed">
+                {desc}
+              </p>
+            </div>
+
+            <Link 
+              href={link}
+              className="inline-flex items-center gap-2 text-brand-gold hover:text-brand-offwhite text-[10px] font-poppins font-bold tracking-widest uppercase transition-colors"
+            >
+              Explore Collection
+              <ArrowUpRight className="w-4 h-4" />
+            </Link>
           </div>
         </motion.div>
-      </Link>
-    </div>
+      </div>
+    </motion.div>
   );
 };
 
@@ -169,6 +220,7 @@ export const ProductCategories: React.FC = () => {
               desc={cat.desc}
               image={cat.image}
               link={cat.link}
+              index={idx}
             />
           ))}
         </div>

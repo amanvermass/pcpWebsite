@@ -5,6 +5,7 @@ import { Header } from "@/components/homepage/Header";
 import { Footer } from "@/components/homepage/Footer";
 import { WhyPCP } from "@/components/homepage/WhyPCP";
 import { motion, useScroll, useTransform, useInView } from "framer-motion";
+import { ImageReveal } from "@/components/ui/ScrollReveal";
 import { ShieldCheck, Cpu, HardHat, Award, Recycle, Factory, Landmark, MapPin, Zap } from "lucide-react";
 
 const TeamCard: React.FC<{ name: string; role: string; desc: string; initialName: string }> = ({ name, role, desc, initialName }) => {
@@ -245,12 +246,14 @@ export default function AboutClient() {
 
             {/* Industrial image with offset borders */}
             <div className="lg:col-span-6 flex items-center justify-center">
-              <div className="relative border border-brand-gold/20 p-2 max-w-md w-full bg-brand-black">
-                <img 
-                  src="/images/hero-5.jpg" 
-                  alt="Certified Terracotta product grid" 
-                  className="w-full h-full object-cover" 
-                />
+              <div className="relative border border-brand-gold/20 p-2 max-w-md w-full bg-brand-black overflow-hidden">
+                <ImageReveal>
+                  <img 
+                    src="/images/hero-5.jpg" 
+                    alt="Certified Terracotta product grid" 
+                    className="w-full h-full object-cover" 
+                  />
+                </ImageReveal>
               </div>
             </div>
 
