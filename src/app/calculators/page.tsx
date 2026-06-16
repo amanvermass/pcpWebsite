@@ -6,6 +6,8 @@ import { Header } from "@/components/homepage/Header";
 import { Footer } from "@/components/homepage/Footer";
 import { Calculator, Layers, Hammer, Compass } from "lucide-react";
 import { ToastProvider } from "@/components/ui/Toast";
+import { motion, AnimatePresence } from "framer-motion";
+import { ScrollReveal } from "@/components/ui/ScrollReveal";
 
 // Import calculators
 import BrickCalculator from "@/components/calculators/BrickCalculator";
@@ -89,58 +91,74 @@ function CalculatorsPageContent() {
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="max-w-3xl">
-            <span className="text-[10px] uppercase font-bold tracking-[0.35em] text-brand-gold bg-brand-gold/5 px-4 py-1.5 border border-brand-gold/20 rounded-none w-fit block mb-4 font-poppins">
-              Engineering Estimators Desk
-            </span>
-            <h1 className="text-4xl sm:text-6xl font-normal font-cormorant text-brand-offwhite mt-4 tracking-wide leading-none">
-              Material Calculators.
-            </h1>
-            <p className="text-brand-sand/70 mt-6 text-sm sm:text-base leading-relaxed font-poppins max-w-xl">
-              Estimate structural material volumes, interlocking paving arrays, sloped roof layouts, and net structural dimensions in real-time.
-            </p>
-          </div>
+          <ScrollReveal direction="up" distance={30}>
+            <div className="max-w-3xl">
+              <span className="text-[10px] uppercase font-bold tracking-[0.35em] text-brand-gold bg-brand-gold/5 px-4 py-1.5 border border-brand-gold/20 rounded-none w-fit block mb-4 font-poppins">
+                Engineering Estimators Desk
+              </span>
+              <h1 className="text-4xl sm:text-6xl font-normal font-cormorant text-brand-offwhite mt-4 tracking-wide leading-none">
+                Material Calculators.
+              </h1>
+              <p className="text-brand-sand/70 mt-6 text-sm sm:text-base leading-relaxed font-poppins max-w-xl">
+                Estimate structural material volumes, interlocking paving arrays, sloped roof layouts, and net structural dimensions in real-time.
+              </p>
+            </div>
+          </ScrollReveal>
         </div>
       </div>
 
       {/* Tabs Menu Panel */}
       <div className="sticky top-[72px] z-30 bg-brand-black/95 border-b border-brand-gold/10 py-5 backdrop-blur-md">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-center">
-          <div className="flex gap-2.5 bg-brand-charcoal p-2 border border-brand-gold/10 w-full md:w-auto overflow-x-auto scrollbar-none rounded-none">
-            {calculatorsList.map((calc) => {
-              const isActive = calc.id === activeCalc.id;
-              return (
-                <button
-                  key={calc.id}
-                  onClick={() => handleSelectTab(calc.id)}
-                  className={`flex items-center gap-2 px-5 py-3 rounded-none text-[10px] uppercase tracking-wider font-poppins font-semibold transition-colors whitespace-nowrap cursor-pointer flex-grow md:flex-grow-0 justify-center border ${
-                    isActive
-                      ? "bg-brand-gold border-brand-gold text-brand-black"
-                      : "bg-brand-black border-brand-gold/5 text-brand-sand hover:text-brand-offwhite"
-                  }`}
-                >
-                  {calc.icon}
-                  <span>{calc.name}</span>
-                </button>
-              );
-            })}
-          </div>
+          <ScrollReveal direction="up" distance={20} delay={0.1}>
+            <div className="flex gap-2.5 bg-brand-charcoal p-2 border border-brand-gold/10 w-full md:w-auto overflow-x-auto scrollbar-none rounded-none">
+              {calculatorsList.map((calc) => {
+                const isActive = calc.id === activeCalc.id;
+                return (
+                  <button
+                    key={calc.id}
+                    onClick={() => handleSelectTab(calc.id)}
+                    className={`flex items-center gap-2 px-5 py-3 rounded-none text-[10px] uppercase tracking-wider font-poppins font-semibold transition-colors whitespace-nowrap cursor-pointer flex-grow md:flex-grow-0 justify-center border ${
+                      isActive
+                        ? "bg-brand-gold border-brand-gold text-brand-black"
+                        : "bg-brand-black border-brand-gold/5 text-brand-sand hover:text-brand-offwhite"
+                    }`}
+                  >
+                    {calc.icon}
+                    <span>{calc.name}</span>
+                  </button>
+                );
+              })}
+            </div>
+          </ScrollReveal>
         </div>
       </div>
 
       {/* Main active calculator */}
       <main className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-16 flex-grow z-10">
-        <div className="max-w-4xl mx-auto mb-12 text-center space-y-4">
-          <h2 className="text-3xl font-normal font-cormorant text-brand-offwhite">
-            {activeCalc.fullName}
-          </h2>
-          <p className="text-xs sm:text-sm text-brand-sand/70 leading-relaxed max-w-xl mx-auto font-poppins">
-            {activeCalc.desc}
-          </p>
-        </div>
+        <ScrollReveal direction="up" distance={20} delay={0.15}>
+          <div className="max-w-4xl mx-auto mb-12 text-center space-y-4">
+            <h2 className="text-3xl font-normal font-cormorant text-brand-offwhite">
+              {activeCalc.fullName}
+            </h2>
+            <p className="text-xs sm:text-sm text-brand-sand/70 leading-relaxed max-w-xl mx-auto font-poppins">
+              {activeCalc.desc}
+            </p>
+          </div>
+        </ScrollReveal>
 
-        <div className="max-w-5xl mx-auto">
-          {activeCalc.component}
+        <div className="max-w-5xl mx-auto overflow-hidden">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeCalc.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+            >
+              {activeCalc.component}
+            </motion.div>
+          </AnimatePresence>
         </div>
       </main>
     </div>

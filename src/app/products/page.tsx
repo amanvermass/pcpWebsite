@@ -10,13 +10,14 @@ import { motion, AnimatePresence, useScroll, useTransform, useMotionValue, useSp
 import { Eye, X, ArrowRight, Download, Filter, Ruler, FileText, HardHat } from "lucide-react";
 import { ToastProvider, useToast } from "@/components/ui/Toast";
 import { Magnetic } from "@/components/ui/Magnetic";
-import { ImageReveal } from "@/components/ui/ScrollReveal";
+import { ImageReveal, ScrollReveal } from "@/components/ui/ScrollReveal";
 
 function CatalogContent() {
   const { toast } = useToast();
   const searchParams = useSearchParams();
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [activeQuickView, setActiveQuickView] = useState<Product | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   // Parallax Scroll Tracking for Hero
   const heroRef = useRef<HTMLDivElement>(null);
@@ -32,6 +33,15 @@ function CatalogContent() {
       setSelectedCategory("All");
     }
   }, [searchParams]);
+
+  // Handle category loading transition animation
+  useEffect(() => {
+    setIsLoading(true);
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 600);
+    return () => clearTimeout(timer);
+  }, [selectedCategory]);
 
   const categories = ["All", "Clay Bricks", "Terracotta", "Roofing Tiles", "Pavers", "Hollow Blocks", "AAC Blocks"];
 
@@ -49,11 +59,11 @@ function CatalogContent() {
       {/* Parallax Hero Banner */}
       <div 
         ref={heroRef}
-        className="relative h-[55vh] md:h-[65vh] w-full flex items-center overflow-hidden bg-brand-black"
+        className="relative h-[55vh] md:h-[65vh] w-full flex items-center overflow-hidden bg-black"
       >
         <motion.div 
           style={{ y: heroImageY }}
-          className="absolute inset-0 z-0 scale-[1.08] opacity-35"
+          className="absolute inset-0 z-0 scale-[1.08] opacity-40"
         >
           <img 
             src="/images/hero-1.jpg" 
@@ -63,7 +73,7 @@ function CatalogContent() {
         </motion.div>
         
         {/* Dark Vignette Mask */}
-        <div className="absolute inset-0 bg-gradient-to-t from-brand-black via-brand-black/70 to-brand-black/20 z-10" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#121110] via-[#121110]/75 to-transparent z-10" />
 
         {/* Hero content */}
         <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
@@ -71,10 +81,10 @@ function CatalogContent() {
             <span className="text-[10px] uppercase font-bold tracking-[0.35em] text-brand-gold bg-brand-gold/5 px-4 py-1.5 border border-brand-gold/20 rounded-none w-fit block mb-4">
               PCP Materials Library
             </span>
-            <h1 className="text-4xl sm:text-6xl font-normal font-cormorant text-brand-offwhite tracking-wide leading-tight mt-2">
+            <h1 className="text-4xl sm:text-6xl font-normal font-cormorant text-[#faf6f2] tracking-wide leading-tight mt-2">
               Architectural Product Catalog
             </h1>
-            <p className="text-brand-sand/75 mt-4 text-sm sm:text-base font-poppins leading-relaxed max-w-2xl">
+            <p className="text-brand-sand-400 mt-4 text-sm sm:text-base font-poppins leading-relaxed max-w-2xl">
               Browse our high-performance building materials, structural components, and masonry solutions designed for next-generation architectural projects.
             </p>
           </motion.div>
@@ -109,7 +119,14 @@ function CatalogContent() {
       {/* Main catalog view */}
       <main className="flex-grow max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-16 z-10">
         <div className="space-y-8">
-          {filteredProducts.length === 0 ? (
+          {isLoading ? (
+            /* Skeletal Loading Grid */
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-start">
+              {Array.from({ length: 6 }).map((_, index) => (
+                <ProductCardSkeleton key={index} index={index} />
+              ))}
+            </div>
+          ) : filteredProducts.length === 0 ? (
             <div className="text-center py-20 bg-brand-charcoal border border-brand-gold/10 rounded-none">
               <p className="text-brand-sand/60 text-sm font-poppins">No products found in this category.</p>
             </div>
@@ -117,12 +134,19 @@ function CatalogContent() {
             /* Staggered masonry layout columns */
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-start">
               {filteredProducts.map((p, index) => (
-                <ProductCard 
+                <ScrollReveal 
                   key={p.id} 
-                  product={p} 
-                  index={index}
-                  onQuickView={setActiveQuickView} 
-                />
+                  delay={(index % 3) * 0.1} 
+                  duration={0.8}
+                  direction="up" 
+                  distance={40}
+                >
+                  <ProductCard 
+                    product={p} 
+                    index={index}
+                    onQuickView={setActiveQuickView} 
+                  />
+                </ScrollReveal>
               ))}
             </div>
           )}
@@ -139,7 +163,7 @@ function CatalogContent() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setActiveQuickView(null)}
-              className="absolute inset-0 bg-brand-black/80 backdrop-blur-sm"
+              className="absolute inset-0 bg-black/60 backdrop-blur-sm"
             />
 
             {/* Spec Drawer Container */}
@@ -259,6 +283,40 @@ function CatalogContent() {
   );
 }
 
+const ProductCardSkeleton: React.FC<{ index: number }> = ({ index }) => {
+  const aspectRatios = ["aspect-[4/3]", "aspect-[16/10]", "aspect-[1/1]"];
+  const aspectClass = aspectRatios[index % aspectRatios.length];
+
+  return (
+    <div className="rounded-none border border-brand-gold/5 bg-brand-charcoal/30 flex flex-col justify-between overflow-hidden relative">
+      <div className={`relative ${aspectClass} w-full bg-brand-black/50 border-b border-brand-gold/5 overflow-hidden`}>
+        {/* Shimmer sweep overlay */}
+        <motion.div
+          animate={{ x: ["-100%", "100%"] }}
+          transition={{ repeat: Infinity, duration: 1.6, ease: "linear" }}
+          className="absolute inset-0 bg-gradient-to-r from-transparent via-brand-gold/10 to-transparent -skew-x-12 pointer-events-none"
+        />
+      </div>
+      <div className="p-6 flex-grow flex flex-col justify-between gap-4">
+        <div className="space-y-3 font-poppins">
+          {/* Title bar with pulse */}
+          <div className="h-6 bg-brand-black/50 w-3/4 rounded-none animate-pulse" />
+          {/* Description line pulses */}
+          <div className="space-y-2">
+            <div className="h-3 bg-brand-black/30 w-full rounded-none animate-pulse" />
+            <div className="h-3 bg-brand-black/30 w-5/6 rounded-none animate-pulse" />
+          </div>
+        </div>
+        {/* Buttons pulse */}
+        <div className="mt-6 flex gap-3 pt-4 border-t border-brand-gold/5">
+          <div className="h-10 bg-brand-black/50 flex-1 rounded-none animate-pulse" />
+          <div className="h-10 bg-brand-black/30 flex-1 rounded-none animate-pulse" />
+        </div>
+      </div>
+    </div>
+  );
+};
+
 function ProductCard({ product, index, onQuickView }: { product: Product; index: number; onQuickView: (p: Product) => void }) {
   const cardRef = useRef<HTMLDivElement>(null);
   
@@ -313,12 +371,12 @@ function ProductCard({ product, index, onQuickView }: { product: Product; index:
               className="object-cover w-full h-full" 
             />
           </ImageReveal>
-          <div className="absolute top-4 left-4 bg-brand-black/90 text-brand-gold border border-brand-gold/15 text-[9px] uppercase font-bold tracking-widest px-3 py-1.5 rounded-none">
+          <div className="absolute top-4 left-4 bg-[#121110]/95 text-brand-gold border border-brand-gold/15 text-[9px] uppercase font-bold tracking-widest px-3 py-1.5 rounded-none">
             {product.category}
           </div>
           
           {/* Quick view spec trigger */}
-          <div className="absolute inset-0 bg-brand-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+          <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
             <button
               onClick={() => onQuickView(product)}
               className="p-3 bg-brand-gold border border-brand-gold text-brand-black hover:scale-110 transition-transform cursor-none rounded-none"

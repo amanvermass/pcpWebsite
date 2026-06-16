@@ -218,7 +218,7 @@ export const DealerLocator: React.FC = () => {
 
           {/* Interactive India Map Panel */}
           <div className="lg:col-span-7 bg-brand-charcoal border border-brand-gold/10 rounded-none p-6 flex flex-col justify-between relative overflow-hidden min-h-[450px] lg:min-h-0">
-            <div className="absolute inset-0 bg-brand-black/25 z-0" />
+            <div className="absolute inset-0 bg-brand-slate/20 z-0" />
             
             <div className="relative z-10 w-full flex justify-between items-center pb-4 border-b border-brand-gold/10">
               <span className="text-[10px] font-bold text-brand-sand/60 uppercase tracking-widest flex items-center gap-1.5 font-poppins">

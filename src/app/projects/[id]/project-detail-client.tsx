@@ -135,7 +135,7 @@ function ProjectDetailContent({ project }: ProjectDetailClientProps) {
   return (
     <div className="flex flex-col min-h-screen bg-brand-black text-brand-offwhite">
       {/* Fullscreen Parallax Cover Image Banner */}
-      <div ref={containerRef} className="relative w-full h-[60vh] sm:h-[70vh] overflow-hidden bg-brand-black">
+      <div ref={containerRef} className="relative w-full h-[60vh] sm:h-[70vh] overflow-hidden bg-black">
         <motion.div 
           style={{ y: imageY }}
           className="absolute inset-0 w-full h-[120%] -top-[10%]"
@@ -148,7 +148,7 @@ function ProjectDetailContent({ project }: ProjectDetailClientProps) {
         </motion.div>
         
         {/* Dark overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-brand-black via-brand-black/45 to-transparent z-10" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#121110] via-[#121110]/55 to-transparent z-10" />
 
         {/* Floating Content Overlays */}
         <div className="absolute inset-0 z-20 flex flex-col justify-between p-6 sm:p-12 max-w-7xl mx-auto w-full pt-28">
@@ -156,7 +156,7 @@ function ProjectDetailContent({ project }: ProjectDetailClientProps) {
             href="/projects" 
             className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-brand-sand hover:text-brand-gold transition-colors group w-fit font-poppins"
           >
-            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1.5 transition-transform text-brand-gold" />
+            <ArrowLeft className="w-4 h-4 group-hover:-translate-x.5 transition-transform text-brand-gold" />
             <span>Back to Portfolio</span>
           </Link>
           
@@ -164,10 +164,10 @@ function ProjectDetailContent({ project }: ProjectDetailClientProps) {
             <span className="text-[9px] uppercase font-bold tracking-[0.25em] text-brand-gold bg-brand-gold/5 px-3.5 py-1.5 border border-brand-gold/20 rounded-none w-fit block mb-4 font-poppins">
               {project.type} Case Study
             </span>
-            <h1 className="text-4xl sm:text-6xl font-normal font-cormorant text-brand-offwhite tracking-wide leading-none">
+            <h1 className="text-4xl sm:text-6xl font-normal font-cormorant text-[#faf6f2] tracking-wide leading-none">
               {project.name}
             </h1>
-            <div className="flex items-center gap-2 text-xs text-brand-sand/75 mt-4 font-poppins">
+            <div className="flex items-center gap-2 text-xs text-brand-sand-400 mt-4 font-poppins">
               <MapPin className="w-4 h-4 text-brand-gold" />
               <span>{project.location}</span>
             </div>
@@ -397,7 +397,7 @@ function ProjectDetailContent({ project }: ProjectDetailClientProps) {
                 key={p.id} 
                 className="bg-brand-charcoal border border-brand-gold/10 hover:border-brand-gold/30 transition-colors flex flex-col group"
               >
-                <Link href={`/projects/${p.id}`} className="block relative aspect-[16/10] overflow-hidden bg-brand-black">
+                <Link href={`/projects/${p.id}`} className="block relative aspect-[16/10] overflow-hidden bg-black">
                   <ImageReveal>
                     <img 
                       src={p.image} 
@@ -405,8 +405,8 @@ function ProjectDetailContent({ project }: ProjectDetailClientProps) {
                       className="w-full h-full object-cover" 
                     />
                   </ImageReveal>
-                  <div className="absolute inset-0 bg-gradient-to-t from-brand-black via-transparent to-transparent opacity-80 z-10" />
-                  <span className="absolute top-4 left-4 bg-brand-black border border-brand-gold/20 text-brand-gold text-[9px] uppercase font-bold tracking-widest px-2.5 py-1 font-poppins z-20">
+                  <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80 z-10" />
+                  <span className="absolute top-4 left-4 bg-[#121110]/95 border border-brand-gold/20 text-brand-gold text-[9px] uppercase font-bold tracking-widest px-2.5 py-1 font-poppins z-20">
                     {p.type}
                   </span>
                 </Link>

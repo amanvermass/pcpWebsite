@@ -22,7 +22,7 @@ const StatCounter: React.FC<StatItemProps> = ({ value, suffix, label }) => {
     const duration = 2000; // 2 seconds
     const end = value;
     const incrementTime = Math.max(Math.floor(duration / end), 20);
-    
+
     const timer = setInterval(() => {
       start += Math.ceil(end / (duration / incrementTime));
       if (start >= end) {
@@ -54,7 +54,7 @@ export const ManufacturingExcellence: React.FC = () => {
   const isInView = useInView(containerRef, { once: false, margin: "-100px" });
 
   return (
-    <section 
+    <section
       ref={containerRef}
       className="relative min-h-[80vh] flex items-center py-24 bg-brand-black overflow-hidden"
     >

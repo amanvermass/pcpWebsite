@@ -59,7 +59,7 @@ export const HorizontalSection: React.FC = () => {
             >
               {/* Left Column - Image with wipe reveal */}
               <div className="w-full md:w-1/2 h-[35vh] md:h-[55vh] relative overflow-hidden group border border-brand-gold/10">
-                <div className="absolute inset-0 bg-brand-black/20 z-10" />
+                <div className="absolute inset-0 bg-black/30 z-10" />
                 <motion.div
                   initial={{ clipPath: "inset(0% 100% 0% 0%)" }}
                   whileInView={{ clipPath: "inset(0% 0% 0% 0%)" }}
@@ -74,7 +74,7 @@ export const HorizontalSection: React.FC = () => {
                     loading="lazy"
                   />
                 </motion.div>
-                <div className="absolute bottom-4 left-4 z-20 text-[10px] font-poppins text-brand-gold font-bold tracking-widest bg-brand-black/80 px-3.5 py-1.5 border border-brand-gold/20">
+                <div className="absolute bottom-4 left-4 z-20 text-[10px] font-poppins text-brand-gold font-bold tracking-widest bg-[#121110]/90 px-3.5 py-1.5 border border-brand-gold/20">
                   0{idx + 1} / 04
                 </div>
               </div>

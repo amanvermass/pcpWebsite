@@ -106,12 +106,12 @@ export const FeaturedProducts: React.FC<{ teaser?: boolean }> = ({ teaser = fals
                       className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-700"
                     />
                   </ImageReveal>
-                  <div className="absolute top-4 left-4 bg-brand-black/85 text-brand-gold border border-brand-gold/20 text-[9px] uppercase font-bold tracking-widest px-3 py-1.5 rounded-none z-10">
+                  <div className="absolute top-4 left-4 bg-[#121110]/95 text-brand-gold border border-brand-gold/20 text-[9px] uppercase font-bold tracking-widest px-3 py-1.5 rounded-none z-10">
                     {p.category}
                   </div>
                   
                   {/* Hover Quick View Overlay */}
-                  <div className="absolute inset-0 bg-brand-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2 z-10">
+                  <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2 z-10">
                     <button
                       onClick={() => setActiveQuickView(p)}
                       className="p-3.5 bg-brand-gold text-brand-black hover:scale-110 transition-transform shadow-lg cursor-pointer rounded-none border border-brand-gold"
@@ -182,7 +182,7 @@ export const FeaturedProducts: React.FC<{ teaser?: boolean }> = ({ teaser = fals
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setActiveQuickView(null)}
-              className="absolute inset-0 bg-brand-black/90 backdrop-blur-md"
+              className="absolute inset-0 bg-black/75 backdrop-blur-md"
             />
 
             {/* Modal Body */}
@@ -202,7 +202,7 @@ export const FeaturedProducts: React.FC<{ teaser?: boolean }> = ({ teaser = fals
                 <div className="absolute inset-0 bg-gradient-to-t from-brand-charcoal md:bg-gradient-to-r md:from-transparent md:to-brand-charcoal" />
                 <button
                   onClick={() => setActiveQuickView(null)}
-                  className="absolute top-4 left-4 p-2 bg-brand-black/70 text-brand-offwhite rounded-none md:hidden border border-brand-gold/20"
+                  className="absolute top-4 left-4 p-2 bg-[#121110]/85 text-brand-offwhite rounded-none md:hidden border border-brand-gold/20"
                 >
                   <X className="w-5 h-5" />
                 </button>

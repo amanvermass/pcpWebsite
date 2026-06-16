@@ -90,7 +90,7 @@ export const Hero: React.FC<HeroProps> = ({ darkMode = true }) => {
 
   const wordVariants = {
     hidden: { y: "100%" },
-    visible: { 
+    visible: {
       y: 0,
       transition: { duration: 1.0, ease: [0.16, 1, 0.3, 1] as any }
     }
@@ -100,9 +100,9 @@ export const Hero: React.FC<HeroProps> = ({ darkMode = true }) => {
 
   return (
     <section className="relative h-screen w-full flex flex-col justify-between overflow-hidden bg-[var(--background)] select-none">
-      
+
       {/* Scroll-driven Scale Slideshow Container */}
-      <motion.div 
+      <motion.div
         style={{ scale, borderRadius }}
         className="absolute inset-0 z-0 overflow-hidden origin-center bg-black"
       >
@@ -112,12 +112,12 @@ export const Hero: React.FC<HeroProps> = ({ darkMode = true }) => {
             initial={{ opacity: 0, scale: 1.15 }}
             animate={{ opacity: 1, scale: 1.0 }}
             exit={{ opacity: 0 }}
-            transition={{ 
+            transition={{
               opacity: { duration: 1.5, ease: "easeInOut" },
               scale: { duration: 6.5, ease: "easeOut" }
             }}
             style={{ y: backgroundY }}
-            className="absolute inset-0 w-full h-full"
+            className="absolute inset-0 w-full h-full opacity-60"
           >
             <img
               src={slides[currentSlide].image}
@@ -128,34 +128,37 @@ export const Hero: React.FC<HeroProps> = ({ darkMode = true }) => {
         </AnimatePresence>
 
         {/* Clean Theme-Adaptive Overlay */}
-        <div className="absolute inset-0 bg-brand-black/75 z-10" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-black/20 z-10" />
       </motion.div>
 
-      {/* Main Centered Hero Contents */}
-      <div className="relative z-20 max-w-7xl mx-auto px-6 lg:px-8 w-full flex-grow flex items-center justify-center text-center">
+      {/* Main Asymmetric Left-Aligned Hero Contents */}
+      <div className="bg-black relative z-20 max-w-7xl mx-auto px-6 lg:px-8 w-full flex-grow flex items-center justify-start text-left pt-20" style={{ backgroundColor: "transparent" }}>
         <motion.div
           variants={containerVariants}
           initial="hidden"
           animate="visible"
           style={{ y: contentY, opacity: contentOpacity }}
-          className="max-w-5xl flex flex-col items-center"
+          className="max-w-4xl flex flex-col items-start"
         >
-          {/* Top Tagline */}
-          <motion.p 
+          {/* Top Tagline with decorative line prefix */}
+          <motion.div
             variants={blockVariants}
-            className="text-[10px] sm:text-xs tracking-[0.45em] uppercase text-brand-gold font-semibold font-poppins mb-6"
+            className="flex items-center gap-3 mb-6"
           >
-            PRAYAG CLAY PRODUCTS
-          </motion.p>
+            <span className="w-8 h-[1px] bg-brand-gold shrink-0" />
+            <span className="text-[10px] sm:text-xs tracking-[0.45em] uppercase text-brand-gold font-semibold font-poppins">
+              PRAYAG CLAY PRODUCTS
+            </span>
+          </motion.div>
 
           {/* Intrio-style Massive Serif Heading (Staggered Word Reveal) */}
-          <motion.h1 
+          <motion.h1
             variants={headingContainerVariants}
-            className="text-white text-center leading-none tracking-tight mb-8 flex flex-wrap justify-center"
+            className="text-white text-left leading-none tracking-tight mb-8 flex flex-wrap justify-start"
             style={{
               fontFamily: "var(--font-poppins), sans-serif",
               fontWeight: 300,
-              fontSize: "clamp(2.5rem, 5.5vw, 5.5rem)",
+              fontSize: "clamp(2.5rem, 5.8vw, 5.8rem)",
               lineHeight: 0.95,
               letterSpacing: "-0.03em"
             }}
@@ -175,15 +178,15 @@ export const Hero: React.FC<HeroProps> = ({ darkMode = true }) => {
           {/* Subheading Description */}
           <motion.p
             variants={blockVariants}
-            className="text-xs sm:text-sm md:text-base font-poppins text-brand-offwhite/70 max-w-xl leading-relaxed mb-12"
+            className="text-xs sm:text-sm md:text-base font-poppins text-[#faf6f2]/85 max-w-xl leading-relaxed mb-12"
           >
-            Premium Bricks, Pavers & Solutions
+            Crafting high-performance building materials, heavy-duty paving units, and clay facades designed for next-generation architectural projects since 1983.
           </motion.p>
 
           {/* Staggered CTA Buttons */}
           <motion.div
             variants={blockVariants}
-            className="flex flex-wrap items-center justify-center gap-6"
+            className="flex flex-wrap items-center justify-start gap-6"
           >
             <button
               onClick={() => handleScrollTo("#categories")}
@@ -191,10 +194,10 @@ export const Hero: React.FC<HeroProps> = ({ darkMode = true }) => {
             >
               Explore Products
             </button>
- 
+
             <button
               onClick={() => handleScrollTo("#projects")}
-              className="bg-transparent hover:bg-brand-gold/5 text-brand-offwhite tracking-[0.2em] font-poppins uppercase text-xs px-8 py-4 border border-brand-offwhite/20 hover:border-brand-gold hover:text-brand-gold transition-colors cursor-pointer"
+              className="bg-transparent hover:bg-brand-gold/5 text-white tracking-[0.2em] font-poppins uppercase text-xs px-8 py-4 border border-white/20 hover:border-brand-gold hover:text-brand-gold transition-colors cursor-pointer"
             >
               View Projects
             </button>
@@ -205,13 +208,13 @@ export const Hero: React.FC<HeroProps> = ({ darkMode = true }) => {
       {/* Slide Progress Indicator Lines at bottom */}
       <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex gap-3.5 z-25">
         {slides.map((_, idx) => (
-          <div 
-            key={idx} 
-            className="w-10 sm:w-14 h-[2px] bg-brand-offwhite/15 relative overflow-hidden cursor-pointer" 
+          <div
+            key={idx}
+            className="w-10 sm:w-14 h-[2px] bg-brand-offwhite/15 relative overflow-hidden cursor-pointer"
             onClick={() => setCurrentSlide(idx)}
           >
             {idx === currentSlide && (
-              <motion.div 
+              <motion.div
                 initial={{ scaleX: 0 }}
                 animate={{ scaleX: 1 }}
                 transition={{ duration: 6, ease: "linear" }}
@@ -226,7 +229,7 @@ export const Hero: React.FC<HeroProps> = ({ darkMode = true }) => {
       <div className="absolute right-10 lg:right-20 top-1/2 -translate-y-1/2 flex flex-col items-center gap-2.5 z-25 text-xs font-poppins tracking-[0.2em] select-none">
         <div className="h-8 overflow-hidden relative w-8 flex items-center justify-center">
           <AnimatePresence mode="popLayout">
-            <motion.span 
+            <motion.span
               key={currentSlide}
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
@@ -243,18 +246,18 @@ export const Hero: React.FC<HeroProps> = ({ darkMode = true }) => {
       </div>
 
       {/* Vertical Scroll Text (Bottom Left) */}
-      <div 
+      <div
         className="absolute bottom-16 left-10 lg:left-20 z-25 flex flex-col items-center gap-4 cursor-pointer text-brand-offwhite/50 hover:text-brand-gold transition-colors"
         onClick={() => handleScrollTo("#intro")}
       >
-        <span 
+        <span
           className="text-[9px] font-semibold tracking-[0.3em] uppercase block"
           style={{ writingMode: "vertical-rl" }}
         >
           SCROLL TO EXPLORE
         </span>
         <div className="w-[1px] h-12 bg-brand-offwhite/15 relative overflow-hidden">
-          <motion.div 
+          <motion.div
             animate={{ y: ["-100%", "100%"] }}
             transition={{ repeat: Infinity, duration: 1.8, ease: "easeInOut" }}
             className="absolute left-0 top-0 w-full h-1/2 bg-brand-gold"

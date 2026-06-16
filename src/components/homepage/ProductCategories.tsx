@@ -38,7 +38,7 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ title, desc, image, link, i
         rotate: 0,
         filter: "blur(0px)"
       }}
-      viewport={{ once: false, margin: "-100px" }}
+      viewport={{ once: true, margin: "-100px" }}
       transition={{ 
         type: "spring",
         stiffness: 55,
@@ -52,7 +52,7 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ title, desc, image, link, i
       <motion.div
         initial={{ opacity: 0.75, scale: 0.6 }}
         whileInView={{ opacity: 0, scale: 1.25 }}
-        viewport={{ once: false, margin: "-100px" }}
+        viewport={{ once: true, margin: "-100px" }}
         transition={{ 
           duration: 1.4, 
           delay: index * 0.15 + 0.3, 
@@ -77,16 +77,16 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ title, desc, image, link, i
             className="absolute inset-0 w-full h-full bg-brand-charcoal border border-brand-gold/10 overflow-hidden flex flex-col justify-end p-6 shadow-xl"
           >
             {/* Card image container */}
-            <div className="absolute inset-0 z-0 bg-brand-black opacity-40 group-hover:opacity-55 transition-opacity duration-500">
+            <div className="absolute inset-0 z-0 bg-[#121110] overflow-hidden">
               <ImageReveal>
                 <img 
                   src={image} 
                   alt={title}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-500"
                 />
               </ImageReveal>
               {/* Dark & Gold Gradient overlays */}
-              <div className="absolute inset-0 bg-gradient-to-t from-brand-black via-brand-black/60 to-transparent z-10" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent z-10" />
               <div className="absolute inset-0 bg-gradient-to-tr from-brand-gold/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10" />
             </div>
 
@@ -94,7 +94,7 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ title, desc, image, link, i
             <motion.div
               initial={{ x: "-100%", opacity: 0 }}
               whileInView={{ x: "100%", opacity: [0, 1, 1, 0] }}
-              viewport={{ once: false }}
+              viewport={{ once: true }}
               transition={{ 
                 duration: 1.2, 
                 delay: index * 0.15 + 0.8, 
@@ -109,7 +109,7 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ title, desc, image, link, i
                 explore collection
               </span>
               
-              <h3 className="text-3xl font-normal font-cormorant text-brand-offwhite mt-1">
+              <h3 className="text-3xl font-normal font-cormorant text-[#faf6f2] mt-1">
                 {title}
               </h3>
             </div>

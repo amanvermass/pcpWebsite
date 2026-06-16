@@ -205,7 +205,7 @@ export const HorizontalProducts: React.FC = () => {
 
                   {/* Right Column - Large Image Mask Reveal */}
                   <div className="lg:col-span-7 w-full h-[40vh] sm:h-[50vh] lg:h-[60vh] relative overflow-hidden group border border-brand-gold/15 bg-brand-charcoal order-1 lg:order-2">
-                    <div className="absolute inset-0 bg-brand-black/30 z-10 transition-opacity duration-500 group-hover:bg-brand-black/10" />
+                    <div className="absolute inset-0 bg-black/35 z-10 transition-opacity duration-500 group-hover:bg-black/15" />
                     
                     {/* Parallax Image Scale bound directly to scroll track */}
                     <div className="w-full h-full overflow-hidden">
@@ -219,7 +219,7 @@ export const HorizontalProducts: React.FC = () => {
 
                     {/* Overlay cursor hover marker */}
                     <div className="absolute bottom-6 right-6 z-20 pointer-events-none">
-                      <span className="text-[9px] font-poppins text-brand-offwhite/50 tracking-widest uppercase bg-brand-black/75 px-3 py-1 border border-brand-slate">
+                      <span className="text-[9px] font-poppins text-[#faf6f2] tracking-widest uppercase bg-black/85 px-3 py-1 border border-brand-slate/20">
                         PCP BUILD
                       </span>
                     </div>

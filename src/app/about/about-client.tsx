@@ -78,7 +78,7 @@ export default function AboutClient() {
       <Header darkMode={darkMode} setDarkMode={setDarkMode} />
 
       {/* Hero Cover Banner */}
-      <div ref={containerRef} className="relative w-full h-[65vh] overflow-hidden bg-brand-black">
+      <div ref={containerRef} className="relative w-full h-[65vh] overflow-hidden bg-black">
         <motion.div 
           style={{ y: imageY }}
           className="absolute inset-0 w-full h-[120%] -top-[10%]"
@@ -87,12 +87,12 @@ export default function AboutClient() {
           <img 
             src="/images/hero-4.jpg" 
             alt="Premium corporate factory architecture" 
-            className="w-full h-full object-cover opacity-40 scale-102" 
+            className="w-full h-full object-cover opacity-65 scale-102" 
           />
         </motion.div>
         
         {/* Dark vignette overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-brand-black via-brand-black/45 to-transparent z-10" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#121110]/95 via-[#121110]/45 to-[#121110]/80 z-10" />
 
         {/* Content Overlays */}
         <div className="absolute inset-0 z-20 flex flex-col justify-between p-6 sm:p-12 max-w-7xl mx-auto w-full pt-28">
@@ -103,10 +103,10 @@ export default function AboutClient() {
           </div>
           
           <div className="max-w-4xl mt-auto">
-            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-normal font-cormorant text-brand-offwhite tracking-wide leading-none">
+            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-normal font-cormorant text-[#faf6f2] tracking-wide leading-none">
               Engineering Resilient Envelopes.
             </h1>
-            <p className="text-brand-sand/70 text-xs sm:text-sm font-poppins mt-4 max-w-lg leading-relaxed">
+            <p className="text-brand-sand-400 text-xs sm:text-sm font-poppins mt-4 max-w-lg leading-relaxed">
               Prayag Clay Productions blends traditional clay firing chemistry with European automated tunnel kiln technologies to supply premium facing bricks and terracotta facades.
             </p>
           </div>

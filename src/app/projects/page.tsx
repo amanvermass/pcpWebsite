@@ -128,7 +128,7 @@ export default function ProjectsPage() {
         <Header darkMode={darkMode} setDarkMode={setDarkMode} />
 
         {/* Fullscreen Project Montage Hero */}
-        <div className="relative h-screen w-full flex items-center overflow-hidden bg-brand-black">
+        <div className="relative h-screen w-full flex items-center overflow-hidden bg-black">
           <div className="absolute inset-0 z-0">
             <AnimatePresence mode="wait">
               <motion.div
@@ -141,7 +141,7 @@ export default function ProjectsPage() {
                 style={{ backgroundImage: `url(${projects[heroIdx].image})` }}
               />
             </AnimatePresence>
-            <div className="absolute inset-0 bg-gradient-to-t from-brand-black via-brand-black/75 to-transparent z-10" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#121110] via-[#121110]/80 to-transparent z-10" />
           </div>
 
           <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full mt-12">
@@ -149,10 +149,10 @@ export default function ProjectsPage() {
               <span className="text-[10px] uppercase font-bold tracking-[0.35em] text-brand-gold bg-brand-gold/5 px-4 py-1.5 border border-brand-gold/20 rounded-none w-fit block mb-4">
                 PCP Case Studies
               </span>
-              <h1 className="text-5xl sm:text-7xl font-normal font-cormorant text-brand-offwhite tracking-wide leading-none">
+              <h1 className="text-5xl sm:text-7xl font-normal font-cormorant text-[#faf6f2] tracking-wide leading-none">
                 Architectural Work.
               </h1>
-              <p className="text-brand-sand/75 mt-6 text-sm sm:text-base font-poppins leading-relaxed max-w-xl">
+              <p className="text-brand-sand-400 mt-6 text-sm sm:text-base font-poppins leading-relaxed max-w-xl">
                 Explore our portfolio of completed projects. From heavy-duty commercial plazas to low-energy residential homes, discover how we build with durability.
               </p>
             </motion.div>
@@ -297,7 +297,7 @@ function ProductCard({ project, spanClass }: { project: Project; spanClass: stri
         />
         
         {/* Mask Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-brand-black via-brand-black/40 to-transparent z-10" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent z-10" />
         
         {/* Project details */}
         <div className="absolute inset-0 p-6 md:p-8 flex flex-col justify-between z-20">
@@ -305,7 +305,7 @@ function ProductCard({ project, spanClass }: { project: Project; spanClass: stri
             <span className="bg-brand-gold text-brand-black text-[9px] uppercase font-bold tracking-widest px-3 py-1.5 rounded-none border border-brand-gold/15 font-poppins">
               {project.type}
             </span>
-            <span className="p-2 bg-brand-black/85 border border-brand-gold/20 text-brand-gold rounded-none opacity-0 group-hover:opacity-100 transition-opacity">
+            <span className="p-2 bg-[#121110]/95 border border-brand-gold/20 text-brand-gold rounded-none opacity-0 group-hover:opacity-100 transition-opacity">
               <Eye className="w-4 h-4" />
             </span>
           </div>
@@ -316,7 +316,7 @@ function ProductCard({ project, spanClass }: { project: Project; spanClass: stri
               <span>{project.location}</span>
             </div>
             
-            <h3 className="text-2xl font-normal font-cormorant text-brand-offwhite mt-1 group-hover:text-brand-gold transition-colors">
+            <h3 className="text-2xl font-normal font-cormorant text-[#faf6f2] mt-1 group-hover:text-brand-gold transition-colors">
               {project.name}
             </h3>
             

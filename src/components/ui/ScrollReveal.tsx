@@ -74,7 +74,7 @@ export const ImageReveal: React.FC<ImageRevealProps> = ({ children, delay = 0 })
       <motion.div
         initial={{ clipPath: "inset(0% 100% 0% 0%)" }}
         whileInView={{ clipPath: "inset(0% 0% 0% 0%)" }}
-        viewport={{ once: false, margin: "-80px" }}
+        viewport={{ once: true, margin: "-80px" }}
         transition={{ duration: 1.2, delay, ease: [0.16, 1, 0.3, 1] }}
         className="w-full h-full overflow-hidden"
       >

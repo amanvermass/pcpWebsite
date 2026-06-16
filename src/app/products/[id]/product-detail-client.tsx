@@ -10,14 +10,55 @@ import { ArrowLeft, ArrowRight, Download, Send, Ruler, FileText, HardHat, FileSp
 import { ToastProvider, useToast } from "@/components/ui/Toast";
 import confetti from "canvas-confetti";
 import { Magnetic } from "@/components/ui/Magnetic";
-import { ImageReveal } from "@/components/ui/ScrollReveal";
+import { ImageReveal, ScrollReveal } from "@/components/ui/ScrollReveal";
 
 interface ProductDetailClientProps {
   product: Product;
 }
 
+const ProductCardSkeleton: React.FC<{ index: number }> = ({ index }) => {
+  const aspectRatios = ["aspect-[4/3]", "aspect-[16/10]", "aspect-[1/1]"];
+  const aspectClass = aspectRatios[index % aspectRatios.length];
+
+  return (
+    <div className="rounded-none border border-brand-gold/5 bg-brand-charcoal/30 flex flex-col justify-between overflow-hidden relative h-full">
+      <div className={`relative ${aspectClass} w-full bg-brand-black/50 border-b border-brand-gold/5 overflow-hidden`}>
+        {/* Shimmer sweep overlay */}
+        <motion.div
+          animate={{ x: ["-100%", "100%"] }}
+          transition={{ repeat: Infinity, duration: 1.6, ease: "linear" }}
+          className="absolute inset-0 bg-gradient-to-r from-transparent via-brand-gold/10 to-transparent -skew-x-12 pointer-events-none"
+        />
+      </div>
+      <div className="p-5 flex-grow flex flex-col justify-between gap-4">
+        <div className="space-y-3 font-poppins">
+          {/* Title bar with pulse */}
+          <div className="h-5 bg-brand-black/50 w-3/4 rounded-none animate-pulse" />
+          {/* Description line pulses */}
+          <div className="space-y-2">
+            <div className="h-3 bg-brand-black/30 w-full rounded-none animate-pulse" />
+            <div className="h-3 bg-brand-black/30 w-5/6 rounded-none animate-pulse" />
+          </div>
+        </div>
+        {/* Link pulse */}
+        <div className="h-4 bg-brand-black/40 w-1/3 rounded-none animate-pulse mt-4" />
+      </div>
+    </div>
+  );
+};
+
 function DetailContent({ product }: ProductDetailClientProps) {
   const { toast } = useToast();
+  const [isLoading, setIsLoading] = React.useState(true);
+
+  // Trigger loading effect when product changes (navigating between related details)
+  React.useEffect(() => {
+    setIsLoading(true);
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 500);
+    return () => clearTimeout(timer);
+  }, [product.id]);
 
   // Multi-image gallery state
   const galleryImages = [
@@ -169,7 +210,7 @@ function DetailContent({ product }: ProductDetailClientProps) {
                     className="object-cover w-full h-full"
                   />
                 </AnimatePresence>
-                <div className="absolute top-4 right-4 bg-brand-black/90 text-brand-gold border border-brand-gold/15 text-[9px] uppercase font-bold tracking-widest px-3 py-1.5 rounded-none z-10">
+                <div className="absolute top-4 right-4 bg-[#121110]/95 text-brand-gold border border-brand-gold/15 text-[9px] uppercase font-bold tracking-widest px-3 py-1.5 rounded-none z-10">
                   IMAGE {activeImageIdx + 1} / 4
                 </div>
               </div>
@@ -535,32 +576,46 @@ function DetailContent({ product }: ProductDetailClientProps) {
 
             {/* Carousel track */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-              {relatedProducts.map((p) => (
-                <div key={p.id} className="group rounded-none border border-brand-gold/10 bg-brand-charcoal flex flex-col justify-between hover:border-brand-gold/40 transition-colors shadow-lg">
-                  <div className="aspect-[4/3] w-full overflow-hidden bg-brand-black border-b border-brand-gold/10">
-                    <ImageReveal>
-                      <img src={p.image} alt={p.name} className="object-cover w-full h-full" />
-                    </ImageReveal>
-                  </div>
-                  <div className="p-5 flex-grow flex flex-col justify-between">
-                    <div>
-                      <h4 className="text-base font-normal font-cormorant text-brand-offwhite group-hover:text-brand-gold transition-colors">
-                        {p.name}
-                      </h4>
-                      <p className="text-[10px] font-poppins text-brand-sand/60 mt-1 leading-relaxed line-clamp-2">
-                        {p.desc}
-                      </p>
+              {isLoading ? (
+                Array.from({ length: 4 }).map((_, index) => (
+                  <ProductCardSkeleton key={index} index={index} />
+                ))
+              ) : (
+                relatedProducts.map((p, index) => (
+                  <ScrollReveal 
+                    key={p.id} 
+                    delay={(index % 4) * 0.1} 
+                    duration={0.8}
+                    direction="up" 
+                    distance={30}
+                  >
+                    <div className="group rounded-none border border-brand-gold/10 bg-brand-charcoal flex flex-col justify-between hover:border-brand-gold/40 transition-colors shadow-lg h-full">
+                      <div className="aspect-[4/3] w-full overflow-hidden bg-brand-black border-b border-brand-gold/10">
+                        <ImageReveal>
+                          <img src={p.image} alt={p.name} className="object-cover w-full h-full" />
+                        </ImageReveal>
+                      </div>
+                      <div className="p-5 flex-grow flex flex-col justify-between">
+                        <div>
+                          <h4 className="text-base font-normal font-cormorant text-brand-offwhite group-hover:text-brand-gold transition-colors">
+                            {p.name}
+                          </h4>
+                          <p className="text-[10px] font-poppins text-brand-sand/60 mt-1 leading-relaxed line-clamp-2">
+                            {p.desc}
+                          </p>
+                        </div>
+                        <Link
+                          href={`/products/${p.id}`}
+                          className="mt-4 inline-flex items-center gap-1.5 text-[10px] font-semibold font-poppins uppercase tracking-wider text-brand-gold hover:text-brand-offwhite transition-colors cursor-none"
+                        >
+                          View Specs
+                          <ArrowRight className="w-3 h-3" />
+                        </Link>
+                      </div>
                     </div>
-                    <Link
-                      href={`/products/${p.id}`}
-                      className="mt-4 inline-flex items-center gap-1.5 text-[10px] font-semibold font-poppins uppercase tracking-wider text-brand-gold hover:text-brand-offwhite transition-colors cursor-none"
-                    >
-                      View Specs
-                      <ArrowRight className="w-3 h-3" />
-                    </Link>
-                  </div>
-                </div>
-              ))}
+                  </ScrollReveal>
+                ))
+              )}
             </div>
           </div>
         )}
