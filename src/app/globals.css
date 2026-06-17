@@ -49,6 +49,14 @@
   --animate-fade-in-up: fade-in-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   --animate-float: float 6s ease-in-out infinite;
   --animate-pulse-subtle: pulse-subtle 3s ease-in-out infinite;
+
+  /* Global Sharp Edges: Override standard border radius sizes to 0px */
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
+  --radius-2xl: 0px;
+  --radius-3xl: 0px;
 }
 
 @keyframes fade-in {

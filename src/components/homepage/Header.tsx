@@ -1,11 +1,88 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Menu, X, ChevronDown, Building2, HardHat, FileText, Calculator, PhoneCall, Sun, Moon, ArrowRight, Compass, Layers, Hammer } from "lucide-react";
+import { Menu, X, ChevronDown, Building2, HardHat, FileText, Calculator, PhoneCall, Sun, Moon, ArrowRight, Compass, Layers, Hammer, LayoutGrid } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Logo } from "./Logo";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+
+// Custom relevant line-art SVG icons matching the Vandersanden aesthetic
+const FacadeIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" {...props}>
+    <rect x="2" y="4" width="20" height="16" rx="1.5" />
+    <line x1="2" y1="9" x2="22" y2="9" />
+    <line x1="2" y1="15" x2="22" y2="15" />
+    <line x1="7" y1="4" x2="7" y2="9" />
+    <line x1="17" y1="4" x2="17" y2="9" />
+    <line x1="12" y1="9" x2="12" y2="15" />
+    <line x1="7" y1="15" x2="7" y2="20" />
+    <line x1="17" y1="15" x2="17" y2="20" />
+  </svg>
+);
+
+const PaversIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" {...props}>
+    <path d="M6 2l6 6-4 4-6-6z" />
+    <path d="M14 2l6 6-4 4-6-6z" />
+    <path d="M10 8l6 6-4 4-6-6z" />
+    <path d="M18 8l6 6-4 4-6-6z" />
+  </svg>
+);
+
+const RoofingIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" {...props}>
+    <path d="M3 20c3-3 3-3 6 0 3-3 3-3 6 0 3-3 3-3 6 0" />
+    <path d="M3 14c3-3 3-3 6 0 3-3 3-3 6 0 3-3 3-3 6 0" />
+    <path d="M3 8c3-3 3-3 6 0 3-3 3-3 6 0 3-3 3-3 6 0" />
+  </svg>
+);
+
+const HollowBlockIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" {...props}>
+    <rect x="2" y="4" width="20" height="16" rx="1.5" />
+    <rect x="5" y="8" width="5" height="8" rx="0.5" />
+    <rect x="14" y="8" width="5" height="8" rx="0.5" />
+  </svg>
+);
+
+const AACBlockIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" {...props}>
+    <rect x="2" y="5" width="20" height="14" rx="1.5" />
+    <line x1="6" y1="10" x2="6.01" y2="10" />
+    <line x1="12" y1="10" x2="12.01" y2="10" />
+    <line x1="18" y1="10" x2="18.01" y2="10" />
+    <line x1="9" y1="14" x2="9.01" y2="14" />
+    <line x1="15" y1="14" x2="15.01" y2="14" />
+  </svg>
+);
+
+const ExpertiseIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" {...props}>
+    <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z" />
+    <path d="M14 2v5h5" />
+    <line x1="8" y1="13" x2="16" y2="13" />
+    <line x1="8" y1="17" x2="16" y2="17" />
+  </svg>
+);
+
+const ProfessionalIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" {...props}>
+    <rect x="6" y="2" width="12" height="20" rx="1" />
+    <line x1="9" y1="2" x2="9" y2="22" />
+    <line x1="6" y1="6" x2="9" y2="6" />
+    <line x1="6" y1="10" x2="9" y2="10" />
+    <line x1="6" y1="14" x2="9" y2="14" />
+    <line x1="6" y1="18" x2="9" y2="18" />
+  </svg>
+);
+
+const ConsumerIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" {...props}>
+    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+    <polyline points="9 22 9 12 15 12 15 22" />
+  </svg>
+);
 
 interface HeaderProps {
   darkMode: boolean;
@@ -91,89 +168,132 @@ export const Header: React.FC<HeaderProps> = ({ darkMode, setDarkMode }) => {
   return (
     <header
       onMouseLeave={() => setActiveDropdown(null)}
-      className={`fixed top-0 left-0 w-full z-40 transition-all duration-500 border-b ${
-        scrolled
-          ? "py-3 bg-brand-slate-950/90 backdrop-blur-md shadow-lg border-brand-terracotta-600/40"
-          : "py-5 bg-transparent border-transparent"
+      className={`fixed top-0 left-0 w-full z-40 transition-all duration-500 ${
+        scrolled 
+          ? "bg-brand-slate-950 py-3 shadow-md border-b border-brand-slate-800/40" 
+          : "bg-transparent py-4 border-none shadow-none"
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+      <div className={`mx-auto transition-all duration-500 relative ${scrolled ? "max-w-7xl px-4 sm:px-6 lg:px-8" : "max-w-full px-4 md:px-8"}`}>
         <div className="flex items-center justify-between">
-          {/* Logo */}
-          <div className="flex items-center gap-2 cursor-pointer" onClick={() => {
-            if (pathname === "/") {
-              window.scrollTo({ top: 0, behavior: "smooth" });
-            } else {
-              router.push("/");
-            }
-          }}>
-            <Logo height="48" inverseText={darkMode} />
+          
+          {/* Left Block (Logo & Project Icon Card) */}
+          <div className={`flex items-center gap-4 transition-all duration-500 ${
+            scrolled 
+              ? "bg-transparent border-none p-0 shadow-none" 
+              : "bg-brand-slate-950 border border-brand-slate-800/40 px-5 py-2.5 rounded-xl shadow-lg"
+          }`}>
+            {/* Project Grid Icon */}
+            <button 
+              onClick={() => handleLinkClick("/projects")}
+              className="p-1.5 rounded-lg text-brand-gold hover:text-brand-terracotta-500 hover:bg-brand-slate-900 transition-all duration-300 flex items-center justify-center cursor-pointer"
+              title="View Projects Portfolio"
+            >
+              <LayoutGrid className="w-5 h-5" />
+            </button>
+            
+            <div className="h-5 w-[1px] bg-brand-slate-800" />
+            
+            {/* Logo */}
+            <div className="flex items-center gap-2 cursor-pointer" onClick={() => {
+              if (pathname === "/") {
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              } else {
+                router.push("/");
+              }
+            }}>
+              <Logo height="36" inverseText={true} />
+            </div>
           </div>
 
-          {/* Desktop Nav */}
-          <nav className="hidden lg:flex items-center gap-6">
-            {/* Products Dropdown Trigger */}
-            <div className="relative">
+          {/* Right Block (Desktop Menu & Mobile Toggle Card) */}
+          <div className={`flex items-center gap-6 transition-all duration-500 ${
+            scrolled 
+              ? "bg-transparent border-none p-0 shadow-none" 
+              : "bg-brand-slate-950 border border-[#ce9456]/20 px-6 py-2 rounded-xl shadow-lg"
+          }`}>
+            {/* Desktop Nav */}
+            <nav className="hidden lg:flex items-center gap-6">
+              {/* Products Dropdown Trigger */}
+              <div className="relative">
+                <button
+                  onMouseEnter={() => setActiveDropdown("products")}
+                  className={`flex items-center gap-1 text-sm font-semibold transition-colors py-2 cursor-pointer ${pathname.startsWith("/products") ? "text-brand-terracotta-500" : "text-brand-slate-200 hover:text-brand-terracotta-500"}`}
+                >
+                  Products <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${activeDropdown === "products" ? "rotate-180" : ""}`} />
+                </button>
+              </div>
+
+              {/* Projects */}
               <button
-                onMouseEnter={() => setActiveDropdown("products")}
-                className={`flex items-center gap-1 text-sm font-semibold transition-colors py-2 cursor-pointer ${pathname.startsWith("/products") ? "text-brand-terracotta-500" : "text-brand-slate-200 hover:text-brand-terracotta-500"}`}
+                onClick={() => handleLinkClick("/projects")}
+                className={`text-sm font-semibold transition-colors py-2 cursor-pointer ${pathname.startsWith("/projects") ? "text-brand-terracotta-500" : "text-brand-slate-200 hover:text-brand-terracotta-500"}`}
               >
-                Products <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${activeDropdown === "products" ? "rotate-180" : ""}`} />
+                Projects
               </button>
-            </div>
 
-            {/* Projects */}
-            <button
-              onClick={() => handleLinkClick("/projects")}
-              className={`text-sm font-semibold transition-colors py-2 cursor-pointer ${pathname.startsWith("/projects") ? "text-brand-terracotta-500" : "text-brand-slate-200 hover:text-brand-terracotta-500"}`}
-            >
-              Projects
-            </button>
+              {/* Calculators Dropdown Trigger */}
+              <div className="relative">
+                <button
+                  onMouseEnter={() => setActiveDropdown("calculators")}
+                  className={`flex items-center gap-1 text-sm font-semibold transition-colors py-2 cursor-pointer ${pathname.startsWith("/calculators") ? "text-brand-terracotta-500" : "text-brand-slate-200 hover:text-brand-terracotta-500"}`}
+                >
+                  Calculators <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${activeDropdown === "calculators" ? "rotate-180" : ""}`} />
+                </button>
+              </div>
 
-            {/* Calculators Dropdown Trigger */}
-            <div className="relative">
+              {/* Recommender Quiz */}
               <button
-                onMouseEnter={() => setActiveDropdown("calculators")}
-                className={`flex items-center gap-1 text-sm font-semibold transition-colors py-2 cursor-pointer ${pathname.startsWith("/calculators") ? "text-brand-terracotta-500" : "text-brand-slate-200 hover:text-brand-terracotta-500"}`}
+                onClick={() => handleLinkClick("#recommender")}
+                className="text-sm font-semibold text-brand-slate-200 hover:text-brand-terracotta-500 transition-colors py-2 cursor-pointer"
               >
-                Calculators <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${activeDropdown === "calculators" ? "rotate-180" : ""}`} />
+                Material Wizard
               </button>
-            </div>
 
-            {/* Recommender Quiz */}
-            <button
-              onClick={() => handleLinkClick("#recommender")}
-              className="text-sm font-semibold text-brand-slate-200 hover:text-brand-terracotta-500 transition-colors py-2 cursor-pointer"
-            >
-              Material Wizard
-            </button>
+              {/* Resources Dropdown Trigger */}
+              <div className="relative">
+                <button
+                  onMouseEnter={() => setActiveDropdown("resources")}
+                  className={`flex items-center gap-1 text-sm font-semibold transition-colors py-2 cursor-pointer ${pathname.startsWith("/resources") ? "text-brand-terracotta-500" : "text-brand-slate-200 hover:text-brand-terracotta-500"}`}
+                >
+                  Resources <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${activeDropdown === "resources" ? "rotate-180" : ""}`} />
+                </button>
+              </div>
 
-            {/* Resources Dropdown Trigger */}
-            <div className="relative">
+              {/* About */}
               <button
-                onMouseEnter={() => setActiveDropdown("resources")}
-                className={`flex items-center gap-1 text-sm font-semibold transition-colors py-2 cursor-pointer ${pathname.startsWith("/resources") ? "text-brand-terracotta-500" : "text-brand-slate-200 hover:text-brand-terracotta-500"}`}
+                onClick={() => handleLinkClick("/about")}
+                className={`text-sm font-semibold transition-colors py-2 cursor-pointer ${pathname.startsWith("/about") ? "text-brand-terracotta-500" : "text-brand-slate-200 hover:text-brand-terracotta-500"}`}
               >
-                Resources <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${activeDropdown === "resources" ? "rotate-180" : ""}`} />
+                About
               </button>
-            </div>
 
-            {/* About */}
-            <button
-              onClick={() => handleLinkClick("/about")}
-              className={`text-sm font-semibold transition-colors py-2 cursor-pointer ${pathname.startsWith("/about") ? "text-brand-terracotta-500" : "text-brand-slate-200 hover:text-brand-terracotta-500"}`}
-            >
-              About
-            </button>
+              {/* Contact */}
+              <button
+                onClick={() => handleLinkClick("/contact")}
+                className={`text-sm font-semibold transition-colors py-2 cursor-pointer ${pathname.startsWith("/contact") ? "text-brand-terracotta-500" : "text-brand-slate-200 hover:text-brand-terracotta-500"}`}
+              >
+                Contact
+              </button>
 
-            {/* Contact */}
+              {/* Enquire Now Button */}
+              <button
+                onClick={() => handleLinkClick("/contact")}
+                className="bg-brand-gold hover:bg-brand-gold-500 text-brand-black px-4.5 py-2  text-xs font-bold uppercase tracking-wider transition-colors duration-300 font-poppins flex items-center gap-1.5 cursor-pointer shadow-md"
+              >
+                <PhoneCall className="w-3.5 h-3.5" />
+                Enquire Now
+              </button>
+            </nav>
+
+            {/* Mobile Menu Toggle */}
             <button
-              onClick={() => handleLinkClick("/contact")}
-              className={`text-sm font-semibold transition-colors py-2 cursor-pointer ${pathname.startsWith("/contact") ? "text-brand-terracotta-500" : "text-brand-slate-200 hover:text-brand-terracotta-500"}`}
+              onClick={() => setIsOpen(!isOpen)}
+              className="lg:hidden p-2 rounded-lg text-brand-slate-200 hover:text-brand-terracotta-500 hover:bg-brand-slate-900 transition-colors cursor-pointer"
             >
-              Contact
+              {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
-          </nav>
+          </div>
 
           {/* Dropdown panels rendered absolute relative to the outer container */}
           <AnimatePresence>
@@ -182,44 +302,46 @@ export const Header: React.FC<HeaderProps> = ({ darkMode, setDarkMode }) => {
                 initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 15 }}
-                className="absolute left-4 right-4 top-full mt-2 rounded-2xl shadow-2xl bg-brand-slate-950/95 border border-brand-slate-800/40 p-6 grid grid-cols-12 gap-8 z-50 backdrop-blur-md text-left"
+                className="absolute max-w-5xl mx-auto left-4 right-4 top-full mt-2 rounded-2xl shadow-2xl bg-brand-slate-950 border border-brand-slate-800/40 p-6 grid grid-cols-12 gap-8 z-50 text-left"
               >
                 {/* Left Column Callout */}
-                <div className="col-span-4 bg-brand-black p-5 border border-brand-gold/15 flex flex-col justify-between relative overflow-hidden group rounded-xl">
-                  <div className="absolute inset-0 z-0 opacity-20 pointer-events-none group-hover:scale-105 transition-transform duration-700">
-                    <img src="/images/hero-3.jpg" alt="Fired clay tile facade detail" className="w-full h-full object-cover" />
+                <div className="col-span-4 bg-brand-black border border-brand-gold/15 flex flex-col justify-between relative overflow-hidden group rounded-xl">
+                  <div className="h-32 relative w-full overflow-hidden shrink-0 border-b border-brand-gold/10">
+                    <img src="/images/hero-3.jpg" alt="Fired clay tile facade detail" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                   </div>
-                  <div className="relative z-10 space-y-3">
-                    <span className="text-[8px] tracking-[0.3em] font-bold text-brand-gold uppercase block font-poppins">
-                      FEATURED SELECTION
-                    </span>
-                    <h4 className="text-lg font-normal font-cormorant text-brand-offwhite leading-tight">
-                      Natural Terracotta Envelopes
-                    </h4>
-                    <p className="text-[10px] font-poppins text-brand-sand/70 leading-relaxed">
-                      Eco-certified, thermal-insulating facades designed for high-load metropolitan layouts.
-                    </p>
+                  <div className="p-4 flex flex-col justify-between flex-grow space-y-4">
+                    <div className="space-y-2">
+                      <span className="text-[8px] tracking-[0.3em] font-bold text-brand-gold uppercase block font-poppins">
+                        FEATURED SELECTION
+                      </span>
+                      <h4 className="text-base font-semibold font-cormorant text-brand-offwhite leading-tight">
+                        Natural Terracotta Envelopes
+                      </h4>
+                      <p className="text-[10px] font-poppins text-brand-sand/70 leading-relaxed">
+                        Eco-certified, thermal-insulating facades designed for high-load metropolitan layouts.
+                      </p>
+                    </div>
+                    <Link 
+                      href="/products?category=Terracotta"
+                      onClick={() => setActiveDropdown(null)}
+                      className="inline-flex items-center gap-1.5 text-[9px] uppercase tracking-widest text-brand-gold font-bold font-poppins w-fit"
+                    >
+                      Explore Range
+                      <ArrowRight className="w-3.5 h-3.5 text-brand-gold" />
+                    </Link>
                   </div>
-                  <Link 
-                    href="/products?category=Terracotta"
-                    onClick={() => setActiveDropdown(null)}
-                    className="relative z-10 inline-flex items-center gap-1.5 text-[9px] uppercase tracking-widest text-brand-gold font-bold font-poppins mt-6"
-                  >
-                    Explore Range
-                    <ArrowRight className="w-3.5 h-3.5 text-brand-gold" />
-                  </Link>
                 </div>
 
                 {/* Right Columns list */}
                 <div className="col-span-8 grid grid-cols-2 gap-4">
                   {menuItems.products.map((item, idx) => {
                     const icons = [
-                      <Layers key="bricks" className="w-4 h-4 text-brand-gold" />,
-                      <Building2 key="facades" className="w-4 h-4 text-brand-gold" />,
-                      <Compass key="tiles" className="w-4 h-4 text-brand-gold" />,
-                      <Layers key="pavers" className="w-4 h-4 text-brand-gold" />,
-                      <Hammer key="hollow" className="w-4 h-4 text-brand-gold" />,
-                      <Building2 key="aac" className="w-4 h-4 text-brand-gold" />,
+                      <FacadeIcon key="bricks" className="w-5 h-5 text-brand-terracotta-500" />,
+                      <FacadeIcon key="facades" className="w-5 h-5 text-brand-terracotta-500" />,
+                      <RoofingIcon key="tiles" className="w-5 h-5 text-brand-terracotta-500" />,
+                      <PaversIcon key="pavers" className="w-5 h-5 text-brand-terracotta-500" />,
+                      <HollowBlockIcon key="hollow" className="w-5 h-5 text-brand-terracotta-500" />,
+                      <AACBlockIcon key="aac" className="w-5 h-5 text-brand-terracotta-500" />,
                     ];
                     return (
                       <Link
@@ -251,43 +373,45 @@ export const Header: React.FC<HeaderProps> = ({ darkMode, setDarkMode }) => {
                 initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 15 }}
-                className="absolute left-4 right-4 top-full mt-2 rounded-2xl shadow-2xl bg-brand-slate-950/95 border border-brand-slate-800/40 p-6 grid grid-cols-12 gap-8 z-50 backdrop-blur-md text-left"
+                className="absolute max-w-5xl mx-auto left-4 right-4 top-full mt-2 rounded-2xl shadow-2xl bg-brand-slate-950 border border-brand-slate-800/40 p-6 grid grid-cols-12 gap-8 z-50 text-left"
               >
                 {/* Left Column Callout */}
-                <div className="col-span-4 bg-brand-black p-5 border border-brand-gold/15 flex flex-col justify-between relative overflow-hidden group rounded-xl">
-                  <div className="absolute inset-0 z-0 opacity-20 pointer-events-none group-hover:scale-105 transition-transform duration-700">
-                    <img src="/images/hero-2.jpg" alt="PCP Automated Factory" className="w-full h-full object-cover" />
+                <div className="col-span-4 bg-brand-black border border-brand-gold/15 flex flex-col justify-between relative overflow-hidden group rounded-xl">
+                  <div className="h-32 relative w-full overflow-hidden shrink-0 border-b border-brand-gold/10">
+                    <img src="/images/hero-2.jpg" alt="PCP Automated Factory" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                   </div>
-                  <div className="relative z-10 space-y-3">
-                    <span className="text-[8px] tracking-[0.3em] font-bold text-brand-gold uppercase block font-poppins">
-                      ESTIMATOR TOOLS
-                    </span>
-                    <h4 className="text-lg font-normal font-cormorant text-brand-offwhite leading-tight">
-                      Engineering Estimators Desk
-                    </h4>
-                    <p className="text-[10px] font-poppins text-brand-sand/70 leading-relaxed">
-                      Estimate material volumes, Roman interlocking patterns, and net masonry boundaries in real-time.
-                    </p>
+                  <div className="p-4 flex flex-col justify-between flex-grow space-y-4">
+                    <div className="space-y-2">
+                      <span className="text-[8px] tracking-[0.3em] font-bold text-brand-gold uppercase block font-poppins">
+                        ESTIMATOR TOOLS
+                      </span>
+                      <h4 className="text-base font-semibold font-cormorant text-brand-offwhite leading-tight">
+                        Engineering Estimators Desk
+                      </h4>
+                      <p className="text-[10px] font-poppins text-brand-sand/70 leading-relaxed">
+                        Estimate material volumes, Roman interlocking patterns, and net masonry boundaries in real-time.
+                      </p>
+                    </div>
+                    <Link 
+                      href="/calculators"
+                      onClick={() => setActiveDropdown(null)}
+                      className="inline-flex items-center gap-1.5 text-[9px] uppercase tracking-widest text-brand-gold font-bold font-poppins w-fit"
+                    >
+                      Go to Estimators
+                      <ArrowRight className="w-3.5 h-3.5 text-brand-gold" />
+                    </Link>
                   </div>
-                  <Link 
-                    href="/calculators"
-                    onClick={() => setActiveDropdown(null)}
-                    className="relative z-10 inline-flex items-center gap-1.5 text-[9px] uppercase tracking-widest text-brand-gold font-bold font-poppins mt-6"
-                  >
-                    Go to Estimators
-                    <ArrowRight className="w-3.5 h-3.5 text-brand-gold" />
-                  </Link>
                 </div>
 
                 {/* Right Columns list */}
                 <div className="col-span-8 grid grid-cols-2 gap-4">
                   {menuItems.calculators.map((item, idx) => {
                     const icons = [
-                      <Calculator key="bricks" className="w-4 h-4 text-brand-gold" />,
-                      <Layers key="house" className="w-4 h-4 text-brand-gold" />,
-                      <Hammer key="wall" className="w-4 h-4 text-brand-gold" />,
-                      <Compass key="roof" className="w-4 h-4 text-brand-gold" />,
-                      <Calculator key="paver" className="w-4 h-4 text-brand-gold" />,
+                      <FacadeIcon key="bricks" className="w-5 h-5 text-brand-terracotta-500" />,
+                      <ConsumerIcon key="house" className="w-5 h-5 text-brand-terracotta-500" />,
+                      <ExpertiseIcon key="wall" className="w-5 h-5 text-brand-terracotta-500" />,
+                      <RoofingIcon key="roof" className="w-5 h-5 text-brand-terracotta-500" />,
+                      <PaversIcon key="paver" className="w-5 h-5 text-brand-terracotta-500" />,
                     ];
                     return (
                       <Link
@@ -319,42 +443,44 @@ export const Header: React.FC<HeaderProps> = ({ darkMode, setDarkMode }) => {
                 initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 15 }}
-                className="absolute left-4 right-4 top-full mt-2 rounded-2xl shadow-2xl bg-brand-slate-950/95 border border-brand-slate-800/40 p-6 grid grid-cols-12 gap-8 z-50 backdrop-blur-md text-left"
+                className="absolute max-w-5xl mx-auto left-4 right-4 top-full mt-2 rounded-2xl shadow-2xl bg-brand-slate-950 border border-brand-slate-800/40 p-6 grid grid-cols-12 gap-8 z-50 text-left"
               >
                 {/* Left Column Callout */}
-                <div className="col-span-4 bg-brand-black p-5 border border-brand-gold/15 flex flex-col justify-between relative overflow-hidden group rounded-xl">
-                  <div className="absolute inset-0 z-0 opacity-20 pointer-events-none group-hover:scale-105 transition-transform duration-700">
-                    <img src="/images/hero-1.jpg" alt="Architectural BIM blueprints" className="w-full h-full object-cover" />
+                <div className="col-span-4 bg-brand-black border border-brand-gold/15 flex flex-col justify-between relative overflow-hidden group rounded-xl">
+                  <div className="h-32 relative w-full overflow-hidden shrink-0 border-b border-brand-gold/10">
+                    <img src="/images/hero-1.jpg" alt="Architectural BIM blueprints" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                   </div>
-                  <div className="relative z-10 space-y-3">
-                    <span className="text-[8px] tracking-[0.3em] font-bold text-brand-gold uppercase block font-poppins">
-                      TECHNICAL DIRECTORY
-                    </span>
-                    <h4 className="text-lg font-normal font-cormorant text-brand-offwhite leading-tight">
-                      Architect CAD & BIM Center
-                    </h4>
-                    <p className="text-[10px] font-poppins text-brand-sand/70 leading-relaxed">
-                      Download technical sheets, detailed DWG drawings, Revit RVT profiles, and installation manuals.
-                    </p>
+                  <div className="p-4 flex flex-col justify-between flex-grow space-y-4">
+                    <div className="space-y-2">
+                      <span className="text-[8px] tracking-[0.3em] font-bold text-brand-gold uppercase block font-poppins">
+                        TECHNICAL DIRECTORY
+                      </span>
+                      <h4 className="text-base font-semibold font-cormorant text-brand-offwhite leading-tight">
+                        Architect CAD & BIM Center
+                      </h4>
+                      <p className="text-[10px] font-poppins text-brand-sand/70 leading-relaxed">
+                        Download technical sheets, detailed DWG drawings, Revit RVT profiles, and installation manuals.
+                      </p>
+                    </div>
+                    <Link 
+                      href="/resources"
+                      onClick={() => setActiveDropdown(null)}
+                      className="inline-flex items-center gap-1.5 text-[9px] uppercase tracking-widest text-brand-gold font-bold font-poppins w-fit"
+                    >
+                      Go to Resources
+                      <ArrowRight className="w-3.5 h-3.5 text-brand-gold" />
+                    </Link>
                   </div>
-                  <Link 
-                    href="/resources"
-                    onClick={() => setActiveDropdown(null)}
-                    className="relative z-10 inline-flex items-center gap-1.5 text-[9px] uppercase tracking-widest text-brand-gold font-bold font-poppins mt-6"
-                  >
-                    Go to Resources
-                    <ArrowRight className="w-3.5 h-3.5 text-brand-gold" />
-                  </Link>
                 </div>
 
                 {/* Right Columns list */}
                 <div className="col-span-8 grid grid-cols-2 gap-4">
                   {menuItems.resources.map((item, idx) => {
                     const icons = [
-                      <FileText key="datasheet" className="w-4 h-4 text-brand-gold" />,
-                      <Compass key="cad" className="w-4 h-4 text-brand-gold" />,
-                      <Building2 key="bim" className="w-4 h-4 text-brand-gold" />,
-                      <HardHat key="manual" className="w-4 h-4 text-brand-gold" />,
+                      <ExpertiseIcon key="datasheet" className="w-5 h-5 text-brand-terracotta-500" />,
+                      <ProfessionalIcon key="cad" className="w-5 h-5 text-brand-terracotta-500" />,
+                      <ProfessionalIcon key="bim" className="w-5 h-5 text-brand-terracotta-500" />,
+                      <ProfessionalIcon key="manual" className="w-5 h-5 text-brand-terracotta-500" />,
                     ];
                     return (
                       <Link
@@ -450,7 +576,7 @@ export const Header: React.FC<HeaderProps> = ({ darkMode, setDarkMode }) => {
               className="flex items-center justify-center gap-2 bg-brand-terracotta-600 hover:bg-brand-terracotta-700 text-white w-full py-3 rounded-xl font-bold transition-all text-center"
             >
               <PhoneCall className="w-4 h-4" />
-              Inquire Now
+              Enquire Now
             </button>
           </motion.div>
         )}

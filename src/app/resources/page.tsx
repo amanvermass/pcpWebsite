@@ -78,7 +78,7 @@ function ResourcesContent() {
       </div>
 
       {/* Search and Filters panel */}
-      <div className="sticky top-[72px] z-30 bg-brand-slate-950/80 backdrop-blur-md border-b border-brand-slate-800/60 py-4 shadow-sm">
+      <div className="relative z-10 bg-brand-slate-950/80 backdrop-blur-md border-b border-brand-slate-800/60 py-4 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
           {/* Search bar */}
           <div className="relative flex-grow max-w-md">

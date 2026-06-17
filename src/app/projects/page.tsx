@@ -174,7 +174,7 @@ export default function ProjectsPage() {
         </div>
 
         {/* Project Filters Sticky Bar */}
-        <div className="sticky top-[72px] z-30 bg-brand-charcoal/95 border-y border-brand-gold/10 py-4.5 backdrop-blur-md">
+        <div className="relative z-10 bg-brand-charcoal/95 border-y border-brand-gold/10 py-4.5 backdrop-blur-md">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-4 overflow-x-auto scrollbar-none">
             <div className="flex items-center gap-2 text-brand-sand/50 text-xs font-bold uppercase tracking-widest shrink-0 font-poppins">
               <Filter className="w-4 h-4 text-brand-gold" />
@@ -280,54 +280,55 @@ function ProductCard({ project, spanClass }: { project: Project; spanClass: stri
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={handleMouseLeave}
-      className={`${spanClass} relative overflow-hidden group border border-brand-gold/10 bg-brand-charcoal hover:border-brand-gold/35 cursor-none transition-colors duration-500 shadow-xl`}
+      className={`${spanClass} relative overflow-hidden flex flex-col group border border-brand-gold/10 bg-brand-charcoal hover:border-brand-gold/35 cursor-pointer transition-colors duration-500 shadow-xl`}
     >
-      <Link href={`/projects/${project.id}`} className="block w-full h-full relative">
-        {/* Background Image with distortion displacement */}
-        <motion.img
-          src={project.image}
-          alt={project.name}
-          animate={{
-            x: mousePos.x,
-            y: mousePos.y,
-            scale: isHovered ? 1.08 : 1
-          }}
-          transition={{ type: "tween", ease: "linear", duration: 0.1 }}
-          className="absolute inset-0 object-cover w-full h-full"
-        />
-        
-        {/* Mask Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent z-10" />
-        
-        {/* Project details */}
-        <div className="absolute inset-0 p-6 md:p-8 flex flex-col justify-between z-20">
-          <div className="flex justify-between items-start">
-            <span className="bg-brand-gold text-brand-black text-[9px] uppercase font-bold tracking-widest px-3 py-1.5 rounded-none border border-brand-gold/15 font-poppins">
-              {project.type}
-            </span>
-            <span className="p-2 bg-[#121110]/95 border border-brand-gold/20 text-brand-gold rounded-none opacity-0 group-hover:opacity-100 transition-opacity">
-              <Eye className="w-4 h-4" />
-            </span>
-          </div>
+      <Link href={`/projects/${project.id}`} className="flex flex-col h-full w-full">
+        {/* Image Container: fully clear, no overlay */}
+        <div className="relative flex-grow overflow-hidden bg-brand-black min-h-[180px]">
+          <motion.img
+            src={project.image}
+            alt={project.name}
+            animate={{
+              x: mousePos.x,
+              y: mousePos.y,
+              scale: isHovered ? 1.08 : 1
+            }}
+            transition={{ type: "tween", ease: "linear", duration: 0.1 }}
+            className="absolute inset-0 object-cover w-full h-full"
+          />
+          <span className="absolute top-4 left-4 bg-brand-gold text-brand-black text-[9px] uppercase font-bold tracking-widest px-3 py-1.5 border border-brand-gold font-poppins z-20">
+            {project.type}
+          </span>
+          <span className="absolute top-4 right-4 p-2 bg-[#121110]/95 border border-brand-gold/20 text-brand-gold rounded-none opacity-0 group-hover:opacity-100 transition-opacity z-20">
+            <Eye className="w-4 h-4" />
+          </span>
+        </div>
 
+        {/* Text Container: on solid background */}
+        <div className="p-5 flex flex-col justify-between shrink-0 bg-brand-charcoal">
           <div>
-            <div className="flex items-center gap-1.5 text-xs text-brand-gold font-semibold font-poppins">
+            <div className="flex items-center gap-1.5 text-[10px] text-brand-gold font-semibold font-poppins">
               <MapPin className="w-3.5 h-3.5 shrink-0" />
               <span>{project.location}</span>
             </div>
             
-            <h3 className="text-2xl font-normal font-cormorant text-[#faf6f2] mt-1 group-hover:text-brand-gold transition-colors">
+            <h3 className="text-xl font-normal font-cormorant text-brand-offwhite mt-1.5 group-hover:text-brand-gold transition-colors line-clamp-1">
               {project.name}
             </h3>
             
-            <p className="text-xs font-poppins text-brand-sand/60 mt-2 line-clamp-2 leading-relaxed max-w-lg">
+            <p className="text-xs font-poppins text-brand-sand/70 mt-2 line-clamp-2 leading-relaxed">
               {project.desc}
             </p>
+          </div>
 
-            <div className="mt-4 flex items-center gap-1.5 text-[9px] uppercase font-bold tracking-widest text-brand-gold font-poppins group-hover:text-brand-offwhite transition-colors">
+          <div className="mt-4 flex items-center justify-between pt-4 border-t border-brand-gold/5">
+            <div className="flex items-center gap-1.5 text-[9px] uppercase font-bold tracking-widest text-brand-gold font-poppins">
               <span>View Case details</span>
               <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
             </div>
+            <span className="text-[10px] font-bold text-brand-sand/40">
+              Completed {project.year}
+            </span>
           </div>
         </div>
       </Link>

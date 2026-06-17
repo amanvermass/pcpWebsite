@@ -395,29 +395,28 @@ function ProjectDetailContent({ project }: ProjectDetailClientProps) {
             {relatedProjects.map((p) => (
               <div 
                 key={p.id} 
-                className="bg-brand-charcoal border border-brand-gold/10 hover:border-brand-gold/30 transition-colors flex flex-col group"
+                className="bg-brand-charcoal border border-brand-gold/10 hover:border-brand-gold/35 transition-colors flex flex-col group rounded-xl overflow-hidden shadow-md"
               >
-                <Link href={`/projects/${p.id}`} className="block relative aspect-[16/10] overflow-hidden bg-black">
+                <Link href={`/projects/${p.id}`} className="block relative aspect-[16/10] overflow-hidden bg-brand-black">
                   <ImageReveal>
                     <img 
                       src={p.image} 
                       alt={p.name} 
-                      className="w-full h-full object-cover" 
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
                     />
                   </ImageReveal>
-                  <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80 z-10" />
-                  <span className="absolute top-4 left-4 bg-[#121110]/95 border border-brand-gold/20 text-brand-gold text-[9px] uppercase font-bold tracking-widest px-2.5 py-1 font-poppins z-20">
+                  <span className="absolute top-4 left-4 bg-brand-gold text-brand-black text-[9px] uppercase font-bold tracking-widest px-2.5 py-1.5 border border-brand-gold font-poppins z-20">
                     {p.type}
                   </span>
                 </Link>
                 
-                <div className="p-6 flex-grow flex flex-col justify-between gap-4">
+                <div className="p-5 flex-grow flex flex-col justify-between gap-4 bg-brand-charcoal">
                   <div>
-                    <div className="flex items-center gap-1 text-[10px] text-brand-sand/60 font-semibold font-poppins">
-                      <MapPin className="w-3 h-3 text-brand-gold" />
+                    <div className="flex items-center gap-1.5 text-[10px] text-brand-gold font-semibold font-poppins">
+                      <MapPin className="w-3.5 h-3.5 text-brand-gold" />
                       <span>{p.location}</span>
                     </div>
-                    <h3 className="text-lg font-normal font-cormorant text-brand-offwhite mt-2 group-hover:text-brand-gold transition-colors leading-tight">
+                    <h3 className="text-xl font-normal font-cormorant text-brand-offwhite mt-2 group-hover:text-brand-gold transition-colors leading-tight line-clamp-1">
                       {p.name}
                     </h3>
                     <p className="text-xs font-poppins text-brand-sand/70 mt-2 line-clamp-2 leading-relaxed">
@@ -425,13 +424,15 @@ function ProjectDetailContent({ project }: ProjectDetailClientProps) {
                     </p>
                   </div>
                   
-                  <Link 
-                    href={`/projects/${p.id}`}
-                    className="inline-flex items-center gap-1.5 text-[9px] uppercase font-bold tracking-widest text-brand-gold group-hover:text-brand-offwhite transition-colors mt-2 font-poppins"
-                  >
-                    <span>Explore Details</span>
-                    <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-                  </Link>
+                  <div className="flex items-center justify-between mt-2 pt-2 border-t border-brand-gold/5">
+                    <span className="inline-flex items-center gap-1.5 text-[9px] uppercase font-bold tracking-widest text-brand-gold group-hover:text-brand-offwhite transition-colors font-poppins">
+                      <span>Explore Details</span>
+                      <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                    </span>
+                    <span className="text-[10px] font-bold text-brand-sand/40">
+                      {p.year}
+                    </span>
+                  </div>
                 </div>
               </div>
             ))}

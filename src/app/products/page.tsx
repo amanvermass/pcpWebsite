@@ -92,7 +92,7 @@ function CatalogContent() {
       </div>
 
       {/* Category Filter Sticky Bar */}
-      <div className="sticky top-[72px] z-30 bg-brand-charcoal/95 border-y border-brand-gold/10 py-4.5 backdrop-blur-md">
+      <div className="relative z-10 bg-brand-charcoal/95 border-y border-brand-gold/10 py-4.5 backdrop-blur-md">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-4 overflow-x-auto scrollbar-none">
           <div className="flex items-center gap-2 text-brand-sand/50 text-xs font-bold uppercase tracking-widest shrink-0 font-poppins">
             <Filter className="w-4 h-4 text-brand-gold" />
