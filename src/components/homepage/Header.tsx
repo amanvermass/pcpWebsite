@@ -169,7 +169,7 @@ export const Header: React.FC<HeaderProps> = ({ darkMode, setDarkMode }) => {
     <header
       onMouseLeave={() => setActiveDropdown(null)}
       className={`fixed top-0 left-0 w-full z-40 transition-all duration-500 ${
-        scrolled 
+        scrolled || isOpen
           ? "bg-brand-slate-950 py-3 shadow-md border-b border-brand-slate-800/40" 
           : "bg-transparent py-4 border-none shadow-none"
       }`}
@@ -514,10 +514,12 @@ export const Header: React.FC<HeaderProps> = ({ darkMode, setDarkMode }) => {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            className="lg:hidden w-full bg-brand-slate-950 border-t border-brand-slate-800 px-4 py-6 flex flex-col gap-4 shadow-2xl"
+            key="mobile-menu"
+            initial={{ opacity: 0, y: -15 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -15 }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
+            className="lg:hidden absolute top-full left-0 w-full bg-brand-slate-950 border-t border-brand-slate-800 px-6 py-6 flex flex-col gap-4 shadow-2xl z-50 max-h-[80vh] overflow-y-auto"
           >
             {/* Navigation links */}
             <div className="flex flex-col gap-2">

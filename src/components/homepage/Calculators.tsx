@@ -164,7 +164,7 @@ export const Calculators: React.FC = () => {
   };
 
   return (
-    <section id="calculators" className="py-24 bg-brand-slate-950 relative">
+    <section id="calculators" className="py-16 md:py-20 lg:py-24 bg-brand-slate-950 relative">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Section Header */}

@@ -117,7 +117,7 @@ export default function AboutClient() {
       <WhyPCP />
 
       {/* Manufacturing Process */}
-      <section className="py-24 bg-brand-black border-t border-brand-gold/10 relative">
+      <section className="py-16 md:py-20 lg:py-24 bg-brand-black border-t border-brand-gold/10 relative">
         <div className="absolute inset-0 pointer-events-none z-0 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-4 h-full opacity-5">
           <div className="border-l border-brand-slate h-full" />
           <div className="border-l border-brand-slate h-full" />
@@ -172,7 +172,7 @@ export default function AboutClient() {
       </section>
 
       {/* Leadership Team */}
-      <section className="py-24 bg-brand-black relative">
+      <section className="py-16 md:py-20 lg:py-24 bg-brand-black relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mb-16">
             <span className="text-[10px] uppercase font-bold tracking-[0.35em] text-brand-gold bg-brand-gold/5 px-4 py-1.5 border border-brand-gold/20 rounded-none w-fit block font-poppins">
@@ -210,7 +210,7 @@ export default function AboutClient() {
       </section>
 
       {/* Certifications and ESG Awards */}
-      <section className="py-24 bg-brand-charcoal/50 border-t border-brand-gold/10 relative">
+      <section className="py-16 md:py-20 lg:py-24 bg-brand-charcoal/50 border-t border-brand-gold/10 relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             

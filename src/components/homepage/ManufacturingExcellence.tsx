@@ -57,6 +57,16 @@ const StatCounter: React.FC<StatItemProps & { variants?: any }> = ({ value, suff
 
 export const ManufacturingExcellence: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [isLargeScreen, setIsLargeScreen] = React.useState(false);
+
+  React.useEffect(() => {
+    const checkScreen = () => {
+      setIsLargeScreen(window.innerWidth >= 1024);
+    };
+    checkScreen();
+    window.addEventListener("resize", checkScreen);
+    return () => window.removeEventListener("resize", checkScreen);
+  }, []);
 
   // Scroll-linked motion (motion on scroll)
   const { scrollYProgress } = useScroll({
@@ -64,9 +74,9 @@ export const ManufacturingExcellence: React.FC = () => {
     offset: ["start end", "end start"],
   });
 
-  // Parallax displacement on scroll
-  const textY = useTransform(scrollYProgress, [0, 1], [30, -30]);
-  const imageY = useTransform(scrollYProgress, [0, 1], [-50, 50]);
+  // Parallax displacement on scroll (enabled on desktop only to prevent stack overlap on mobile/tablet)
+  const textY = useTransform(scrollYProgress, [0, 1], isLargeScreen ? [30, -30] : [0, 0]);
+  const imageY = useTransform(scrollYProgress, [0, 1], isLargeScreen ? [-50, 50] : [0, 0]);
 
   // Parent container variants for staggered children load
   const statsContainerVariants = {
@@ -96,7 +106,7 @@ export const ManufacturingExcellence: React.FC = () => {
   return (
     <section
       ref={containerRef}
-      className="relative flex items-center py-32 bg-brand-black overflow-hidden"
+      className="relative flex items-center py-16 md:py-24 lg:py-32 bg-brand-black overflow-hidden"
     >
       {/* Grid Lines Overlay - slides down smoothly on entrance */}
       <motion.div 

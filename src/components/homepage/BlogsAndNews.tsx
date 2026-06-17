@@ -60,7 +60,7 @@ export const BlogsAndNews: React.FC = () => {
   };
 
   return (
-    <section id="blogs" className="py-24 bg-brand-slate-900 bg-grid-pattern relative">
+    <section id="blogs" className="py-16 md:py-20 lg:py-24 bg-brand-slate-900 bg-grid-pattern relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Section Header */}

@@ -116,7 +116,7 @@ export const RecommendationEngine: React.FC = () => {
   };
 
   return (
-    <section id="recommender" className="py-24 bg-brand-slate-950 relative overflow-hidden">
+    <section id="recommender" className="py-16 md:py-20 lg:py-24 bg-brand-slate-950 relative overflow-hidden">
       {/* Decorative gradient glowing elements */}
       <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-brand-terracotta-600/10 rounded-full blur-[120px] pointer-events-none" />
       <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-brand-emerald-500/5 rounded-full blur-[120px] pointer-events-none" />
