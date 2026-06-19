@@ -103,7 +103,7 @@ export const FeaturedProducts: React.FC<{ teaser?: boolean }> = ({ teaser = fals
                     <img
                       src={p.image}
                       alt={p.name}
-                      className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-700"
+                      className="object-cover w-full h-full"
                     />
                   </ImageReveal>
                   <div className="absolute top-4 left-4 bg-[#121110]/95 text-brand-gold border border-brand-gold/20 text-[9px] uppercase font-bold tracking-widest px-3 py-1.5 rounded-none z-10">

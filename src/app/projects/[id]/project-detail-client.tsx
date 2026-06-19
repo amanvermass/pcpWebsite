@@ -402,7 +402,7 @@ function ProjectDetailContent({ project }: ProjectDetailClientProps) {
                     <img 
                       src={p.image} 
                       alt={p.name} 
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
+                      className="w-full h-full object-cover" 
                     />
                   </ImageReveal>
                   <span className="absolute top-4 left-4 bg-brand-gold text-brand-black text-[9px] uppercase font-bold tracking-widest px-2.5 py-1.5 border border-brand-gold font-poppins z-20">

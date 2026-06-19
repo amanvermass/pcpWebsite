@@ -218,6 +218,7 @@ export const Header: React.FC<HeaderProps> = ({ darkMode, setDarkMode }) => {
               <div className="relative">
                 <button
                   onMouseEnter={() => setActiveDropdown("products")}
+                  onClick={() => handleLinkClick("/products")}
                   className={`flex items-center gap-1 text-sm font-semibold transition-colors py-2 cursor-pointer ${pathname.startsWith("/products") ? "text-brand-terracotta-500" : "text-brand-slate-200 hover:text-brand-terracotta-500"}`}
                 >
                   Products <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${activeDropdown === "products" ? "rotate-180" : ""}`} />
@@ -236,6 +237,7 @@ export const Header: React.FC<HeaderProps> = ({ darkMode, setDarkMode }) => {
               <div className="relative">
                 <button
                   onMouseEnter={() => setActiveDropdown("calculators")}
+                  onClick={() => handleLinkClick("/calculators")}
                   className={`flex items-center gap-1 text-sm font-semibold transition-colors py-2 cursor-pointer ${pathname.startsWith("/calculators") ? "text-brand-terracotta-500" : "text-brand-slate-200 hover:text-brand-terracotta-500"}`}
                 >
                   Calculators <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${activeDropdown === "calculators" ? "rotate-180" : ""}`} />
@@ -254,6 +256,7 @@ export const Header: React.FC<HeaderProps> = ({ darkMode, setDarkMode }) => {
               <div className="relative">
                 <button
                   onMouseEnter={() => setActiveDropdown("resources")}
+                  onClick={() => handleLinkClick("/resources")}
                   className={`flex items-center gap-1 text-sm font-semibold transition-colors py-2 cursor-pointer ${pathname.startsWith("/resources") ? "text-brand-terracotta-500" : "text-brand-slate-200 hover:text-brand-terracotta-500"}`}
                 >
                   Resources <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${activeDropdown === "resources" ? "rotate-180" : ""}`} />
@@ -333,37 +336,51 @@ export const Header: React.FC<HeaderProps> = ({ darkMode, setDarkMode }) => {
                 </div>
 
                 {/* Right Columns list */}
-                <div className="col-span-8 grid grid-cols-2 gap-4">
-                  {menuItems.products.map((item, idx) => {
-                    const icons = [
-                      <FacadeIcon key="bricks" className="w-5 h-5 text-brand-terracotta-500" />,
-                      <FacadeIcon key="facades" className="w-5 h-5 text-brand-terracotta-500" />,
-                      <RoofingIcon key="tiles" className="w-5 h-5 text-brand-terracotta-500" />,
-                      <PaversIcon key="pavers" className="w-5 h-5 text-brand-terracotta-500" />,
-                      <HollowBlockIcon key="hollow" className="w-5 h-5 text-brand-terracotta-500" />,
-                      <AACBlockIcon key="aac" className="w-5 h-5 text-brand-terracotta-500" />,
-                    ];
-                    return (
-                      <Link
-                        key={idx}
-                        href={item.href}
-                        onClick={() => setActiveDropdown(null)}
-                        className="flex gap-3 p-3 rounded-lg hover:bg-brand-slate-900/50 transition-colors group"
-                      >
-                        <div className="p-2.5 bg-brand-black border border-brand-gold/10 rounded-lg group-hover:border-brand-gold/45 transition-colors shrink-0 flex items-center justify-center h-fit">
-                          {icons[idx % icons.length]}
-                        </div>
-                        <div className="space-y-1">
-                          <h5 className="text-xs font-semibold text-brand-offwhite group-hover:text-brand-terracotta-500 transition-colors font-poppins">
-                            {item.name}
-                          </h5>
-                          <p className="text-[9px] font-poppins text-brand-sand/65 leading-relaxed">
-                            {item.desc}
-                          </p>
-                        </div>
-                      </Link>
-                    );
-                  })}
+                <div className="col-span-8 flex flex-col justify-between">
+                  <div className="grid grid-cols-2 gap-4">
+                    {menuItems.products.map((item, idx) => {
+                      const icons = [
+                        <FacadeIcon key="bricks" className="w-5 h-5 text-brand-terracotta-500" />,
+                        <FacadeIcon key="facades" className="w-5 h-5 text-brand-terracotta-500" />,
+                        <RoofingIcon key="tiles" className="w-5 h-5 text-brand-terracotta-500" />,
+                        <PaversIcon key="pavers" className="w-5 h-5 text-brand-terracotta-500" />,
+                        <HollowBlockIcon key="hollow" className="w-5 h-5 text-brand-terracotta-500" />,
+                        <AACBlockIcon key="aac" className="w-5 h-5 text-brand-terracotta-500" />,
+                      ];
+                      return (
+                        <Link
+                          key={idx}
+                          href={item.href}
+                          onClick={() => setActiveDropdown(null)}
+                          className="flex gap-3 p-3 rounded-lg hover:bg-brand-slate-900/50 transition-colors group"
+                        >
+                          <div className="p-2.5 bg-brand-black border border-brand-gold/10 rounded-lg group-hover:border-brand-gold/45 transition-colors shrink-0 flex items-center justify-center h-fit">
+                            {icons[idx % icons.length]}
+                          </div>
+                          <div className="space-y-1">
+                            <h5 className="text-xs font-semibold text-brand-offwhite group-hover:text-brand-terracotta-500 transition-colors font-poppins">
+                              {item.name}
+                            </h5>
+                            <p className="text-[9px] font-poppins text-brand-sand/65 leading-relaxed">
+                              {item.desc}
+                            </p>
+                          </div>
+                        </Link>
+                      );
+                    })}
+                  </div>
+
+                  {/* View All Products button inside dropdown */}
+                  <div className="mt-6 pt-4 border-t border-brand-slate-800/60 flex justify-end">
+                    <Link
+                      href="/products"
+                      onClick={() => setActiveDropdown(null)}
+                      className="bg-brand-gold hover:bg-brand-sand text-brand-black px-6 py-2.5 text-[10px] font-bold uppercase tracking-wider transition-colors duration-300 font-poppins flex items-center gap-1.5 cursor-pointer shadow-md rounded-none border border-brand-gold"
+                    >
+                      <span>View All Products</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </Link>
+                  </div>
                 </div>
               </motion.div>
             )}
@@ -404,36 +421,50 @@ export const Header: React.FC<HeaderProps> = ({ darkMode, setDarkMode }) => {
                 </div>
 
                 {/* Right Columns list */}
-                <div className="col-span-8 grid grid-cols-2 gap-4">
-                  {menuItems.calculators.map((item, idx) => {
-                    const icons = [
-                      <FacadeIcon key="bricks" className="w-5 h-5 text-brand-terracotta-500" />,
-                      <ConsumerIcon key="house" className="w-5 h-5 text-brand-terracotta-500" />,
-                      <ExpertiseIcon key="wall" className="w-5 h-5 text-brand-terracotta-500" />,
-                      <RoofingIcon key="roof" className="w-5 h-5 text-brand-terracotta-500" />,
-                      <PaversIcon key="paver" className="w-5 h-5 text-brand-terracotta-500" />,
-                    ];
-                    return (
-                      <Link
-                        key={idx}
-                        href={item.href}
-                        onClick={() => setActiveDropdown(null)}
-                        className="flex gap-3 p-3 rounded-lg hover:bg-brand-slate-900/50 transition-colors group"
-                      >
-                        <div className="p-2.5 bg-brand-black border border-brand-gold/10 rounded-lg group-hover:border-brand-gold/45 transition-colors shrink-0 flex items-center justify-center h-fit">
-                          {icons[idx % icons.length]}
-                        </div>
-                        <div className="space-y-1">
-                          <h5 className="text-xs font-semibold text-brand-offwhite group-hover:text-brand-terracotta-500 transition-colors font-poppins">
-                            {item.name}
-                          </h5>
-                          <p className="text-[9px] font-poppins text-brand-sand/65 leading-relaxed">
-                            {item.desc}
-                          </p>
-                        </div>
-                      </Link>
-                    );
-                  })}
+                <div className="col-span-8 flex flex-col justify-between">
+                  <div className="grid grid-cols-2 gap-4">
+                    {menuItems.calculators.map((item, idx) => {
+                      const icons = [
+                        <FacadeIcon key="bricks" className="w-5 h-5 text-brand-terracotta-500" />,
+                        <ConsumerIcon key="house" className="w-5 h-5 text-brand-terracotta-500" />,
+                        <ExpertiseIcon key="wall" className="w-5 h-5 text-brand-terracotta-500" />,
+                        <RoofingIcon key="roof" className="w-5 h-5 text-brand-terracotta-500" />,
+                        <PaversIcon key="paver" className="w-5 h-5 text-brand-terracotta-500" />,
+                      ];
+                      return (
+                        <Link
+                          key={idx}
+                          href={item.href}
+                          onClick={() => setActiveDropdown(null)}
+                          className="flex gap-3 p-3 rounded-lg hover:bg-brand-slate-900/50 transition-colors group"
+                        >
+                          <div className="p-2.5 bg-brand-black border border-brand-gold/10 rounded-lg group-hover:border-brand-gold/45 transition-colors shrink-0 flex items-center justify-center h-fit">
+                            {icons[idx % icons.length]}
+                          </div>
+                          <div className="space-y-1">
+                            <h5 className="text-xs font-semibold text-brand-offwhite group-hover:text-brand-terracotta-500 transition-colors font-poppins">
+                              {item.name}
+                            </h5>
+                            <p className="text-[9px] font-poppins text-brand-sand/65 leading-relaxed">
+                              {item.desc}
+                            </p>
+                          </div>
+                        </Link>
+                      );
+                    })}
+                  </div>
+
+                  {/* View All Calculators button inside dropdown */}
+                  <div className="mt-6 pt-4 border-t border-brand-slate-800/60 flex justify-end">
+                    <Link
+                      href="/calculators"
+                      onClick={() => setActiveDropdown(null)}
+                      className="bg-brand-gold hover:bg-brand-sand text-brand-black px-6 py-2.5 text-[10px] font-bold uppercase tracking-wider transition-colors duration-300 font-poppins flex items-center gap-1.5 cursor-pointer shadow-md rounded-none border border-brand-gold"
+                    >
+                      <span>View All Calculators</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </Link>
+                  </div>
                 </div>
               </motion.div>
             )}
@@ -474,35 +505,49 @@ export const Header: React.FC<HeaderProps> = ({ darkMode, setDarkMode }) => {
                 </div>
 
                 {/* Right Columns list */}
-                <div className="col-span-8 grid grid-cols-2 gap-4">
-                  {menuItems.resources.map((item, idx) => {
-                    const icons = [
-                      <ExpertiseIcon key="datasheet" className="w-5 h-5 text-brand-terracotta-500" />,
-                      <ProfessionalIcon key="cad" className="w-5 h-5 text-brand-terracotta-500" />,
-                      <ProfessionalIcon key="bim" className="w-5 h-5 text-brand-terracotta-500" />,
-                      <ProfessionalIcon key="manual" className="w-5 h-5 text-brand-terracotta-500" />,
-                    ];
-                    return (
-                      <Link
-                        key={idx}
-                        href={item.href}
-                        onClick={() => setActiveDropdown(null)}
-                        className="flex gap-3 p-3 rounded-lg hover:bg-brand-slate-900/50 transition-colors group"
-                      >
-                        <div className="p-2.5 bg-brand-black border border-brand-gold/10 rounded-lg group-hover:border-brand-gold/45 transition-colors shrink-0 flex items-center justify-center h-fit">
-                          {icons[idx % icons.length]}
-                        </div>
-                        <div className="space-y-1">
-                          <h5 className="text-xs font-semibold text-brand-offwhite group-hover:text-brand-terracotta-500 transition-colors font-poppins">
-                            {item.name}
-                          </h5>
-                          <p className="text-[9px] font-poppins text-brand-sand/65 leading-relaxed">
-                            {item.desc}
-                          </p>
-                        </div>
-                      </Link>
-                    );
-                  })}
+                <div className="col-span-8 flex flex-col justify-between">
+                  <div className="grid grid-cols-2 gap-4">
+                    {menuItems.resources.map((item, idx) => {
+                      const icons = [
+                        <ExpertiseIcon key="datasheet" className="w-5 h-5 text-brand-terracotta-500" />,
+                        <ProfessionalIcon key="cad" className="w-5 h-5 text-brand-terracotta-500" />,
+                        <ProfessionalIcon key="bim" className="w-5 h-5 text-brand-terracotta-500" />,
+                        <ProfessionalIcon key="manual" className="w-5 h-5 text-brand-terracotta-500" />,
+                      ];
+                      return (
+                        <Link
+                          key={idx}
+                          href={item.href}
+                          onClick={() => setActiveDropdown(null)}
+                          className="flex gap-3 p-3 rounded-lg hover:bg-brand-slate-900/50 transition-colors group"
+                        >
+                          <div className="p-2.5 bg-brand-black border border-brand-gold/10 rounded-lg group-hover:border-brand-gold/45 transition-colors shrink-0 flex items-center justify-center h-fit">
+                            {icons[idx % icons.length]}
+                          </div>
+                          <div className="space-y-1">
+                            <h5 className="text-xs font-semibold text-brand-offwhite group-hover:text-brand-terracotta-500 transition-colors font-poppins">
+                              {item.name}
+                            </h5>
+                            <p className="text-[9px] font-poppins text-brand-sand/65 leading-relaxed">
+                              {item.desc}
+                            </p>
+                          </div>
+                        </Link>
+                      );
+                    })}
+                  </div>
+
+                  {/* View All Resources button inside dropdown */}
+                  <div className="mt-6 pt-4 border-t border-brand-slate-800/60 flex justify-end">
+                    <Link
+                      href="/resources"
+                      onClick={() => setActiveDropdown(null)}
+                      className="bg-brand-gold hover:bg-brand-sand text-brand-black px-6 py-2.5 text-[10px] font-bold uppercase tracking-wider transition-colors duration-300 font-poppins flex items-center gap-1.5 cursor-pointer shadow-md rounded-none border border-brand-gold"
+                    >
+                      <span>View All Resources</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </Link>
+                  </div>
                 </div>
               </motion.div>
             )}
@@ -527,7 +572,7 @@ export const Header: React.FC<HeaderProps> = ({ darkMode, setDarkMode }) => {
                 onClick={() => handleLinkClick("/products")}
                 className={`w-full text-left font-semibold py-2.5 px-3 rounded-lg hover:bg-brand-slate-900 transition-colors ${pathname.startsWith("/products") ? "text-brand-terracotta-500 bg-brand-slate-900/50 font-bold" : "text-brand-slate-200"}`}
               >
-                Products Catalog
+                View All Products
               </button>
               <button
                 onClick={() => handleLinkClick("/projects")}

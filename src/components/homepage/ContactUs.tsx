@@ -152,7 +152,7 @@ export const ContactUs: React.FC = () => {
             {/* Quick WhatsApp Link */}
             <button
               onClick={handleWhatsAppChat}
-              className="w-full bg-brand-gold/10 hover:bg-brand-gold border border-brand-gold/30 hover:border-brand-gold text-brand-gold hover:text-brand-black font-semibold py-4 rounded-none transition-colors flex items-center justify-center gap-2 cursor-none text-xs uppercase tracking-wider font-poppins"
+              className="w-full bg-brand-gold/10 hover:bg-brand-gold border border-brand-gold/30 hover:border-brand-gold text-brand-gold hover:text-brand-black font-semibold py-4 rounded-none transition-colors flex items-center justify-center gap-2 cursor-pointer text-xs uppercase tracking-wider font-poppins"
             >
               <MessageSquare className="w-4 h-4 shrink-0" />
               Chat instantly on WhatsApp
@@ -266,7 +266,7 @@ export const ContactUs: React.FC = () => {
               <button
                 type="submit"
                 disabled={submitting}
-                className="w-full bg-brand-gold hover:bg-brand-sand disabled:bg-brand-gold/50 text-brand-black font-semibold tracking-wider font-poppins uppercase text-xs py-4 rounded-none transition-colors cursor-none flex items-center justify-center gap-2 border border-brand-gold"
+                className="w-full bg-brand-gold hover:bg-brand-sand disabled:bg-brand-gold/50 text-brand-black font-semibold tracking-wider font-poppins uppercase text-xs py-4 rounded-none transition-colors cursor-pointer flex items-center justify-center gap-2 border border-brand-gold"
               >
                 {submitting ? (
                   <span className="w-5 h-5 rounded-full border-2 border-brand-black border-t-transparent animate-spin" />

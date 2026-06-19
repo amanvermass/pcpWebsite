@@ -16,12 +16,12 @@ interface CalculatorCardProps {
   label: string;
 }
 
-const CalculatorCard: React.FC<CalculatorCardProps> = ({ 
-  id, name, desc, icon, targetCount, suffix, label 
+const CalculatorCard: React.FC<CalculatorCardProps> = ({
+  id, name, desc, icon, targetCount, suffix, label
 }) => {
   const cardRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(cardRef, { once: true, margin: "-80px" });
-  
+
   const [count, setCount] = React.useState(0);
 
   React.useEffect(() => {
@@ -57,10 +57,10 @@ const CalculatorCard: React.FC<CalculatorCardProps> = ({
             <div className="p-3 bg-brand-black border border-brand-gold/15 rounded-none text-brand-gold group-hover:border-brand-gold/40 transition-colors">
               {icon}
             </div>
-            
+
             {/* Animated counter preview */}
             <div className="text-right">
-              <span className="block text-[9px] uppercase tracking-widest text-brand-sand/55 font-poppins">
+              <span className="block text-[9px] uppercase tracking-widest text-brand-slate-400 font-poppins">
                 {label}
               </span>
               <span className="text-2xl font-light font-cormorant text-brand-gold">
@@ -72,12 +72,12 @@ const CalculatorCard: React.FC<CalculatorCardProps> = ({
           <h3 className="text-xl font-normal font-cormorant text-brand-offwhite group-hover:text-brand-gold transition-colors">
             {name}
           </h3>
-          <p className="text-xs font-poppins text-brand-sand/65 mt-3 leading-relaxed">
+          <p className="text-xs font-poppins text-brand-slate-300 mt-3 leading-relaxed">
             {desc}
           </p>
         </div>
 
-        <div className="mt-8 flex items-center justify-center gap-2 py-3 rounded-none text-[10px] uppercase font-poppins tracking-wider font-semibold bg-brand-gold/10 group-hover:bg-brand-gold text-brand-gold group-hover:text-brand-black border border-brand-gold/25 group-hover:border-brand-gold transition-colors">
+        <div className="mt-8 flex items-center justify-center gap-2.5 py-3.5 rounded-none text-[10px] uppercase font-poppins font-bold tracking-[0.2em] bg-brand-gold group-hover:bg-brand-sand text-brand-black border border-brand-gold group-hover:border-brand-sand transition-colors cursor-pointer">
           Use Estimator
           <ArrowRight className="w-3.5 h-3.5" />
         </div>
@@ -128,7 +128,7 @@ export const CalculatorsTeaser: React.FC = () => {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        
+
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16 flex flex-col items-center">
           <span className="text-[10px] uppercase font-bold tracking-[0.35em] text-brand-gold bg-brand-gold/5 px-4 py-1.5 border border-brand-gold/20 rounded-none w-fit block">
@@ -137,7 +137,7 @@ export const CalculatorsTeaser: React.FC = () => {
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-normal font-cormorant text-brand-offwhite mt-6 tracking-wide">
             Construction Estimators
           </h2>
-          <p className="text-brand-sand/70 text-xs sm:text-sm font-poppins mt-4 max-w-xl leading-relaxed">
+          <p className="text-brand-slate-300 text-xs sm:text-sm font-poppins mt-4 max-w-xl leading-relaxed">
             Minimize material waste and estimate costs in seconds using our precision architectural and masonry calculators.
           </p>
         </div>

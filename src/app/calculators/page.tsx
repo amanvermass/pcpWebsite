@@ -118,11 +118,10 @@ function CalculatorsPageContent() {
                   <button
                     key={calc.id}
                     onClick={() => handleSelectTab(calc.id)}
-                    className={`flex items-center gap-2 px-5 py-3 rounded-none text-[10px] uppercase tracking-wider font-poppins font-semibold transition-colors whitespace-nowrap cursor-pointer flex-grow md:flex-grow-0 justify-center border ${
-                      isActive
+                    className={`flex items-center gap-2 px-5 py-3 rounded-none text-[10px] uppercase tracking-wider font-poppins font-semibold transition-colors whitespace-nowrap cursor-pointer flex-grow md:flex-grow-0 justify-center border ${isActive
                         ? "bg-brand-gold border-brand-gold text-brand-black"
                         : "bg-brand-black border-brand-gold/5 text-brand-sand hover:text-brand-offwhite"
-                    }`}
+                      }`}
                   >
                     {calc.icon}
                     <span>{calc.name}</span>

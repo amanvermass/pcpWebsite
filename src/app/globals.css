@@ -60,8 +60,13 @@
 }
 
 @keyframes fade-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes fade-in-up {
@@ -69,6 +74,7 @@
     opacity: 0;
     transform: translateY(24px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -76,13 +82,27 @@
 }
 
 @keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-8px);
+  }
 }
 
 @keyframes pulse-subtle {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.85; }
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.85;
+  }
 }
 
 :root {
@@ -91,9 +111,12 @@
   --font-playfair: var(--font-poppins), sans-serif;
   --font-cormorant: var(--font-poppins), sans-serif;
 
-  --background: #faf6f2; /* Warm paper logo cream background */
-  --foreground: #121110; /* Dark charcoal logo text */
-  --card: #ffffff; /* Card background */
+  --background: #faf6f2;
+  /* Warm paper logo cream background */
+  --foreground: #121110;
+  /* Dark charcoal logo text */
+  --card: #ffffff;
+  /* Card background */
   --card-foreground: #121110;
   --border: #e7e5e4;
   scroll-behavior: smooth;
@@ -117,21 +140,26 @@
   --brand-terracotta-600: #ae624c;
 
   /* Scale mappings */
-  --brand-slate-950: #faf6f2; /* Body bg */
-  --brand-slate-900: #ffffff; /* Card/alt bg */
-  --brand-slate-800: #f5f5f4; /* Section bg */
+  --brand-slate-950: #faf6f2;
+  /* Body bg */
+  --brand-slate-900: #ffffff;
+  /* Card/alt bg */
+  --brand-slate-800: #f5f5f4;
+  /* Section bg */
   --brand-slate-700: #e7e5e4;
   --brand-slate-600: #d6d3d1;
   --brand-slate-500: #a8a29e;
   --brand-slate-400: #78716c;
   --brand-slate-300: #57524f;
   --brand-slate-200: #44403c;
-  --brand-slate-100: #292524; /* Primary text */
+  --brand-slate-100: #292524;
+  /* Primary text */
   --brand-slate-50: #121110;
 }
 
 .light {
-  --background: #ffffff; /* Crisp white background */
+  --background: #ffffff;
+  /* Crisp white background */
   --foreground: #111111;
   --card: #f9f9f9;
   --card-foreground: #111111;
@@ -177,7 +205,12 @@ body {
   transition: background-color 0.4s cubic-bezier(0.16, 1, 0.3, 1), color 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--font-playfair), serif !important;
   color: var(--foreground) !important;
 }
@@ -195,13 +228,16 @@ h1, h2, h3, h4, h5, h6 {
   width: 6px;
   height: 6px;
 }
+
 ::-webkit-scrollbar-track {
   background: var(--background);
 }
+
 ::-webkit-scrollbar-thumb {
   background: var(--border);
   border-radius: 3px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background: #ce9456;
 }
@@ -238,6 +274,7 @@ input[type="reset"],
 .cursor-none {
   cursor: auto !important;
 }
+
 button,
 a,
 select,
@@ -249,33 +286,61 @@ input,
 }
 
 /* Typography and layout text overrides for light themes */
-:root *:not(
-  button, button *, 
-  a.bg-brand-terracotta-600, a.bg-brand-terracotta-600 *, 
+:root *:not(button, button *,
+  a.bg-brand-terracotta-600, a.bg-brand-terracotta-600 *,
   .bg-brand-terracotta-600, .bg-brand-terracotta-600 *,
   .bg-brand-ochre-600, .bg-brand-ochre-600 *,
   .bg-brand-gold, .bg-brand-gold *,
   .bg-black, .bg-black *,
-  .page-loader, .page-loader *
-).text-white {
+  .page-loader, .page-loader *).text-white {
   color: var(--foreground) !important;
 }
 
 /* Ensure inputs/selects inside white/cream cards render readable dark text */
-:root input, :root select, :root textarea {
+:root input,
+:root select,
+:root textarea {
   color: var(--foreground) !important;
   background-color: var(--card) !important;
 }
 
 /* Ensure dark text is always dark on gold/terracotta backgrounds or hover states */
-.bg-brand-gold, .bg-brand-sand, .bg-brand-terracotta-600, .bg-brand-ochre-600 {
-  &.text-brand-black, & .text-brand-black {
+.bg-brand-gold,
+.bg-brand-sand,
+.bg-brand-terracotta-600,
+.bg-brand-ochre-600 {
+
+  &.text-brand-black,
+  & .text-brand-black {
     color: #121110 !important;
   }
 }
+
 .hover\:text-brand-black:hover {
   color: #121110 !important;
 }
+
 .hover\:bg-brand-gold:hover {
   color: #121110 !important;
+}
+
+/* Force text white/cream color regardless of light/dark theme heading overrides */
+.text-white-force,
+.text-white-force h1,
+.text-white-force h2,
+.text-white-force h3,
+.text-white-force h4,
+.text-white-force h5,
+.text-white-force h6 {
+  color: #ffffff !important;
+}
+
+.text-cream-force,
+.text-cream-force h1,
+.text-cream-force h2,
+.text-cream-force h3,
+.text-cream-force h4,
+.text-cream-force h5,
+.text-cream-force h6 {
+  color: #faf6f2 !important;
 }

@@ -54,7 +54,7 @@ export const Projects: React.FC<{ teaser?: boolean }> = ({ teaser = false }) => 
                     <img
                       src={p.image}
                       alt={p.name}
-                      className="w-full h-full object-cover origin-center transition-transform duration-[1.2s] group-hover:scale-105"
+                      className="w-full h-full object-cover"
                       loading="lazy"
                     />
                   </ImageReveal>

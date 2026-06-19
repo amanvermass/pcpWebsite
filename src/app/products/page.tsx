@@ -34,14 +34,13 @@ function CatalogContent() {
     }
   }, [searchParams]);
 
-  // Handle category loading transition animation
+  // Initial page load simulation (only on mount)
   useEffect(() => {
-    setIsLoading(true);
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 600);
+    }, 800);
     return () => clearTimeout(timer);
-  }, [selectedCategory]);
+  }, []);
 
   const categories = ["All", "Clay Bricks", "Terracotta", "Roofing Tiles", "Pavers", "Hollow Blocks", "AAC Blocks"];
 
@@ -131,24 +130,39 @@ function CatalogContent() {
               <p className="text-brand-sand/60 text-sm font-poppins">No products found in this category.</p>
             </div>
           ) : (
-            /* Staggered masonry layout columns */
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-start">
-              {filteredProducts.map((p, index) => (
-                <ScrollReveal 
-                  key={p.id} 
-                  delay={(index % 3) * 0.1} 
-                  duration={0.8}
-                  direction="up" 
-                  distance={40}
-                >
-                  <ProductCard 
-                    product={p} 
-                    index={index}
-                    onQuickView={setActiveQuickView} 
-                  />
-                </ScrollReveal>
-              ))}
-            </div>
+            /* Staggered dynamic filtering layout with AnimatePresence & layout transitions */
+            <motion.div 
+              layout 
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-start"
+              style={{ perspective: "1200px" }}
+            >
+              <AnimatePresence mode="popLayout">
+                {filteredProducts.map((p, index) => (
+                  <motion.div
+                    key={p.id}
+                    layout
+                    initial={{ opacity: 0, scale: 0.88, rotateX: 28, y: 70, transformOrigin: "top center" }}
+                    whileInView={{ opacity: 1, scale: 1, rotateX: 0, y: 0 }}
+                    viewport={{ once: true, margin: "-60px" }}
+                    exit={{ opacity: 0, scale: 0.92, y: 20 }}
+                    transition={{
+                      duration: 0.95,
+                      delay: (index % 3) * 0.08,
+                      ease: [0.16, 1, 0.3, 1],
+                      layout: { type: "spring", stiffness: 220, damping: 28 },
+                    }}
+                    className="w-full"
+                    style={{ transformStyle: "preserve-3d" }}
+                  >
+                    <ProductCard 
+                      product={p} 
+                      index={index}
+                      onQuickView={setActiveQuickView} 
+                    />
+                  </motion.div>
+                ))}
+              </AnimatePresence>
+            </motion.div>
           )}
         </div>
       </main>
@@ -262,7 +276,7 @@ function CatalogContent() {
                 <Link
                   href={`/products/${activeQuickView.id}`}
                   onClick={() => setActiveQuickView(null)}
-                  className="flex-1 bg-brand-black border border-brand-gold/20 hover:bg-brand-charcoal text-brand-sand font-poppins uppercase tracking-wider font-semibold py-3.5 rounded-none transition-colors text-center text-[10px] cursor-none flex items-center justify-center gap-1"
+                  className="flex-1 bg-brand-black border border-brand-gold/20 hover:bg-brand-charcoal text-brand-sand font-poppins uppercase tracking-wider font-semibold py-3.5 rounded-none transition-colors text-center text-[10px] cursor-pointer flex items-center justify-center gap-1"
                 >
                   Full Details Page
                   <ArrowRight className="w-3.5 h-3.5 text-brand-gold" />
@@ -270,7 +284,7 @@ function CatalogContent() {
                 <Link
                   href={`/products/${activeQuickView.id}#inquire`}
                   onClick={() => setActiveQuickView(null)}
-                  className="flex-1 bg-brand-gold hover:bg-brand-sand text-brand-black font-poppins uppercase tracking-wider font-bold py-3.5 rounded-none transition-colors border border-brand-gold text-center text-[10px] cursor-none"
+                  className="flex-1 bg-brand-gold hover:bg-brand-sand text-brand-black font-poppins uppercase tracking-wider font-bold py-3.5 rounded-none transition-colors border border-brand-gold text-center text-[10px] cursor-pointer"
                 >
                   Request Quote
                 </Link>
@@ -324,8 +338,8 @@ function ProductCard({ product, index, onQuickView }: { product: Product; index:
   const x = useMotionValue(0);
   const y = useMotionValue(0);
 
-  const springX = useSpring(x, { stiffness: 150, damping: 20 });
-  const springY = useSpring(y, { stiffness: 150, damping: 20 });
+  const springX = useSpring(x, { stiffness: 300, damping: 24 });
+  const springY = useSpring(y, { stiffness: 300, damping: 24 });
 
   const rotateX = useTransform(springY, [-0.5, 0.5], [10, -10]);
   const rotateY = useTransform(springX, [-0.5, 0.5], [-10, 10]);
@@ -361,7 +375,7 @@ function ProductCard({ product, index, onQuickView }: { product: Product; index:
           rotateY,
           transformStyle: "preserve-3d"
         }}
-        className="group rounded-none border border-brand-gold/10 bg-brand-charcoal flex flex-col justify-between hover:border-brand-gold/45 hover:shadow-[0_0_25px_rgba(197,139,69,0.12)] transition-all cursor-none duration-300"
+        className="group rounded-none border border-brand-gold/10 bg-brand-charcoal flex flex-col justify-between hover:border-brand-gold/45 hover:shadow-[0_0_25px_rgba(197,139,69,0.12)] transition-[border-color,box-shadow] ease-out duration-300 cursor-pointer"
       >
         <div className={`relative ${aspectClass} w-full overflow-hidden bg-brand-black border-b border-brand-gold/10`}>
           <ImageReveal>
@@ -379,7 +393,7 @@ function ProductCard({ product, index, onQuickView }: { product: Product; index:
           <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
             <button
               onClick={() => onQuickView(product)}
-              className="p-3 bg-brand-gold border border-brand-gold text-brand-black hover:scale-110 transition-transform cursor-none rounded-none"
+              className="p-3 bg-brand-gold border border-brand-gold text-brand-black hover:scale-110 transition-transform cursor-pointer rounded-none"
               title="Quick View Technical Specs"
             >
               <Eye className="w-5 h-5" />
@@ -402,14 +416,14 @@ function ProductCard({ product, index, onQuickView }: { product: Product; index:
           <div className="mt-6 flex items-center gap-3 pt-4 border-t border-brand-gold/10">
             <Link
               href={`/products/${product.id}`}
-              className="flex-1 text-center py-3 rounded-none text-[10px] uppercase font-poppins tracking-wider font-semibold bg-brand-black text-brand-sand hover:text-brand-offwhite border border-brand-gold/15 hover:border-brand-gold/50 transition-colors cursor-none"
+              className="flex-1 text-center py-3 rounded-none text-[10px] uppercase font-poppins tracking-wider font-semibold bg-brand-black text-brand-sand hover:text-brand-offwhite border border-brand-gold/15 hover:border-brand-gold/50 transition-colors cursor-pointer"
             >
               Full details
             </Link>
             
             <button
               onClick={() => onQuickView(product)}
-              className="flex-1 flex items-center justify-center gap-1.5 py-3 rounded-none text-[10px] uppercase font-poppins tracking-wider font-semibold bg-brand-gold/10 text-brand-gold hover:bg-brand-gold hover:text-brand-black transition-colors border border-brand-gold/30 hover:border-brand-gold cursor-none"
+              className="flex-1 flex items-center justify-center gap-1.5 py-3 rounded-none text-[10px] uppercase font-poppins tracking-wider font-semibold bg-brand-gold/10 text-brand-gold hover:bg-brand-gold hover:text-brand-black transition-colors border border-brand-gold/30 hover:border-brand-gold cursor-pointer"
             >
               Specs Info
               <ArrowRight className="w-3.5 h-3.5" />

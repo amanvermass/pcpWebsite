@@ -8,7 +8,6 @@ import { ProductCategories } from "@/components/homepage/ProductCategories";
 import { ManufacturingExcellence } from "@/components/homepage/ManufacturingExcellence";
 import { Projects } from "@/components/homepage/Projects";
 import { HorizontalSection } from "@/components/homepage/HorizontalSection";
-import { WhyPCP } from "@/components/homepage/WhyPCP";
 import { CalculatorsTeaser } from "@/components/homepage/CalculatorsTeaser";
 import { DealerLocator } from "@/components/homepage/DealerLocator";
 import { Testimonials } from "@/components/homepage/Testimonials";
@@ -57,11 +56,6 @@ export default function Home() {
 
         {/* Project Gallery: Pinned Horizontal Scroll Showcase */}
         <HorizontalSection />
-        
-        {/* Why PCP Timeline */}
-        <ScrollReveal>
-          <WhyPCP />
-        </ScrollReveal>
         
         {/* Section 6: Calculators Card Deck */}
         <ScrollReveal>

@@ -34,7 +34,7 @@ export const CompanyIntro: React.FC = () => {
               <img
                 src="/images/hero-4.jpg"
                 alt="Prayag Clay Productions automated factory floor"
-                className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+                className="w-full h-full object-cover"
               />
             </ImageReveal>
 

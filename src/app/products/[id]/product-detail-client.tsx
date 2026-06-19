@@ -171,7 +171,7 @@ function DetailContent({ product }: ProductDetailClientProps) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <Link 
             href="/products" 
-            className="inline-flex items-center gap-2 text-xs uppercase tracking-wider font-poppins font-semibold text-brand-sand hover:text-brand-offwhite mb-6 transition-colors group cursor-none"
+            className="inline-flex items-center gap-2 text-xs uppercase tracking-wider font-poppins font-semibold text-brand-sand hover:text-brand-offwhite mb-6 transition-colors group cursor-pointer"
           >
             <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
             Back to Materials Library
@@ -221,7 +221,7 @@ function DetailContent({ product }: ProductDetailClientProps) {
                   <button
                     key={idx}
                     onClick={() => setActiveImageIdx(idx)}
-                    className={`aspect-[16/10] border overflow-hidden cursor-none transition-colors ${
+                    className={`aspect-[16/10] border overflow-hidden cursor-pointer transition-colors ${
                       activeImageIdx === idx ? "border-brand-gold" : "border-brand-gold/10 hover:border-brand-gold/30"
                     }`}
                   >
@@ -305,7 +305,7 @@ function DetailContent({ product }: ProductDetailClientProps) {
                       <span className="text-[9px] text-brand-sand/40 uppercase font-semibold font-poppins">PDF (1.2 MB)</span>
                     </div>
                   </div>
-                  <button onClick={() => handleDownload("Datasheet (PDF)")} className="p-2 hover:bg-brand-charcoal text-brand-sand hover:text-brand-offwhite cursor-none">
+                  <button onClick={() => handleDownload("Datasheet (PDF)")} className="p-2 hover:bg-brand-charcoal text-brand-sand hover:text-brand-offwhite cursor-pointer">
                     <Download className="w-4 h-4" />
                   </button>
                 </div>
@@ -318,7 +318,7 @@ function DetailContent({ product }: ProductDetailClientProps) {
                       <span className="text-[9px] text-brand-sand/40 uppercase font-semibold font-poppins">RVT (8.4 MB)</span>
                     </div>
                   </div>
-                  <button onClick={() => handleDownload("Revit (RVT)")} className="p-2 hover:bg-brand-charcoal text-brand-sand hover:text-brand-offwhite cursor-none">
+                  <button onClick={() => handleDownload("Revit (RVT)")} className="p-2 hover:bg-brand-charcoal text-brand-sand hover:text-brand-offwhite cursor-pointer">
                     <Download className="w-4 h-4" />
                   </button>
                 </div>
@@ -331,7 +331,7 @@ function DetailContent({ product }: ProductDetailClientProps) {
                       <span className="text-[9px] text-brand-sand/40 uppercase font-semibold font-poppins">DWG (2.3 MB)</span>
                     </div>
                   </div>
-                  <button onClick={() => handleDownload("CAD Details (DWG)")} className="p-2 hover:bg-brand-charcoal text-brand-sand hover:text-brand-offwhite cursor-none">
+                  <button onClick={() => handleDownload("CAD Details (DWG)")} className="p-2 hover:bg-brand-charcoal text-brand-sand hover:text-brand-offwhite cursor-pointer">
                     <Download className="w-4 h-4" />
                   </button>
                 </div>
@@ -344,7 +344,7 @@ function DetailContent({ product }: ProductDetailClientProps) {
                       <span className="text-[9px] text-brand-sand/40 uppercase font-semibold font-poppins">PDF (3.1 MB)</span>
                     </div>
                   </div>
-                  <button onClick={() => handleDownload("Installation Manual")} className="p-2 hover:bg-brand-charcoal text-brand-sand hover:text-brand-offwhite cursor-none">
+                  <button onClick={() => handleDownload("Installation Manual")} className="p-2 hover:bg-brand-charcoal text-brand-sand hover:text-brand-offwhite cursor-pointer">
                     <Download className="w-4 h-4" />
                   </button>
                 </div>
@@ -543,7 +543,7 @@ function DetailContent({ product }: ProductDetailClientProps) {
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="w-full bg-brand-gold hover:bg-brand-sand disabled:bg-brand-gold/50 text-brand-black font-semibold py-4 rounded-none transition-colors cursor-none flex items-center justify-center gap-2 text-xs uppercase tracking-wider font-poppins border border-brand-gold"
+                  className="w-full bg-brand-gold hover:bg-brand-sand disabled:bg-brand-gold/50 text-brand-black font-semibold py-4 rounded-none transition-colors cursor-pointer flex items-center justify-center gap-2 text-xs uppercase tracking-wider font-poppins border border-brand-gold"
                 >
                   {submitting ? (
                     <span className="w-5 h-5 rounded-full border-2 border-brand-black border-t-transparent animate-spin" />
@@ -606,7 +606,7 @@ function DetailContent({ product }: ProductDetailClientProps) {
                         </div>
                         <Link
                           href={`/products/${p.id}`}
-                          className="mt-4 inline-flex items-center gap-1.5 text-[10px] font-semibold font-poppins uppercase tracking-wider text-brand-gold hover:text-brand-offwhite transition-colors cursor-none"
+                          className="mt-4 inline-flex items-center gap-1.5 text-[10px] font-semibold font-poppins uppercase tracking-wider text-brand-gold hover:text-brand-offwhite transition-colors cursor-pointer"
                         >
                           View Specs
                           <ArrowRight className="w-3 h-3" />

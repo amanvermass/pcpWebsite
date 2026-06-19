@@ -154,17 +154,17 @@ export const Hero: React.FC<HeroProps> = ({ darkMode = true }) => {
           {/* Intrio-style Massive Serif Heading (Staggered Word Reveal) */}
           <motion.h1
             variants={headingContainerVariants}
-            className="text-white text-left leading-none tracking-tight mb-8 flex flex-wrap justify-start"
+            className="text-white-force text-left leading-none tracking-tight mb-8 flex flex-wrap justify-start"
             style={{
               fontFamily: "var(--font-poppins), sans-serif",
               fontWeight: 300,
               fontSize: "clamp(2.5rem, 5.8vw, 5.8rem)",
-              lineHeight: 0.95,
+              lineHeight: 1.05,
               letterSpacing: "-0.03em"
             }}
           >
             {headingWords.map((word, i) => (
-              <span key={i} className="overflow-hidden inline-block mr-[0.25em] pb-1">
+              <span key={i} className="overflow-hidden inline-block mr-[0.25em] pt-3 pb-5 -mt-3 -mb-5">
                 <motion.span
                   variants={wordVariants}
                   className="inline-block"
