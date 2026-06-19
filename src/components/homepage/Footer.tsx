@@ -55,21 +55,21 @@ export const Footer: React.FC = () => {
   };
 
   return (
-    <footer className="bg-brand-black pt-20 pb-12 relative z-10 border-t border-brand-slate text-brand-sand">
+    <footer className="bg-brand-slate pt-20 pb-12 relative z-10 border-t border-brand-slate-600/10 text-brand-slate-200 font-poppins">
       {/* Structural background lines */}
-      <div className="absolute inset-0 pointer-events-none z-0 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-4 h-full opacity-5">
-        <div className="border-l border-brand-slate h-full" />
-        <div className="border-l border-brand-slate h-full" />
-        <div className="border-l border-brand-slate h-full" />
-        <div className="border-l border-brand-slate h-full border-r" />
+      <div className="absolute inset-0 pointer-events-none z-0 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-4 h-full opacity-10">
+        <div className="border-l border-brand-charcoal h-full" />
+        <div className="border-l border-brand-charcoal h-full" />
+        <div className="border-l border-brand-charcoal h-full" />
+        <div className="border-l border-brand-charcoal h-full border-r" />
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Top Branding Statement & Back to Top Header Block */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center pb-8 border-b border-brand-slate/40 mb-12 gap-6">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center pb-8 border-b border-brand-charcoal/10 mb-12 gap-6">
           <div className="flex flex-col gap-2">
-            <span className="text-[9px] uppercase font-bold tracking-[0.35em] text-brand-gold font-poppins">
+            <span className="text-[9px] uppercase font-bold tracking-[0.35em] text-brand-terracotta font-poppins">
               BRAND PHILOSOPHY
             </span>
             <h2 className="text-xl sm:text-2xl lg:text-3xl font-light font-cormorant text-brand-offwhite leading-tight uppercase tracking-wider">
@@ -87,8 +87,8 @@ export const Footer: React.FC = () => {
           </button>
         </div>
 
-        {/* Newsletter subscription panel */}
-        <div className="w-full bg-brand-charcoal border border-brand-slate p-6 sm:p-8 rounded-none flex flex-col lg:flex-row items-center justify-between gap-6 mb-16 shadow-sm">
+        {/* Newsletter subscription panel - White-Contrast Card overlay */}
+        <div className="w-full bg-brand-charcoal border border-brand-slate/40 p-6 sm:p-8 rounded-none flex flex-col lg:flex-row items-center justify-between gap-6 mb-16 shadow-sm relative z-10">
           <div className="flex flex-col gap-1.5 text-left max-w-xl">
             <span className="text-[9px] uppercase font-bold tracking-[0.25em] text-brand-gold font-poppins">
               ARCHITECTURAL DISPATCH
@@ -120,30 +120,30 @@ export const Footer: React.FC = () => {
         {/* Main Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 pt-2">
           
-          {/* Left Side Column: Logo, coordinates, credentials, & copyright */}
+          {/* Left Side Column: Logo, credentials, & copyright */}
           <div className="col-span-12 lg:col-span-4 flex flex-col justify-between h-full min-h-[200px] text-left">
             <div>
               <Logo height="42" />
-              <p className="text-[11px] font-poppins text-brand-sand leading-relaxed mt-4 max-w-[280px]">
+              <p className="text-[11px] font-poppins text-brand-slate-200 leading-relaxed mt-4 max-w-[280px]">
                 Engineering structural building envelopes with premium terracotta solutions since 1983.
               </p>
               
               {/* Technical / Certification credentials */}
               <div className="flex flex-wrap gap-2.5 mt-6">
-                <span className="text-[8px] font-bold tracking-widest uppercase border border-brand-gold/30 text-brand-gold px-2.5 py-1 font-poppins">
+                <span className="text-[8px] font-bold tracking-widest uppercase border border-brand-terracotta/30 text-brand-terracotta px-2.5 py-1 font-poppins">
                   ISO 9001:2015
                 </span>
-                <span className="text-[8px] font-bold tracking-widest uppercase border border-brand-gold/30 text-brand-gold px-2.5 py-1 font-poppins">
+                <span className="text-[8px] font-bold tracking-widest uppercase border border-brand-terracotta/30 text-brand-terracotta px-2.5 py-1 font-poppins">
                   IGBC MEMBER
                 </span>
               </div>
             </div>
             
             <div className="space-y-2 mt-8 lg:mt-12">
-              <p className="text-[10px] font-poppins text-brand-sand/80 leading-relaxed">
+              <p className="text-[10px] font-poppins text-brand-slate-300 leading-relaxed">
                 Prayag Clay Products &copy; 2026. All Rights Reserved.
               </p>
-              <p className="text-[9px] font-poppins text-brand-sand/50 leading-relaxed">
+              <p className="text-[9px] font-poppins text-brand-slate-300/50 leading-relaxed">
                 Varanasi Web Development -{" "}
                 <a 
                   href="https://kvtechmedia.com" 
@@ -161,20 +161,20 @@ export const Footer: React.FC = () => {
           <div className="col-span-12 lg:col-span-8 flex flex-col gap-8">
             
             {/* Top Social Links Row */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pb-6 border-b border-brand-slate/40">
-              <a href="#" className="flex items-center justify-center gap-2.5 border border-brand-gold/15 hover:border-brand-gold py-3 px-4 bg-brand-slate-900 hover:bg-brand-gold text-brand-offwhite hover:text-brand-black transition-all duration-300 text-[9px] font-bold uppercase tracking-widest font-poppins">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pb-6 border-b border-brand-charcoal/10">
+              <a href="#" className="flex items-center justify-center gap-2.5 border border-brand-gold/15 hover:border-brand-gold py-3 px-4 bg-brand-charcoal hover:bg-brand-gold text-brand-offwhite hover:text-brand-black transition-all duration-300 text-[9px] font-bold uppercase tracking-widest font-poppins">
                 <FacebookIcon className="w-3.5 h-3.5" />
                 <span>Facebook</span>
               </a>
-              <a href="#" className="flex items-center justify-center gap-2.5 border border-brand-gold/15 hover:border-brand-gold py-3 px-4 bg-brand-slate-900 hover:bg-brand-gold text-brand-offwhite hover:text-brand-black transition-all duration-300 text-[9px] font-bold uppercase tracking-widest font-poppins">
+              <a href="#" className="flex items-center justify-center gap-2.5 border border-brand-gold/15 hover:border-brand-gold py-3 px-4 bg-brand-charcoal hover:bg-brand-gold text-brand-offwhite hover:text-brand-black transition-all duration-300 text-[9px] font-bold uppercase tracking-widest font-poppins">
                 <InstagramIcon className="w-3.5 h-3.5" />
                 <span>Instagram</span>
               </a>
-              <a href="#" className="flex items-center justify-center gap-2.5 border border-brand-gold/15 hover:border-brand-gold py-3 px-4 bg-brand-slate-900 hover:bg-brand-gold text-brand-offwhite hover:text-brand-black transition-all duration-300 text-[9px] font-bold uppercase tracking-widest font-poppins">
+              <a href="#" className="flex items-center justify-center gap-2.5 border border-brand-gold/15 hover:border-brand-gold py-3 px-4 bg-brand-charcoal hover:bg-brand-gold text-brand-offwhite hover:text-brand-black transition-all duration-300 text-[9px] font-bold uppercase tracking-widest font-poppins">
                 <LinkedInIcon className="w-3.5 h-3.5" />
                 <span>LinkedIn</span>
               </a>
-              <a href="#" className="flex items-center justify-center gap-2.5 border border-brand-gold/15 hover:border-brand-gold py-3 px-4 bg-brand-slate-900 hover:bg-brand-gold text-brand-offwhite hover:text-brand-black transition-all duration-300 text-[9px] font-bold uppercase tracking-widest font-poppins">
+              <a href="#" className="flex items-center justify-center gap-2.5 border border-brand-gold/15 hover:border-brand-gold py-3 px-4 bg-brand-charcoal hover:bg-brand-gold text-brand-offwhite hover:text-brand-black transition-all duration-300 text-[9px] font-bold uppercase tracking-widest font-poppins">
                 <YouTubeIcon className="w-3.5 h-3.5" />
                 <span>YouTube</span>
               </a>
@@ -185,35 +185,35 @@ export const Footer: React.FC = () => {
               
               {/* Column 1: OUR WEBSITE */}
               <div>
-                <h6 className="font-poppins text-uppercase text-[10px] font-bold tracking-[0.25em] text-brand-gold mb-5">
+                <h6 className="font-poppins text-uppercase text-[10px] font-bold tracking-[0.25em] text-brand-terracotta mb-5">
                   OUR WEBSITE
                 </h6>
                 <ul className="flex flex-col gap-3.5 text-xs font-poppins">
-                  <li><Link href="/" className="text-brand-sand hover:text-brand-offwhite transition-colors duration-200 relative after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-0 hover:after:w-full after:bg-brand-gold after:transition-all after:duration-300 pb-0.5">Home</Link></li>
-                  <li><Link href="/about" className="text-brand-sand hover:text-brand-offwhite transition-colors duration-200 relative after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-0 hover:after:w-full after:bg-brand-gold after:transition-all after:duration-300 pb-0.5">About Us</Link></li>
-                  <li><Link href="/inspiration" className="text-brand-sand hover:text-brand-offwhite transition-colors duration-200 relative after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-0 hover:after:w-full after:bg-brand-gold after:transition-all after:duration-300 pb-0.5">Inspiration</Link></li>
-                  <li><Link href="/enquiry" className="text-brand-sand hover:text-brand-offwhite transition-colors duration-200 relative after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-0 hover:after:w-full after:bg-brand-gold after:transition-all after:duration-300 pb-0.5">Business Enquiry</Link></li>
-                  <li><Link href="/privacy" className="text-brand-sand hover:text-brand-offwhite transition-colors duration-200 relative after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-0 hover:after:w-full after:bg-brand-gold after:transition-all after:duration-300 pb-0.5">Privacy Policy</Link></li>
+                  <li><Link href="/" className="text-brand-slate-200 hover:text-brand-gold transition-colors duration-200 relative after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-0 hover:after:w-full after:bg-brand-gold after:transition-all after:duration-300 pb-0.5">Home</Link></li>
+                  <li><Link href="/about" className="text-brand-slate-200 hover:text-brand-gold transition-colors duration-200 relative after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-0 hover:after:w-full after:bg-brand-gold after:transition-all after:duration-300 pb-0.5">About Us</Link></li>
+                  <li><Link href="/inspiration" className="text-brand-slate-200 hover:text-brand-gold transition-colors duration-200 relative after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-0 hover:after:w-full after:bg-brand-gold after:transition-all after:duration-300 pb-0.5">Inspiration</Link></li>
+                  <li><Link href="/enquiry" className="text-brand-slate-200 hover:text-brand-gold transition-colors duration-200 relative after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-0 hover:after:w-full after:bg-brand-gold after:transition-all after:duration-300 pb-0.5">Business Enquiry</Link></li>
+                  <li><Link href="/privacy" className="text-brand-slate-200 hover:text-brand-gold transition-colors duration-200 relative after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-0 hover:after:w-full after:bg-brand-gold after:transition-all after:duration-300 pb-0.5">Privacy Policy</Link></li>
                 </ul>
               </div>
 
               {/* Column 2: EXPLORE */}
               <div>
-                <h6 className="font-poppins text-uppercase text-[10px] font-bold tracking-[0.25em] text-brand-gold mb-5">
+                <h6 className="font-poppins text-uppercase text-[10px] font-bold tracking-[0.25em] text-brand-terracotta mb-5">
                   EXPLORE
                 </h6>
                 <ul className="flex flex-col gap-3.5 text-xs font-poppins">
-                  <li><Link href="/products" className="text-brand-sand hover:text-brand-offwhite transition-colors duration-200 relative after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-0 hover:after:w-full after:bg-brand-gold after:transition-all after:duration-300 pb-0.5">Products</Link></li>
-                  <li><Link href="/projects" className="text-brand-sand hover:text-brand-offwhite transition-colors duration-200 relative after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-0 hover:after:w-full after:bg-brand-gold after:transition-all after:duration-300 pb-0.5">Projects</Link></li>
-                  <li><Link href="/dealers" className="text-brand-sand hover:text-brand-offwhite transition-colors duration-200 relative after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-0 hover:after:w-full after:bg-brand-gold after:transition-all after:duration-300 pb-0.5">Where to buy</Link></li>
-                  <li><Link href="/contact" className="text-brand-sand hover:text-brand-offwhite transition-colors duration-200 relative after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-0 hover:after:w-full after:bg-brand-gold after:transition-all after:duration-300 pb-0.5">Contacts</Link></li>
+                  <li><Link href="/products" className="text-brand-slate-200 hover:text-brand-gold transition-colors duration-200 relative after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-0 hover:after:w-full after:bg-brand-gold after:transition-all after:duration-300 pb-0.5">Products</Link></li>
+                  <li><Link href="/projects" className="text-brand-slate-200 hover:text-brand-gold transition-colors duration-200 relative after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-0 hover:after:w-full after:bg-brand-gold after:transition-all after:duration-300 pb-0.5">Projects</Link></li>
+                  <li><Link href="/dealers" className="text-brand-slate-200 hover:text-brand-gold transition-colors duration-200 relative after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-0 hover:after:w-full after:bg-brand-gold after:transition-all after:duration-300 pb-0.5">Where to buy</Link></li>
+                  <li><Link href="/contact" className="text-brand-slate-200 hover:text-brand-gold transition-colors duration-200 relative after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-0 hover:after:w-full after:bg-brand-gold after:transition-all after:duration-300 pb-0.5">Contacts</Link></li>
                 </ul>
               </div>
 
               {/* Column 3: SAY HELLO & GEOGRAPHY */}
               <div className="space-y-6">
                 <div>
-                  <h6 className="font-poppins text-uppercase text-[10px] font-bold tracking-[0.25em] text-brand-gold mb-3">
+                  <h6 className="font-poppins text-uppercase text-[10px] font-bold tracking-[0.25em] text-brand-terracotta mb-3">
                     SAY HELLO
                   </h6>
                   <ul className="flex flex-col gap-2.5 text-xs font-poppins">
@@ -223,12 +223,12 @@ export const Footer: React.FC = () => {
                       </a>
                     </li>
                     <li>
-                      <a href="tel:+919936011176" className="text-brand-sand hover:text-brand-offwhite transition-colors duration-200">
+                      <a href="tel:+919936011176" className="text-brand-slate-200 hover:text-brand-gold transition-colors duration-200">
                         +91 99360 11176
                       </a>
                     </li>
                     <li>
-                      <a href="tel:+919935534218" className="text-brand-sand hover:text-brand-offwhite transition-colors duration-200">
+                      <a href="tel:+919935534218" className="text-brand-slate-200 hover:text-brand-gold transition-colors duration-200">
                         +91 99355 34218
                       </a>
                     </li>
@@ -236,22 +236,22 @@ export const Footer: React.FC = () => {
                 </div>
                 
                 <div>
-                  <h6 className="font-poppins text-uppercase text-[10px] font-bold tracking-[0.25em] text-brand-gold mb-3">
+                  <h6 className="font-poppins text-uppercase text-[10px] font-bold tracking-[0.25em] text-brand-terracotta mb-3">
                     REACH US
                   </h6>
-                  <div className="text-[10.5px] font-poppins text-brand-sand leading-relaxed space-y-3">
+                  <div className="text-[10.5px] font-poppins text-brand-slate-200 leading-relaxed space-y-3">
                     <div className="space-y-0.5">
                       <p className="font-semibold text-brand-offwhite text-xs">Varanasi Headquarters</p>
-                      <p className="text-[8.5px] text-brand-gold font-bold tracking-wider uppercase font-mono">25.3176° N, 82.9739° E</p>
+                      <p className="text-[8.5px] text-brand-terracotta font-bold tracking-wider uppercase font-mono">25.3176° N, 82.9739° E</p>
                       <p className="text-[10px] leading-relaxed">
                         Vill. Hariharpur, Off Ring Road Ph-1,<br />
                         Shivpur, Varanasi, UP, India 221003
                       </p>
                     </div>
                     
-                    <div className="space-y-0.5 pt-1.5 border-t border-brand-slate/20">
+                    <div className="space-y-0.5 pt-1.5 border-t border-brand-charcoal/10">
                       <p className="font-semibold text-brand-offwhite text-xs">Noida Sales Office</p>
-                      <p className="text-[8.5px] text-brand-gold font-bold tracking-wider uppercase font-mono">28.6273° N, 77.3725° E</p>
+                      <p className="text-[8.5px] text-brand-terracotta font-bold tracking-wider uppercase font-mono">28.6273° N, 77.3725° E</p>
                       <p className="text-[10px] leading-relaxed">
                         Sector 62, Noida,<br />
                         Uttar Pradesh, India 201301

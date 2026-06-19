@@ -177,23 +177,8 @@ export const Header: React.FC<HeaderProps> = ({ darkMode, setDarkMode }) => {
       <div className={`mx-auto transition-all duration-500 relative ${scrolled ? "max-w-7xl px-4 sm:px-6 lg:px-8" : "max-w-full px-4 md:px-8"}`}>
         <div className="flex items-center justify-between">
           
-          {/* Left Block (Logo & Project Icon Card) */}
-          <div className={`flex items-center gap-4 transition-all duration-500 ${
-            scrolled 
-              ? "bg-transparent border-none p-0 shadow-none" 
-              : "bg-brand-slate-950 border border-brand-slate-800/40 px-5 py-2.5 rounded-xl shadow-lg"
-          }`}>
-            {/* Project Grid Icon */}
-            <button 
-              onClick={() => handleLinkClick("/projects")}
-              className="p-1.5 rounded-lg text-brand-gold hover:text-brand-terracotta-500 hover:bg-brand-slate-900 transition-all duration-300 flex items-center justify-center cursor-pointer"
-              title="View Projects Portfolio"
-            >
-              <LayoutGrid className="w-5 h-5" />
-            </button>
-            
-            <div className="h-5 w-[1px] bg-brand-slate-800" />
-            
+          {/* Left Block (Logo Card) */}
+          <div className="flex items-center bg-transparent border-none p-0 shadow-none transition-all duration-500">
             {/* Logo */}
             <div className="flex items-center gap-2 cursor-pointer" onClick={() => {
               if (pathname === "/") {
@@ -202,7 +187,7 @@ export const Header: React.FC<HeaderProps> = ({ darkMode, setDarkMode }) => {
                 router.push("/");
               }
             }}>
-              <Logo height="36" inverseText={true} />
+              <Logo height="36" inverseText={pathname === "/" && !scrolled} />
             </div>
           </div>
 
