@@ -168,13 +168,13 @@ export const ProductCategories: React.FC = () => {
       link: "/products?category=Pavers"
     },
     {
-      title: "AAC Blocks",
+      title: "Terraplasts",
       desc: "Thermal-insulating lightweight autoclaved cellular structural blocks.",
       image: "/images/hero-2.jpg",
-      link: "/products?category=AAC Blocks"
+      link: "/products?category=Terraplasts"
     },
     {
-      title: "Fly Ash Bricks",
+      title: "Cladding",
       desc: "Organic fly-ash dense engineering bricks for structural columns.",
       image: "/images/hero-3.jpg",
       link: "/products?category=Hollow Blocks"

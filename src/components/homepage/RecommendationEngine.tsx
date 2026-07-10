@@ -52,7 +52,7 @@ export const RecommendationEngine: React.FC = () => {
   // Logic to determine recommended building materials
   const getRecommendation = () => {
     const { buildingType, budget, climate } = selections;
-    
+
     if (buildingType === "Luxury Villa") {
       return {
         primary: "Natural Terracotta Cladding & Premium Fired Clay Bricks",
@@ -62,20 +62,20 @@ export const RecommendationEngine: React.FC = () => {
         image: "/images/hero-3.jpg"
       };
     }
-    
+
     if (buildingType === "Commercial") {
       return {
         primary: "Supreme Autoclaved Aerated Concrete (AAC) Blocks & Hollow Blocks",
-        reason: "Commercial high-rises require rapid build speeds, light dead-loads, and excellent fire ratings. AAC blocks reduce foundation loads while providing excellent sound dampening and thermal shielding.",
+        reason: "Commercial high-rises require rapid build speeds, light dead-loads, and excellent fire ratings. Terraplasts reduce foundation loads while providing excellent sound dampening and thermal shielding.",
         features: ["Up to 3x lighter than standard brick", "Acoustic insulation (STC 44)", "Class A1 4-hour fire rating", "Rapid wall construction speed"],
         techSpecs: "Density ~600 kg/m³ | Thermal conductivity 0.15 W/mK",
         image: "/images/hero-1.jpg"
       };
     }
-    
+
     if (buildingType === "Industrial") {
       return {
-        primary: "Heavy-Duty Fly Ash Bricks & Engineering Bricks",
+        primary: "Heavy-Duty Cladding & Engineering Bricks",
         reason: "Industrial plants need maximum durability, low moisture ingress, and high chemical resistance. Engineering fired bricks offer extreme load capacities and low water absorption rates.",
         features: ["Extreme compressive load limits", "Acid and industrial atmosphere resistant", "Highly dense microstructure", "Minimal water capillary action"],
         techSpecs: "Compressive strength > 45 N/mm² | Absorption < 5.0%",
@@ -96,7 +96,7 @@ export const RecommendationEngine: React.FC = () => {
 
     return {
       primary: "Standard Eco-Clay Bricks & AAC Wall Blocks Combo",
-      reason: "Combining structural clay loadbearing outer walls with lightweight interior AAC blocks provides the perfect balance of budget efficiency, thermal insulation, and sturdy wall load capacity.",
+      reason: "Combining structural clay loadbearing outer walls with lightweight interior Terraplasts provides the perfect balance of budget efficiency, thermal insulation, and sturdy wall load capacity.",
       features: ["Optimal cost-to-performance ratio", "Fast masonry speed", "Balanced thermal envelope", "Green building compliant materials"],
       techSpecs: "Mixed compression rating | Standard load bearing compliant",
       image: "/images/hero-5.jpg"
@@ -122,7 +122,7 @@ export const RecommendationEngine: React.FC = () => {
       <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-brand-emerald-500/5 rounded-full blur-[120px] pointer-events-none" />
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        
+
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-16">
           <span className="text-xs uppercase font-extrabold tracking-widest text-brand-emerald-500 bg-brand-emerald-500/10 px-3.5 py-1 rounded-full inline-flex items-center gap-1.5">
@@ -139,11 +139,11 @@ export const RecommendationEngine: React.FC = () => {
 
         {/* Wizard Panel Box */}
         <div className="glass-panel rounded-3xl border border-brand-slate-800 bg-brand-slate-900/60 p-6 md:p-10 shadow-2xl relative">
-          
+
           {/* Progress bar */}
           {step <= stepsCount && (
             <div className="w-full bg-brand-slate-950 rounded-full h-1.5 mb-8 overflow-hidden border border-brand-slate-800">
-              <div 
+              <div
                 className="bg-brand-emerald-500 h-full transition-all duration-300"
                 style={{ width: `${((step - 1) / stepsCount) * 100}%` }}
               />
@@ -174,11 +174,10 @@ export const RecommendationEngine: React.FC = () => {
                     <button
                       key={opt.name}
                       onClick={() => handleSelect("buildingType", opt.name)}
-                      className={`flex items-center gap-4 p-5 rounded-2xl border text-left cursor-pointer transition-all ${
-                        selections.buildingType === opt.name
-                          ? "border-brand-emerald-500 bg-brand-emerald-500/10 text-white"
-                          : "border-brand-slate-800 bg-brand-slate-950 hover:border-brand-slate-700 text-brand-slate-300 hover:text-white"
-                      }`}
+                      className={`flex items-center gap-4 p-5 rounded-2xl border text-left cursor-pointer transition-all ${selections.buildingType === opt.name
+                        ? "border-brand-emerald-500 bg-brand-emerald-500/10 text-white"
+                        : "border-brand-slate-800 bg-brand-slate-950 hover:border-brand-slate-700 text-brand-slate-300 hover:text-white"
+                        }`}
                     >
                       <div className="p-3 bg-brand-slate-900 rounded-xl shrink-0 border border-brand-slate-800">
                         {opt.icon}
@@ -215,11 +214,10 @@ export const RecommendationEngine: React.FC = () => {
                     <button
                       key={opt.name}
                       onClick={() => handleSelect("climate", opt.name)}
-                      className={`flex flex-col gap-4 p-5 rounded-2xl border text-left cursor-pointer transition-all ${
-                        selections.climate === opt.name
-                          ? "border-brand-emerald-500 bg-brand-emerald-500/10 text-white"
-                          : "border-brand-slate-800 bg-brand-slate-950 hover:border-brand-slate-700 text-brand-slate-300 hover:text-white"
-                      }`}
+                      className={`flex flex-col gap-4 p-5 rounded-2xl border text-left cursor-pointer transition-all ${selections.climate === opt.name
+                        ? "border-brand-emerald-500 bg-brand-emerald-500/10 text-white"
+                        : "border-brand-slate-800 bg-brand-slate-950 hover:border-brand-slate-700 text-brand-slate-300 hover:text-white"
+                        }`}
                     >
                       <div className="p-3 bg-brand-slate-900 rounded-xl shrink-0 w-fit border border-brand-slate-800">
                         {opt.icon}
@@ -262,11 +260,10 @@ export const RecommendationEngine: React.FC = () => {
                     <button
                       key={opt.name}
                       onClick={() => handleSelect("location", opt.name)}
-                      className={`flex flex-col justify-between p-5 rounded-2xl border text-left cursor-pointer transition-all min-h-[120px] ${
-                        selections.location === opt.name
-                          ? "border-brand-emerald-500 bg-brand-emerald-500/10 text-white"
-                          : "border-brand-slate-800 bg-brand-slate-950 hover:border-brand-slate-700 text-brand-slate-300 hover:text-white"
-                      }`}
+                      className={`flex flex-col justify-between p-5 rounded-2xl border text-left cursor-pointer transition-all min-h-[120px] ${selections.location === opt.name
+                        ? "border-brand-emerald-500 bg-brand-emerald-500/10 text-white"
+                        : "border-brand-slate-800 bg-brand-slate-950 hover:border-brand-slate-700 text-brand-slate-300 hover:text-white"
+                        }`}
                     >
                       <h4 className="font-bold text-sm">{opt.name}</h4>
                       <p className="text-xs text-brand-slate-400 mt-2">{opt.desc}</p>
@@ -304,11 +301,10 @@ export const RecommendationEngine: React.FC = () => {
                     <button
                       key={opt.name}
                       onClick={() => handleSelect("floors", opt.name)}
-                      className={`flex flex-col justify-between p-5 rounded-2xl border text-left cursor-pointer transition-all min-h-[120px] ${
-                        selections.floors === opt.name
-                          ? "border-brand-emerald-500 bg-brand-emerald-500/10 text-white"
-                          : "border-brand-slate-800 bg-brand-slate-950 hover:border-brand-slate-700 text-brand-slate-300 hover:text-white"
-                      }`}
+                      className={`flex flex-col justify-between p-5 rounded-2xl border text-left cursor-pointer transition-all min-h-[120px] ${selections.floors === opt.name
+                        ? "border-brand-emerald-500 bg-brand-emerald-500/10 text-white"
+                        : "border-brand-slate-800 bg-brand-slate-950 hover:border-brand-slate-700 text-brand-slate-300 hover:text-white"
+                        }`}
                     >
                       <h4 className="font-bold text-sm">{opt.name}</h4>
                       <p className="text-xs text-brand-slate-400 mt-2">{opt.desc}</p>
@@ -346,11 +342,10 @@ export const RecommendationEngine: React.FC = () => {
                     <button
                       key={opt.name}
                       onClick={() => handleSelect("budget", opt.name)}
-                      className={`flex flex-col justify-between p-5 rounded-2xl border text-left cursor-pointer transition-all min-h-[120px] ${
-                        selections.budget === opt.name
-                          ? "border-brand-emerald-500 bg-brand-emerald-500/10 text-white"
-                          : "border-brand-slate-800 bg-brand-slate-950 hover:border-brand-slate-700 text-brand-slate-300 hover:text-white"
-                      }`}
+                      className={`flex flex-col justify-between p-5 rounded-2xl border text-left cursor-pointer transition-all min-h-[120px] ${selections.budget === opt.name
+                        ? "border-brand-emerald-500 bg-brand-emerald-500/10 text-white"
+                        : "border-brand-slate-800 bg-brand-slate-950 hover:border-brand-slate-700 text-brand-slate-300 hover:text-white"
+                        }`}
                     >
                       <h4 className="font-bold text-sm">{opt.name}</h4>
                       <p className="text-xs text-brand-slate-400 mt-2">{opt.desc}</p>
@@ -382,11 +377,11 @@ export const RecommendationEngine: React.FC = () => {
                       <ShieldCheck className="w-4 h-4" />
                       Recommended Building Material
                     </div>
-                    
+
                     <h3 className="text-2xl md:text-3xl font-extrabold text-white mt-2 leading-tight">
                       {getRecommendation().primary}
                     </h3>
-                    
+
                     <p className="text-sm text-brand-slate-300 mt-4 leading-relaxed bg-brand-slate-950/40 border border-brand-slate-800/50 p-4 rounded-xl">
                       {getRecommendation().reason}
                     </p>
@@ -415,8 +410,8 @@ export const RecommendationEngine: React.FC = () => {
                 {/* Picture & Action Column */}
                 <div className="rounded-2xl overflow-hidden border border-brand-slate-800 bg-brand-slate-950 flex flex-col justify-between relative min-h-[300px] md:min-h-auto">
                   <div className="relative aspect-[16/10] w-full overflow-hidden shrink-0">
-                    <img 
-                      src={getRecommendation().image} 
+                    <img
+                      src={getRecommendation().image}
                       alt="Recommended solution"
                       className="object-cover w-full h-full"
                     />
@@ -427,7 +422,7 @@ export const RecommendationEngine: React.FC = () => {
                     <div className="text-xs text-brand-slate-400">
                       Recommendation compiled for building type <strong className="text-white">{selections.buildingType}</strong> located in <strong className="text-white">{selections.location}</strong> with <strong className="text-white">{selections.floors}</strong> storeys.
                     </div>
-                    
+
                     <div className="flex flex-col gap-3">
                       <button
                         onClick={() => handleRequestQuote(getRecommendation().primary)}
@@ -436,7 +431,7 @@ export const RecommendationEngine: React.FC = () => {
                         Request Specification & Pricing
                         <ArrowRight className="w-4 h-4" />
                       </button>
-                      
+
                       <button
                         onClick={resetQuiz}
                         className="w-full bg-brand-slate-900 hover:bg-brand-slate-800 text-brand-slate-300 font-semibold py-3.5 rounded-xl transition-all border border-brand-slate-800 text-center text-sm cursor-pointer flex items-center justify-center gap-2"

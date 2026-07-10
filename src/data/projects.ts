@@ -20,9 +20,9 @@ export const projects: Project[] = [
     architect: "Sanjay Puri Architects",
     builder: "L&T Construction",
     year: "2025",
-    productsUsed: ["Natural Terracotta Cladding Tile", "Supreme Insulated AAC Block"],
+    productsUsed: ["Natural Terracotta Cladding Tile", "Supreme Insulated Terraplast"],
     image: "/images/hero-1.jpg",
-    desc: "A 14-storey commercial office structure utilizing custom fired terracotta rainscreen panels for energy shielding, supported by high-insulating AAC block interior infill walls.",
+    desc: "A 14-storey commercial office structure utilizing custom fired terracotta rainscreen panels for energy shielding, supported by high-insulating Terraplast interior infill walls.",
   },
   {
     id: "proj2",

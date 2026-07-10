@@ -37,16 +37,16 @@ const products: ProductItem[] = [
   {
     id: "aac-blocks",
     num: "03",
-    name: "AAC Blocks",
+    name: "Terraplasts",
     subtitle: "AUTOCLAVED AERATED CONCRETE",
     desc: "Ultra-lightweight structural masonry units featuring superior acoustic damping, structural fire safety, and advanced thermal insulation to dramatically reduce building energy requirements.",
     image: "/images/hero-2.jpg",
-    link: "/products?category=AAC Blocks",
+    link: "/products?category=Terraplasts",
   },
   {
     id: "flyash-bricks",
     num: "04",
-    name: "Fly Ash Bricks",
+    name: "Cladding",
     subtitle: "SUSTAINABLE MASONRY SOLUTIONS",
     desc: "Eco-friendly, precise-dimension engineering bricks manufactured using recycled fly ash, sand, and cement. Highly uniform in shape to optimize structural mortar efficiency and design consistency.",
     image: "/images/hero-3.jpg",
@@ -56,7 +56,7 @@ const products: ProductItem[] = [
 
 export const HorizontalProducts: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
-  
+
   // Track scroll position of the parent vertical container
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -70,13 +70,13 @@ export const HorizontalProducts: React.FC = () => {
     const total = products.length;
     const step = 1 / (total - 1); // 0.333...
     const center = index * step;
-    
+
     let inputR: number[];
     let yR: number[];
     let opacityR: number[];
     let scaleR: number[];
     let parallaxTextR: number[];
-    
+
     if (index === 0) {
       inputR = [0, step];
       yR = [0, -80];
@@ -96,12 +96,12 @@ export const HorizontalProducts: React.FC = () => {
       scaleR = [1.15, 1.0, 1.15];
       parallaxTextR = [-150, 0, 150];
     }
-    
+
     const y = useTransform(scrollYProgress, inputR, yR);
     const opacity = useTransform(scrollYProgress, inputR, opacityR);
     const imgScale = useTransform(scrollYProgress, inputR, scaleR);
     const pTextX = useTransform(scrollYProgress, inputR, parallaxTextR);
-    
+
     return { y, opacity, imgScale, pTextX };
   };
 
@@ -109,7 +109,7 @@ export const HorizontalProducts: React.FC = () => {
     <section ref={containerRef} id="categories" className="relative h-[400vh] bg-brand-black">
       {/* Sticky viewport frame */}
       <div className="sticky top-0 h-screen overflow-hidden flex items-center">
-        
+
         {/* Background Grid Lines */}
         <div className="absolute inset-0 pointer-events-none z-0 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-4 h-full opacity-5">
           <div className="border-l border-brand-slate h-full" />
@@ -134,8 +134,8 @@ export const HorizontalProducts: React.FC = () => {
             SCROLL FOR PRODUCTS
           </span>
           <div className="w-24 h-[1px] bg-brand-slate/40 relative">
-            <motion.div 
-              style={{ scaleX: scrollYProgress }} 
+            <motion.div
+              style={{ scaleX: scrollYProgress }}
               className="absolute left-0 top-0 h-full bg-brand-gold origin-left w-full"
             />
           </div>
@@ -145,14 +145,14 @@ export const HorizontalProducts: React.FC = () => {
         <motion.div style={{ x }} className="flex w-[400vw] h-full items-center">
           {products.map((prod, idx) => {
             const { y, opacity, imgScale, pTextX } = getSlideTransforms(idx);
-            
+
             return (
               <div
                 key={prod.id}
                 className="relative w-[100vw] h-full flex items-center justify-center shrink-0 px-6 md:px-12 lg:px-20 z-10 overflow-hidden"
               >
                 {/* Massive Background Parallax Text Layer */}
-                <motion.div 
+                <motion.div
                   style={{ x: pTextX }}
                   className="absolute top-[45%] left-0 -translate-y-1/2 text-[15vw] font-playfair font-black text-brand-slate-200/15 select-none pointer-events-none uppercase whitespace-nowrap z-0"
                 >
@@ -160,9 +160,9 @@ export const HorizontalProducts: React.FC = () => {
                 </motion.div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center max-w-7xl w-full z-10 relative">
-                  
+
                   {/* Left Column - Typography & Content (Smooth scroll-linked translate and fade) */}
-                  <motion.div 
+                  <motion.div
                     style={{ y, opacity }}
                     className="lg:col-span-5 flex flex-col items-start text-left order-2 lg:order-1"
                   >
@@ -206,7 +206,7 @@ export const HorizontalProducts: React.FC = () => {
                   {/* Right Column - Large Image Mask Reveal */}
                   <div className="lg:col-span-7 w-full h-[40vh] sm:h-[50vh] lg:h-[60vh] relative overflow-hidden group border border-brand-gold/15 bg-brand-charcoal order-1 lg:order-2">
                     <div className="absolute inset-0 bg-black/35 z-10 transition-opacity duration-500 group-hover:bg-black/15" />
-                    
+
                     {/* Parallax Image Scale bound directly to scroll track */}
                     <div className="w-full h-full overflow-hidden">
                       <motion.img

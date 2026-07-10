@@ -29,12 +29,12 @@ const cormorant = Cormorant_Garamond({
 });
 
 export const metadata: Metadata = {
-  title: "PCP Clay | Premium Fired Clay Bricks, Terracotta Facades & AAC Blocks",
-  description: "Prayag Clay Productions (PCP) manufactures high-performance architectural fired clay bricks, natural terracotta cladding tiles, concrete pavers, and thermal AAC blocks. Complete with BIM objects and calculators for architects and builders.",
-  keywords: ["prayag clay", "pcp clay", "clay bricks", "terracotta bricks", "cladding tile", "roofing tiles", "pavers", "AAC blocks", "BIM objects", "construction calculators"],
+  title: "PCP Clay | Premium Fired Clay Bricks, Terracotta Facades & Terraplasts",
+  description: "Prayag Clay Productions (PCP) manufactures high-performance architectural fired clay bricks, natural terracotta Cladding tiles, concrete pavers, and thermal Terraplasts. Complete with BIM objects and calculators for architects and builders.",
+  keywords: ["prayag clay", "pcp clay", "clay bricks", "terracotta bricks", "Cladding tile", "roofing tiles", "pavers", "Terraplasts", "BIM objects", "construction calculators"],
   openGraph: {
     title: "Prayag Clay Productions | Premium Architectural Building Materials",
-    description: "Eco-friendly fired clay cladding, insulation blocks, and engineering pavers by Prayag Clay Productions (PCP). Custom CAD downloads and structural calculators.",
+    description: "Eco-friendly fired clay Cladding, insulation blocks, and engineering pavers by Prayag Clay Productions (PCP). Custom CAD downloads and structural calculators.",
     type: "website",
     url: "https://www.prayagclay.com",
   }

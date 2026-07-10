@@ -14,7 +14,7 @@ export const FeaturedProducts: React.FC<{ teaser?: boolean }> = ({ teaser = fals
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [activeQuickView, setActiveQuickView] = useState<Product | null>(null);
 
-  const categories = ["All", "Clay Bricks", "Terracotta", "Roofing Tiles", "Pavers", "Hollow Blocks", "AAC Blocks"];
+  const categories = ["All", "Clay Bricks", "Terracotta", "Roofing Tiles", "Pavers", "Hollow Blocks", "Terraplasts"];
 
   const filteredProducts = teaser
     ? products.slice(0, 3)
@@ -47,7 +47,7 @@ export const FeaturedProducts: React.FC<{ teaser?: boolean }> = ({ teaser = fals
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        
+
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16 flex flex-col items-center">
           <span className="text-[10px] uppercase font-bold tracking-[0.35em] text-brand-gold bg-brand-gold/5 px-4 py-1.5 border border-brand-gold/20 rounded-none w-fit">
@@ -69,11 +69,10 @@ export const FeaturedProducts: React.FC<{ teaser?: boolean }> = ({ teaser = fals
               <button
                 key={cat}
                 onClick={() => setSelectedCategory(cat)}
-                className={`px-6 py-3 rounded-none text-xs uppercase font-poppins tracking-[0.2em] font-medium transition-colors cursor-pointer border ${
-                  selectedCategory === cat
-                    ? "bg-brand-gold text-brand-black border-brand-gold"
-                    : "bg-brand-charcoal text-brand-sand border-brand-gold/15 hover:border-brand-gold/50"
-                }`}
+                className={`px-6 py-3 rounded-none text-xs uppercase font-poppins tracking-[0.2em] font-medium transition-colors cursor-pointer border ${selectedCategory === cat
+                  ? "bg-brand-gold text-brand-black border-brand-gold"
+                  : "bg-brand-charcoal text-brand-sand border-brand-gold/15 hover:border-brand-gold/50"
+                  }`}
               >
                 {cat}
               </button>
@@ -82,7 +81,7 @@ export const FeaturedProducts: React.FC<{ teaser?: boolean }> = ({ teaser = fals
         )}
 
         {/* Products Grid */}
-        <motion.div 
+        <motion.div
           layout
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
         >
@@ -109,7 +108,7 @@ export const FeaturedProducts: React.FC<{ teaser?: boolean }> = ({ teaser = fals
                   <div className="absolute top-4 left-4 bg-[#121110]/95 text-brand-gold border border-brand-gold/20 text-[9px] uppercase font-bold tracking-widest px-3 py-1.5 rounded-none z-10">
                     {p.category}
                   </div>
-                  
+
                   {/* Hover Quick View Overlay */}
                   <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2 z-10">
                     <button

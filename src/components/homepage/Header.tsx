@@ -119,7 +119,7 @@ export const Header: React.FC<HeaderProps> = ({ darkMode, setDarkMode }) => {
   const handleLinkClick = (pathOrSelector: string) => {
     setIsOpen(false);
     setActiveDropdown(null);
-    
+
     if (pathOrSelector.startsWith("#")) {
       if (pathname === "/") {
         const element = document.querySelector(pathOrSelector);
@@ -144,11 +144,11 @@ export const Header: React.FC<HeaderProps> = ({ darkMode, setDarkMode }) => {
   const menuItems = {
     products: [
       { name: "Clay Bricks", href: "/products?category=Clay Bricks", desc: "Facing bricks fired at 1100°C for load-bearing facades." },
-      { name: "Terracotta Facades", href: "/products?category=Terracotta", desc: "Ventilated natural terracotta cladding and custom sunscreens." },
+      { name: "Terracotta Facades", href: "/products?category=Terracotta", desc: "Ventilated natural terracotta Cladding and custom sunscreens." },
       { name: "Roofing Tiles", href: "/products?category=Roofing Tiles", desc: "Interlocking clay sloped roof tiles and finishing ridges." },
       { name: "Paving Stones", href: "/products?category=Pavers", desc: "Heavy-duty outdoor paving bricks for paths and roadways." },
       { name: "Hollow Blocks", href: "/products?category=Hollow Blocks", desc: "Insulating structural clay blocks for lightweight facades." },
-      { name: "AAC Blocks", href: "/products?category=AAC Blocks", desc: "Lightweight cellular thermal insulating autoclaved blocks." },
+      { name: "Terraplasts", href: "/products?category=Terraplasts", desc: "Lightweight cellular thermal insulating autoclaved blocks." },
     ],
     calculators: [
       { name: "Brick Quantity Calculator", href: "/calculators?id=brick-quantity", desc: "Calculate brick counts and mortar buffers." },
@@ -168,15 +168,14 @@ export const Header: React.FC<HeaderProps> = ({ darkMode, setDarkMode }) => {
   return (
     <header
       onMouseLeave={() => setActiveDropdown(null)}
-      className={`fixed top-0 left-0 w-full z-40 transition-all duration-500 ${
-        scrolled || isOpen
-          ? "bg-brand-slate-950 py-3 shadow-md border-b border-brand-slate-800/40" 
-          : "bg-transparent py-4 border-none shadow-none"
-      }`}
+      className={`fixed top-0 left-0 w-full z-40 transition-all duration-500 ${scrolled || isOpen
+        ? "bg-brand-slate-950 py-3 shadow-md border-b border-brand-slate-800/40"
+        : "bg-transparent py-4 border-none shadow-none"
+        }`}
     >
       <div className={`mx-auto transition-all duration-500 relative ${scrolled ? "max-w-7xl px-4 sm:px-6 lg:px-8" : "max-w-full px-4 md:px-8"}`}>
         <div className="flex items-center justify-between">
-          
+
           {/* Left Block (Logo Card) */}
           <div className="flex items-center bg-transparent border-none p-0 shadow-none transition-all duration-500">
             {/* Logo */}
@@ -192,11 +191,10 @@ export const Header: React.FC<HeaderProps> = ({ darkMode, setDarkMode }) => {
           </div>
 
           {/* Right Block (Desktop Menu & Mobile Toggle Card) */}
-          <div className={`flex items-center gap-6 transition-all duration-500 ${
-            scrolled 
-              ? "bg-transparent border-none p-0 shadow-none" 
-              : "bg-brand-slate-950 border border-[#ce9456]/20 px-6 py-2 rounded-xl shadow-lg"
-          }`}>
+          <div className={`flex items-center gap-6 transition-all duration-500 ${scrolled
+            ? "bg-transparent border-none p-0 shadow-none"
+            : "bg-brand-slate-950 border border-[#ce9456]/20 px-6 py-2 rounded-xl shadow-lg"
+            }`}>
             {/* Desktop Nav */}
             <nav className="hidden lg:flex items-center gap-6">
               {/* Products Dropdown Trigger */}
@@ -309,7 +307,7 @@ export const Header: React.FC<HeaderProps> = ({ darkMode, setDarkMode }) => {
                         Eco-certified, thermal-insulating facades designed for high-load metropolitan layouts.
                       </p>
                     </div>
-                    <Link 
+                    <Link
                       href="/products?category=Terracotta"
                       onClick={() => setActiveDropdown(null)}
                       className="inline-flex items-center gap-1.5 text-[9px] uppercase tracking-widest text-brand-gold font-bold font-poppins w-fit"
@@ -394,7 +392,7 @@ export const Header: React.FC<HeaderProps> = ({ darkMode, setDarkMode }) => {
                         Estimate material volumes, Roman interlocking patterns, and net masonry boundaries in real-time.
                       </p>
                     </div>
-                    <Link 
+                    <Link
                       href="/calculators"
                       onClick={() => setActiveDropdown(null)}
                       className="inline-flex items-center gap-1.5 text-[9px] uppercase tracking-widest text-brand-gold font-bold font-poppins w-fit"
@@ -478,7 +476,7 @@ export const Header: React.FC<HeaderProps> = ({ darkMode, setDarkMode }) => {
                         Download technical sheets, detailed DWG drawings, Revit RVT profiles, and installation manuals.
                       </p>
                     </div>
-                    <Link 
+                    <Link
                       href="/resources"
                       onClick={() => setActiveDropdown(null)}
                       className="inline-flex items-center gap-1.5 text-[9px] uppercase tracking-widest text-brand-gold font-bold font-poppins w-fit"

@@ -86,15 +86,15 @@ export const resources: Resource[] = [
   },
   {
     id: "r6",
-    name: "Supreme Insulated AAC Block Installation Guide",
+    name: "Supreme Insulated Terraplast Installation Guide",
     format: "PDF",
     size: "3.2 MB",
     type: "Installation Guide",
     productId: "p6",
-    productName: "Supreme Insulated AAC Block",
+    productName: "Supreme Insulated Terraplast",
     author: "PCP Construction Advisory Group",
     updatedAt: "2026-02-10",
-    desc: "Step-by-step handling, mortar application, thin-bed jointing techniques, and thermal bridge reduction guidelines for AAC blockwork.",
+    desc: "Step-by-step handling, mortar application, thin-bed jointing techniques, and thermal bridge reduction guidelines for Terraplastwork.",
     compatibility: "PDF reader",
     downloadsCount: 943
   }

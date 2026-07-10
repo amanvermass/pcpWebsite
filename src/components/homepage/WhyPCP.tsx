@@ -108,7 +108,7 @@ export const WhyPCP: React.FC = () => {
     {
       year: "2010",
       title: "Eco Green Shield Systems",
-      desc: "Pioneered high-insulation cellular aerated concrete blocks (AAC Blocks) and solar recovery lines, reducing site HVAC load demands.",
+      desc: "Pioneered high-insulation cellular aerated concrete blocks (Terraplasts) and solar recovery lines, reducing site HVAC load demands.",
       icon: <Leaf className="w-5 h-5" />,
       alignLeft: true
     },
@@ -132,7 +132,7 @@ export const WhyPCP: React.FC = () => {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        
+
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-20 flex flex-col items-center">
           <span className="text-[10px] uppercase font-bold tracking-[0.35em] text-brand-gold bg-brand-gold/5 px-4 py-1.5 border border-brand-gold/20 rounded-none w-fit block">
@@ -151,7 +151,7 @@ export const WhyPCP: React.FC = () => {
           {/* Vertical timeline line container */}
           <div className="absolute left-6 md:left-1/2 top-4 bottom-4 w-[2px] bg-brand-gold/15 -translate-x-1/2 overflow-hidden">
             {/* GSAP ScrollTrigger controlled drawing indicator */}
-            <div 
+            <div
               ref={lineRef}
               className="w-full h-full bg-brand-gold origin-top"
               style={{ transform: "scaleY(0)" }}
@@ -159,7 +159,7 @@ export const WhyPCP: React.FC = () => {
           </div>
 
           {milestones.map((ms, idx) => (
-            <TimelineNode 
+            <TimelineNode
               key={idx}
               year={ms.year}
               title={ms.title}

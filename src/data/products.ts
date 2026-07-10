@@ -109,8 +109,8 @@ export const products: Product[] = [
   },
   {
     id: "p6",
-    name: "Supreme Insulated AAC Block",
-    category: "AAC Blocks",
+    name: "Supreme Insulated Terraplast",
+    category: "Terraplasts",
     desc: "Autoclaved Aerated Concrete blocks providing ultimate lightweight efficiency, speed of work, and acoustic control.",
     image: "/images/hero-1.jpg",
     specs: {

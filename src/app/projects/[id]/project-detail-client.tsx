@@ -29,7 +29,7 @@ const StatCounter: React.FC<{ value: number; suffix: string; label: string }> = 
     const duration = 1500; // 1.5 seconds
     const end = value;
     const incrementTime = Math.max(Math.floor(duration / end), 16);
-    
+
     const timer = setInterval(() => {
       start += Math.ceil(end / (duration / incrementTime));
       if (start >= end) {
@@ -104,7 +104,7 @@ function ProjectDetailContent({ project }: ProjectDetailClientProps) {
   };
 
   // Resolve matching products
-  const matchedProducts = products.filter((prod) => 
+  const matchedProducts = products.filter((prod) =>
     project.productsUsed.some((name) => prod.name.toLowerCase().includes(name.toLowerCase()) || name.toLowerCase().includes(prod.name.toLowerCase()))
   );
 
@@ -136,30 +136,30 @@ function ProjectDetailContent({ project }: ProjectDetailClientProps) {
     <div className="flex flex-col min-h-screen bg-brand-black text-brand-offwhite">
       {/* Fullscreen Parallax Cover Image Banner */}
       <div ref={containerRef} className="relative w-full h-[60vh] sm:h-[70vh] overflow-hidden bg-black">
-        <motion.div 
+        <motion.div
           style={{ y: imageY }}
           className="absolute inset-0 w-full h-[120%] -top-[10%]"
         >
-          <img 
-            src={project.image} 
-            alt={project.name} 
-            className="w-full h-full object-cover" 
+          <img
+            src={project.image}
+            alt={project.name}
+            className="w-full h-full object-cover"
           />
         </motion.div>
-        
+
         {/* Dark overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-[#121110] via-[#121110]/55 to-transparent z-10" />
 
         {/* Floating Content Overlays */}
         <div className="absolute inset-0 z-20 flex flex-col justify-between p-6 sm:p-12 max-w-7xl mx-auto w-full pt-28">
-          <Link 
-            href="/projects" 
+          <Link
+            href="/projects"
             className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-brand-sand hover:text-brand-gold transition-colors group w-fit font-poppins"
           >
             <ArrowLeft className="w-4 h-4 group-hover:-translate-x.5 transition-transform text-brand-gold" />
             <span>Back to Portfolio</span>
           </Link>
-          
+
           <div className="max-w-4xl mt-auto">
             <span className="text-[9px] uppercase font-bold tracking-[0.25em] text-brand-gold bg-brand-gold/5 px-3.5 py-1.5 border border-brand-gold/20 rounded-none w-fit block mb-4 font-poppins">
               {project.type} Case Study
@@ -187,10 +187,10 @@ function ProjectDetailContent({ project }: ProjectDetailClientProps) {
       {/* Main Details Section */}
       <main className="flex-grow max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
-          
+
           {/* Left Column - Overview and Materials */}
           <div className="lg:col-span-8 space-y-12">
-            
+
             {/* Project Overview */}
             <div className="bg-brand-charcoal p-8 sm:p-10 border border-brand-gold/10 space-y-6">
               <h2 className="text-3xl font-normal font-cormorant text-brand-offwhite">Project Overview</h2>
@@ -198,7 +198,7 @@ function ProjectDetailContent({ project }: ProjectDetailClientProps) {
                 {project.desc}
               </p>
               <p className="text-brand-sand/50 text-xs sm:text-sm leading-relaxed border-t border-brand-gold/10 pt-6 font-poppins">
-                This case study highlights the installation of architectural clay products designed for structural loads, longevity, and aesthetics. The building envelope utilizes specialized cladding details engineered to protect against harsh weather conditions while maintaining an organic building finish.
+                This case study highlights the installation of architectural clay products designed for structural loads, longevity, and aesthetics. The building envelope utilizes specialized Cladding details engineered to protect against harsh weather conditions while maintaining an organic building finish.
               </p>
             </div>
 
@@ -221,7 +221,7 @@ function ProjectDetailContent({ project }: ProjectDetailClientProps) {
                         <h3 className="text-xl font-normal font-cormorant text-brand-offwhite mt-2 group-hover:text-brand-gold transition-colors">{p.name}</h3>
                         <p className="text-xs font-poppins text-brand-sand/70 mt-1 leading-relaxed">{p.desc}</p>
                       </div>
-                      <Link 
+                      <Link
                         href={`/products/${p.id}`}
                         className="inline-flex items-center justify-center gap-1.5 py-2 px-4 text-xs font-semibold tracking-wider uppercase bg-brand-black text-brand-sand hover:text-brand-offwhite border border-brand-gold/10 hover:border-brand-gold/30 transition-colors w-fit font-poppins"
                       >
@@ -237,7 +237,7 @@ function ProjectDetailContent({ project }: ProjectDetailClientProps) {
 
           {/* Right Column - Meta & Form */}
           <div className="lg:col-span-4 space-y-8">
-            
+
             {/* Meta data parameters */}
             <div className="bg-brand-charcoal border border-brand-gold/10 p-6 md:p-8 space-y-4">
               <h3 className="text-xs font-bold uppercase tracking-widest text-brand-gold border-b border-brand-gold/10 pb-3 font-poppins">
@@ -287,7 +287,7 @@ function ProjectDetailContent({ project }: ProjectDetailClientProps) {
               <div>
                 <h3 className="text-lg font-normal font-cormorant text-brand-offwhite">Consult on Similar Build</h3>
                 <p className="text-xs text-brand-sand/60 mt-1 font-poppins">
-                  Connect with our specifications desk to advise on brick counts, cladding grids, or load compliance.
+                  Connect with our specifications desk to advise on brick counts, Cladding grids, or load compliance.
                 </p>
               </div>
 
@@ -384,7 +384,7 @@ function ProjectDetailContent({ project }: ProjectDetailClientProps) {
                 Related Case Studies
               </h2>
             </div>
-            
+
             <Link href="/projects" className="group inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest text-brand-gold hover:text-brand-offwhite transition-colors font-poppins">
               <span>View All Projects</span>
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -393,23 +393,23 @@ function ProjectDetailContent({ project }: ProjectDetailClientProps) {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {relatedProjects.map((p) => (
-              <div 
-                key={p.id} 
+              <div
+                key={p.id}
                 className="bg-brand-charcoal border border-brand-gold/10 hover:border-brand-gold/35 transition-colors flex flex-col group rounded-xl overflow-hidden shadow-md"
               >
                 <Link href={`/projects/${p.id}`} className="block relative aspect-[16/10] overflow-hidden bg-brand-black">
                   <ImageReveal>
-                    <img 
-                      src={p.image} 
-                      alt={p.name} 
-                      className="w-full h-full object-cover" 
+                    <img
+                      src={p.image}
+                      alt={p.name}
+                      className="w-full h-full object-cover"
                     />
                   </ImageReveal>
                   <span className="absolute top-4 left-4 bg-brand-gold text-brand-black text-[9px] uppercase font-bold tracking-widest px-2.5 py-1.5 border border-brand-gold font-poppins z-20">
                     {p.type}
                   </span>
                 </Link>
-                
+
                 <div className="p-5 flex-grow flex flex-col justify-between gap-4 bg-brand-charcoal">
                   <div>
                     <div className="flex items-center gap-1.5 text-[10px] text-brand-gold font-semibold font-poppins">
@@ -423,7 +423,7 @@ function ProjectDetailContent({ project }: ProjectDetailClientProps) {
                       {p.desc}
                     </p>
                   </div>
-                  
+
                   <div className="flex items-center justify-between mt-2 pt-2 border-t border-brand-gold/5">
                     <span className="inline-flex items-center gap-1.5 text-[9px] uppercase font-bold tracking-widest text-brand-gold group-hover:text-brand-offwhite transition-colors font-poppins">
                       <span>Explore Details</span>

@@ -42,7 +42,7 @@ function CatalogContent() {
     return () => clearTimeout(timer);
   }, []);
 
-  const categories = ["All", "Clay Bricks", "Terracotta", "Roofing Tiles", "Pavers", "Hollow Blocks", "AAC Blocks"];
+  const categories = ["All", "Clay Bricks", "Terracotta", "Roofing Tiles", "Pavers", "Hollow Blocks", "Terraplasts"];
 
   const filteredProducts = selectedCategory === "All"
     ? products
@@ -54,23 +54,23 @@ function CatalogContent() {
 
   return (
     <div className="flex flex-col min-h-screen bg-brand-black text-brand-offwhite">
-      
+
       {/* Parallax Hero Banner */}
-      <div 
+      <div
         ref={heroRef}
         className="relative h-[55vh] md:h-[65vh] w-full flex items-center overflow-hidden bg-black"
       >
-        <motion.div 
+        <motion.div
           style={{ y: heroImageY }}
           className="absolute inset-0 z-0 scale-[1.08] opacity-40"
         >
-          <img 
-            src="/images/hero-1.jpg" 
-            alt="Luxury modern architecture facade grid" 
+          <img
+            src="/images/hero-1.jpg"
+            alt="Luxury modern architecture facade grid"
             className="w-full h-full object-cover"
           />
         </motion.div>
-        
+
         {/* Dark Vignette Mask */}
         <div className="absolute inset-0 bg-gradient-to-t from-[#121110] via-[#121110]/75 to-transparent z-10" />
 
@@ -102,11 +102,10 @@ function CatalogContent() {
               <button
                 key={cat}
                 onClick={() => setSelectedCategory(cat)}
-                className={`relative px-5 py-2.5 rounded-none text-[10px] uppercase tracking-wider font-poppins font-medium transition-colors cursor-pointer border ${
-                  selectedCategory === cat
-                    ? "bg-brand-gold text-brand-black border-brand-gold"
-                    : "bg-brand-black border-brand-gold/10 text-brand-sand hover:text-brand-offwhite hover:border-brand-gold/40"
-                }`}
+                className={`relative px-5 py-2.5 rounded-none text-[10px] uppercase tracking-wider font-poppins font-medium transition-colors cursor-pointer border ${selectedCategory === cat
+                  ? "bg-brand-gold text-brand-black border-brand-gold"
+                  : "bg-brand-black border-brand-gold/10 text-brand-sand hover:text-brand-offwhite hover:border-brand-gold/40"
+                  }`}
               >
                 {cat}
               </button>
@@ -131,8 +130,8 @@ function CatalogContent() {
             </div>
           ) : (
             /* Staggered dynamic filtering layout with AnimatePresence & layout transitions */
-            <motion.div 
-              layout 
+            <motion.div
+              layout
               className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-start"
               style={{ perspective: "1200px" }}
             >
@@ -154,10 +153,10 @@ function CatalogContent() {
                     className="w-full"
                     style={{ transformStyle: "preserve-3d" }}
                   >
-                    <ProductCard 
-                      product={p} 
+                    <ProductCard
+                      product={p}
                       index={index}
-                      onQuickView={setActiveQuickView} 
+                      onQuickView={setActiveQuickView}
                     />
                   </motion.div>
                 ))}
@@ -333,7 +332,7 @@ const ProductCardSkeleton: React.FC<{ index: number }> = ({ index }) => {
 
 function ProductCard({ product, index, onQuickView }: { product: Product; index: number; onQuickView: (p: Product) => void }) {
   const cardRef = useRef<HTMLDivElement>(null);
-  
+
   // 3D tilt coordinates
   const x = useMotionValue(0);
   const y = useMotionValue(0);
@@ -363,7 +362,7 @@ function ProductCard({ product, index, onQuickView }: { product: Product; index:
   const aspectClass = aspectRatios[index % aspectRatios.length];
 
   return (
-    <div 
+    <div
       className="perspective-[1000px] w-full"
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
@@ -379,16 +378,16 @@ function ProductCard({ product, index, onQuickView }: { product: Product; index:
       >
         <div className={`relative ${aspectClass} w-full overflow-hidden bg-brand-black border-b border-brand-gold/10`}>
           <ImageReveal>
-            <img 
-              src={product.image} 
-              alt={product.name} 
-              className="object-cover w-full h-full" 
+            <img
+              src={product.image}
+              alt={product.name}
+              className="object-cover w-full h-full"
             />
           </ImageReveal>
           <div className="absolute top-4 left-4 bg-[#121110]/95 text-brand-gold border border-brand-gold/15 text-[9px] uppercase font-bold tracking-widest px-3 py-1.5 rounded-none">
             {product.category}
           </div>
-          
+
           {/* Quick view spec trigger */}
           <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
             <button
@@ -420,7 +419,7 @@ function ProductCard({ product, index, onQuickView }: { product: Product; index:
             >
               Full details
             </Link>
-            
+
             <button
               onClick={() => onQuickView(product)}
               className="flex-1 flex items-center justify-center gap-1.5 py-3 rounded-none text-[10px] uppercase font-poppins tracking-wider font-semibold bg-brand-gold/10 text-brand-gold hover:bg-brand-gold hover:text-brand-black transition-colors border border-brand-gold/30 hover:border-brand-gold cursor-pointer"

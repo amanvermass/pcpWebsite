@@ -15,14 +15,14 @@ export const Testimonials: React.FC = () => {
   const [hoveredIdx, setHoveredIdx] = React.useState<number | null>(null);
   const testimonials: Testimonial[] = [
     {
-      quote: "The visual depth and thermal shielding of PCP's cladding tiles are unmatched. We've specified them for multiple Net-Zero facades.",
+      quote: "The visual depth and thermal shielding of PCP's Cladding tiles are unmatched. We've specified them for multiple Net-Zero facades.",
       author: "Ar. Sanjay Puri",
       role: "Principal Architect",
       firm: "Sanjay Puri Architects",
       rating: 5
     },
     {
-      quote: "PCP lightweight AAC blocks significantly reduced our building structural loads while giving us superior fire-ratings.",
+      quote: "PCP lightweight Terraplasts significantly reduced our building structural loads while giving us superior fire-ratings.",
       author: "Rajesh Malhotra",
       role: "Lead Structural Engineer",
       firm: "L&T Construction",

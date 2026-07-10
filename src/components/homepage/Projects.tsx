@@ -14,7 +14,7 @@ export const Projects: React.FC<{ teaser?: boolean }> = ({ teaser = false }) => 
   return (
     <section id="projects" className="py-16 md:py-20 lg:py-24 bg-transparent relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        
+
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-20 flex flex-col items-center">
           <span className="text-[10px] uppercase font-bold tracking-[0.35em] text-brand-gold bg-brand-gold/5 px-4 py-1.5 border border-brand-gold/20 rounded-none w-fit">
@@ -34,11 +34,10 @@ export const Projects: React.FC<{ teaser?: boolean }> = ({ teaser = false }) => 
           {featuredList.map((p, idx) => {
             const isEven = idx % 2 === 0;
             return (
-              <div 
+              <div
                 key={p.id}
-                className={`flex flex-col lg:flex-row items-center gap-12 lg:gap-20 ${
-                  isEven ? "" : "lg:flex-row-reverse"
-                }`}
+                className={`flex flex-col lg:flex-row items-center gap-12 lg:gap-20 ${isEven ? "" : "lg:flex-row-reverse"
+                  }`}
               >
                 {/* Left/Right Column: Image with Wipe reveal & Parallax Scale */}
                 <div className="w-full lg:w-1/2 aspect-[16/10] overflow-hidden border border-brand-gold/15 bg-brand-charcoal relative group">
@@ -60,13 +59,13 @@ export const Projects: React.FC<{ teaser?: boolean }> = ({ teaser = false }) => 
                   <span className="text-[10px] tracking-[0.3em] font-semibold text-brand-gold uppercase block font-poppins">
                     {p.type} Architectural envelope
                   </span>
-                  
+
                   <h3 className="text-2xl sm:text-3xl lg:text-4xl font-normal font-cormorant text-brand-offwhite leading-tight">
                     {p.name}
                   </h3>
-                  
+
                   <p className="text-xs sm:text-sm font-poppins text-brand-sand/75 leading-relaxed">
-                    This signature layout integrates PCP's high-insulating materials to construct modern ventilated cladding facade surfaces, demonstrating premium aesthetic execution and weather-resistant performance.
+                    This signature layout integrates PCP's high-insulating materials to construct modern ventilated Cladding facade surfaces, demonstrating premium aesthetic execution and weather-resistant performance.
                   </p>
 
                   <div className="grid grid-cols-2 gap-y-3 gap-x-4 border-t border-brand-gold/10 pt-6 mt-2 max-w-md">
