@@ -15,6 +15,8 @@ import { ContactUs } from "@/components/homepage/ContactUs";
 import { Footer } from "@/components/homepage/Footer";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 
+import { BlueprintGlobalBackground } from "@/components/ui/BlueprintGlobalBackground";
+
 export default function Home() {
   const [darkMode, setDarkMode] = useState(true);
 
@@ -30,7 +32,8 @@ export default function Home() {
   return (
     <div className="flex flex-col min-h-screen">
       <Header darkMode={darkMode} setDarkMode={setDarkMode} />
-      <main className="flex-grow">
+      <main className="flex-grow relative">
+        <BlueprintGlobalBackground />
         {/* Section 1: Hero */}
         <Hero darkMode={darkMode} />
         

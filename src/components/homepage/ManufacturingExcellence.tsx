@@ -106,22 +106,8 @@ export const ManufacturingExcellence: React.FC = () => {
   return (
     <section
       ref={containerRef}
-      className="relative flex items-center py-16 md:py-24 lg:py-32 bg-brand-black overflow-hidden"
+      className="relative flex items-center py-16 md:py-24 lg:py-32 bg-transparent overflow-hidden"
     >
-      {/* Grid Lines Overlay - slides down smoothly on entrance */}
-      <motion.div 
-        initial={{ opacity: 0, height: 0 }}
-        whileInView={{ opacity: 0.05, height: "100%" }}
-        viewport={{ once: true }}
-        transition={{ duration: 1.5, ease: "easeInOut" }}
-        className="absolute inset-x-0 top-0 pointer-events-none z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-4 opacity-5"
-      >
-        <div className="border-l border-brand-slate h-full" />
-        <div className="border-l border-brand-slate h-full" />
-        <div className="border-l border-brand-slate h-full" />
-        <div className="border-l border-brand-slate h-full border-r" />
-      </motion.div>
-
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20 w-full">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           {/* Left Side Content - Parallax Scroll */}

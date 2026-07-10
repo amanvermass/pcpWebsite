@@ -188,15 +188,7 @@ export const ProductCategories: React.FC = () => {
   ];
 
   return (
-    <section id="categories" className="py-16 md:py-20 lg:py-24 bg-brand-black relative">
-      {/* Grid Guide lines */}
-      <div className="absolute inset-0 pointer-events-none z-0 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-4 h-full opacity-5">
-        <div className="border-l border-brand-slate h-full" />
-        <div className="border-l border-brand-slate h-full" />
-        <div className="border-l border-brand-slate h-full" />
-        <div className="border-l border-brand-slate h-full border-r" />
-      </div>
-
+    <section id="categories" className="py-16 md:py-20 lg:py-24 bg-transparent relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
 
         {/* Section Header */}

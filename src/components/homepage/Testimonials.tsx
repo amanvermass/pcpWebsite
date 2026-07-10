@@ -12,6 +12,7 @@ interface Testimonial {
 }
 
 export const Testimonials: React.FC = () => {
+  const [hoveredIdx, setHoveredIdx] = React.useState<number | null>(null);
   const testimonials: Testimonial[] = [
     {
       quote: "The visual depth and thermal shielding of PCP's cladding tiles are unmatched. We've specified them for multiple Net-Zero facades.",
@@ -47,15 +48,7 @@ export const Testimonials: React.FC = () => {
   const loopList = [...testimonials, ...testimonials];
 
   return (
-    <section className="py-20 bg-brand-black overflow-hidden relative select-none">
-      {/* Background guide lines */}
-      <div className="absolute inset-0 pointer-events-none z-0 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-4 h-full opacity-5">
-        <div className="border-l border-brand-slate h-full" />
-        <div className="border-l border-brand-slate h-full" />
-        <div className="border-l border-brand-slate h-full" />
-        <div className="border-l border-brand-slate h-full border-r" />
-      </div>
-
+    <section className="py-20 bg-transparent overflow-hidden relative select-none">
       <div className="relative z-10 w-full">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16 flex flex-col items-center px-4">
@@ -78,7 +71,14 @@ export const Testimonials: React.FC = () => {
             {loopList.map((item, idx) => (
               <div
                 key={idx}
-                className="w-[300px] sm:w-[420px] bg-brand-charcoal border border-brand-gold/10 p-6 sm:p-8 flex flex-col justify-between shrink-0 rounded-none select-none"
+                onMouseEnter={() => setHoveredIdx(idx)}
+                onMouseLeave={() => setHoveredIdx(null)}
+                style={{
+                  filter: hoveredIdx !== null && hoveredIdx !== idx ? "blur(3px)" : "blur(0px)",
+                  opacity: hoveredIdx !== null && hoveredIdx !== idx ? 0.45 : 1,
+                  scale: hoveredIdx === idx ? 1.015 : 1,
+                }}
+                className="w-[300px] sm:w-[420px] bg-brand-charcoal border border-brand-gold/10 p-6 sm:p-8 flex flex-col justify-between shrink-0 rounded-none select-none transition-all duration-500 ease-[0.16,1,0.3,1]"
               >
                 <div>
                   {/* Rating Stars */}

@@ -70,7 +70,7 @@ export const ContactUs: React.FC = () => {
   };
 
   return (
-    <section id="contact" className="bg-brand-black border-t border-brand-gold/15 py-16 md:py-20 lg:py-24 relative overflow-hidden select-none">
+    <section id="contact" className="bg-transparent py-16 md:py-20 lg:py-24 relative overflow-hidden select-none">
       {/* Animated background shapes (Let's Build CTA layout) */}
       <div className="absolute inset-0 pointer-events-none z-0">
         <motion.div
@@ -83,14 +83,6 @@ export const ContactUs: React.FC = () => {
           transition={{ duration: 14, repeat: Infinity, ease: "easeInOut" }}
           className="absolute -bottom-[20%] -right-[10%] w-[600px] h-[600px] bg-brand-sand rounded-full blur-[140px]"
         />
-      </div>
-
-      {/* Guide lines */}
-      <div className="absolute inset-0 pointer-events-none z-0 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-4 h-full opacity-5">
-        <div className="border-l border-brand-slate h-full" />
-        <div className="border-l border-brand-slate h-full" />
-        <div className="border-l border-brand-slate h-full" />
-        <div className="border-l border-brand-slate h-full border-r" />
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">

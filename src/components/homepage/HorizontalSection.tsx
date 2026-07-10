@@ -8,6 +8,7 @@ import { ArrowRight, MapPin, User, Calendar } from "lucide-react";
 import { Magnetic } from "../ui/Magnetic";
 
 export const HorizontalSection: React.FC = () => {
+  const [hoveredIdx, setHoveredIdx] = React.useState<number | null>(null);
   const targetRef = useRef<HTMLDivElement>(null);
 
   // Track scroll position of the parent vertical container
@@ -19,7 +20,7 @@ export const HorizontalSection: React.FC = () => {
   const x = useTransform(scrollYProgress, [0, 1], ["0%", "-75%"]);
 
   return (
-    <section ref={targetRef} id="featured-gallery" className="relative h-[400vh] bg-brand-black">
+    <section ref={targetRef} id="featured-gallery" className="relative h-[400vh] bg-transparent">
       {/* Sticky viewport container */}
       <div className="sticky top-0 h-screen overflow-hidden flex items-center">
         {/* Background grids */}
@@ -58,7 +59,14 @@ export const HorizontalSection: React.FC = () => {
           {projects.map((project, idx) => (
             <div
               key={project.id}
-              className="relative w-[85vw] md:w-[70vw] h-full flex flex-col md:flex-row items-center gap-8 md:gap-16 shrink-0 z-10 border-b border-brand-gold/10 pb-8"
+              onMouseEnter={() => setHoveredIdx(idx)}
+              onMouseLeave={() => setHoveredIdx(null)}
+              style={{
+                filter: hoveredIdx !== null && hoveredIdx !== idx ? "blur(4px)" : "blur(0px)",
+                opacity: hoveredIdx !== null && hoveredIdx !== idx ? 0.35 : 1,
+                scale: hoveredIdx === idx ? 1.015 : 1,
+              }}
+              className="relative w-[85vw] md:w-[70vw] h-full flex flex-col md:flex-row items-center gap-8 md:gap-16 shrink-0 z-10 border-b border-brand-gold/10 pb-8 transition-all duration-500 ease-[0.16,1,0.3,1]"
             >
               {/* Left Column - Image with wipe reveal */}
               <div className="w-full md:w-1/2 h-[35vh] md:h-[55vh] relative overflow-hidden group border border-brand-gold/10">

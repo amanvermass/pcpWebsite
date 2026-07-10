@@ -38,7 +38,7 @@ export const ScrollReveal: React.FC<ScrollRevealProps> = ({
         x: 0,
         y: 0,
       }}
-      viewport={{ once: false, margin: "-80px" }}
+      viewport={{ once: true, margin: "-80px" }}
       transition={{
         duration,
         delay,
@@ -107,7 +107,7 @@ export const TextReveal: React.FC<TextRevealProps> = ({ text, className = "", de
           <motion.span
             initial={{ y: "100%" }}
             whileInView={{ y: 0 }}
-            viewport={{ once: false, margin: "-50px" }}
+            viewport={{ once: true, margin: "-50px" }}
             transition={{
               duration: 0.8,
               delay: delay + i * 0.03,

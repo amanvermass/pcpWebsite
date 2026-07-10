@@ -28,6 +28,21 @@ export const PageLoader: React.FC = () => {
     return () => clearInterval(timer);
   }, []);
 
+  useEffect(() => {
+    // Lock scroll while page is loading
+    if (!isComplete) {
+      document.body.style.overflow = "hidden";
+      document.documentElement.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
+    };
+  }, [isComplete]);
+
   // Grid size for the brick assembling animation
   const gridRows = 4;
   const gridCols = 8;
@@ -106,7 +121,7 @@ export const PageLoader: React.FC = () => {
                 initial={{ y: 100 }}
                 animate={{ y: 0 }}
                 transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                className="text-7xl md:text-9xl font-cormorant font-light text-brand-gold"
+                className="text-7xl md:text-9xl font-cormorant font-light text-brand-gold tabular-nums"
               >
                 {Math.round(progress)}
                 <span className="text-4xl md:text-5xl font-cormorant font-light text-brand-sand ml-1">%</span>
