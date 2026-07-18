@@ -4,10 +4,12 @@ import React, { useState, useEffect } from "react";
 import { Header } from "@/components/homepage/Header";
 import { Hero } from "@/components/homepage/Hero";
 import { CompanyIntro } from "@/components/homepage/CompanyIntro";
+import { EcothermFeature } from "@/components/homepage/EcothermFeature";
+import { SustainabilityStrip } from "@/components/homepage/SustainabilityStrip";
 import { ProductCategories } from "@/components/homepage/ProductCategories";
+import { AudienceGateways } from "@/components/homepage/AudienceGateways";
 import { ManufacturingExcellence } from "@/components/homepage/ManufacturingExcellence";
 import { Projects } from "@/components/homepage/Projects";
-import { HorizontalSection } from "@/components/homepage/HorizontalSection";
 import { CalculatorsTeaser } from "@/components/homepage/CalculatorsTeaser";
 import { DealerLocator } from "@/components/homepage/DealerLocator";
 import { Testimonials } from "@/components/homepage/Testimonials";
@@ -34,54 +36,69 @@ export default function Home() {
       <Header darkMode={darkMode} setDarkMode={setDarkMode} />
       <main className="flex-grow relative">
         <BlueprintGlobalBackground />
+        
         {/* Section 1: Hero */}
         <Hero darkMode={darkMode} />
         
-        {/* Section 2: About PCP */}
+        {/* Section 2: Legacy / Three Generations */}
         <ScrollReveal>
           <CompanyIntro />
         </ScrollReveal>
         
-        {/* Section 3: Featured Products */}
-        <ScrollReveal>
-          <ProductCategories />
-        </ScrollReveal>
-
-        {/* Section 4: Manufacturing Excellence (Counters) */}
+        {/* Section 2 Stats Complement: Manufacturing Excellence (Counters) */}
         <ScrollReveal>
           <ManufacturingExcellence />
         </ScrollReveal>
 
-        {/* Section 5: Signature Projects (Alternating Layout) */}
+        {/* Section 3: Ecotherm Feature (Hero Product) */}
+        <ScrollReveal>
+          <EcothermFeature />
+        </ScrollReveal>
+
+        {/* Section 4: Sustainability & Certification Strip */}
+        <ScrollReveal>
+          <SustainabilityStrip />
+        </ScrollReveal>
+        
+        {/* Section 5: Product Range */}
+        <ScrollReveal>
+          <div id="products-range">
+            <ProductCategories />
+          </div>
+        </ScrollReveal>
+
+        {/* Section 6: Audience Gateways */}
+        <ScrollReveal>
+          <AudienceGateways />
+        </ScrollReveal>
+
+        {/* Section 7: Projects & Clients (Social Proof) */}
         <ScrollReveal>
           <Projects teaser={true} />
         </ScrollReveal>
-
-        {/* Project Gallery: Pinned Horizontal Scroll Showcase */}
-        <HorizontalSection />
         
-        {/* Section 6: Calculators Card Deck */}
+        {/* Section 8: Tools & Resources Teaser */}
         <ScrollReveal>
           <CalculatorsTeaser />
         </ScrollReveal>
         
-        {/* Section 7: Dealer Network India Map */}
-        <ScrollReveal>
-          <DealerLocator />
-        </ScrollReveal>
-        
-        {/* Section 8: Testimonials Infinite Marquee */}
+        {/* Section 9: Testimonials */}
         <ScrollReveal>
           <Testimonials />
         </ScrollReveal>
         
-        {/* Section 9: Massive CTA */}
+        {/* Section 10: Dealer Locator Teaser */}
+        <ScrollReveal>
+          <DealerLocator />
+        </ScrollReveal>
+        
+        {/* final Safety Net CTA */}
         <ScrollReveal>
           <ContactUs />
         </ScrollReveal>
       </main>
 
-      {/* Section 10: Footer */}
+      {/* Section 11: Footer */}
       <Footer />
     </div>
   );

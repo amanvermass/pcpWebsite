@@ -3,6 +3,8 @@
 import React, { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { ImageReveal } from "../ui/ScrollReveal";
+import { ArrowRight } from "lucide-react";
+import Link from "next/link";
 
 export const CompanyIntro: React.FC = () => {
   const storyRef = useRef<HTMLDivElement>(null);
@@ -45,7 +47,7 @@ export const CompanyIntro: React.FC = () => {
                   ESTABLISHED
                 </span>
                 <span className="text-sm font-light text-brand-offwhite tracking-widest font-cormorant mt-1">
-                  1983
+                  1937
                 </span>
                 <span className="text-[6px] tracking-[0.2em] font-medium text-brand-gold/70 uppercase block font-poppins mt-1">
                   PCP INDIA
@@ -54,14 +56,14 @@ export const CompanyIntro: React.FC = () => {
             </div>
           </motion.div>
 
-          <div ref={storyRef} className="lg:col-span-6 flex flex-col gap-6">
+          <div ref={storyRef} className="lg:col-span-6 flex flex-col gap-5 text-left">
             <motion.span 
               initial={{ x: 50, opacity: 0 }}
               animate={isStoryInView ? { x: 0, opacity: 1 } : { x: 50, opacity: 0 }}
               transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
               className="text-[10px] uppercase font-bold tracking-[0.35em] text-brand-gold bg-brand-gold/5 px-4 py-1.5 border border-brand-gold/20 rounded-none w-fit block"
             >
-              ABOUT PCP INDIA
+              LEGACY & HERITAGE
             </motion.span>
 
             <motion.h2 
@@ -70,26 +72,74 @@ export const CompanyIntro: React.FC = () => {
               transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
               className="text-3xl sm:text-4xl lg:text-5xl font-normal font-cormorant text-brand-offwhite leading-tight"
             >
-              Forming Raw Earth, Firing Architectural Legacies
+              Three Generations of Badlani Leadership
             </motion.h2>
 
             <motion.p 
               initial={{ opacity: 0, y: 15 }}
               animate={isStoryInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="text-sm sm:text-base font-poppins text-brand-sand/80 leading-relaxed"
+              className="text-xs sm:text-sm font-poppins text-brand-sand/80 leading-relaxed"
             >
-              Since 1983, Prayag Clay Productions (PCP) has been at the forefront of engineering building envelopes. By blending traditional clay chemistry with heavy-duty European tunnel firing kilns, we produce architectural facing bricks, ventilated terracotta facades, and paving stones that endure for generations.
+              Founded in Varanasi in 1937, Prayag Clay Products (PCP) is built on an eighty-year history of structural craftsmanship. Today, under the third generation of the Badlani family, we merge traditional chemistry with European tunnel-kiln automation to deliver certified high-performance masonry solutions.
             </motion.p>
 
-            <motion.p 
-              initial={{ opacity: 0, y: 15 }}
-              animate={isStoryInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
+            {/* Legacy Stats Strip */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={isStoryInView ? { opacity: 1 } : { opacity: 0 }}
               transition={{ duration: 0.8, delay: 0.3 }}
-              className="text-sm sm:text-base font-poppins text-brand-sand/80 leading-relaxed"
+              className="grid grid-cols-3 gap-4 border-y border-brand-gold/15 py-4 my-2"
             >
-              Our automated manufacturing facilities incorporate eco-sustainable closed-loop processing, capturing excess kiln heat to operate raw-clay dryers. Partnering with leading builders and architects, we refine raw earthen minerals into structural masterworks.
-            </motion.p>
+              <div>
+                <span className="block text-lg sm:text-xl font-bold font-cormorant text-brand-gold">85+ Years</span>
+                <span className="block text-[9px] uppercase tracking-wider text-brand-sand/60 font-poppins mt-0.5">Structural Trust</span>
+              </div>
+              <div>
+                <span className="block text-lg sm:text-xl font-bold font-cormorant text-brand-gold">15+ Markets</span>
+                <span className="block text-[9px] uppercase tracking-wider text-brand-sand/60 font-poppins mt-0.5">Global Presence</span>
+              </div>
+              <div>
+                <span className="block text-lg sm:text-xl font-bold font-cormorant text-brand-gold">500+ Blends</span>
+                <span className="block text-[9px] uppercase tracking-wider text-brand-sand/60 font-poppins mt-0.5">Custom Formations</span>
+              </div>
+            </motion.div>
+
+            {/* Legacy Timeline */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={isStoryInView ? { opacity: 1 } : { opacity: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+              className="space-y-3 pl-3 border-l-2 border-brand-gold/20 text-xs text-left"
+            >
+              <div>
+                <span className="font-bold text-brand-gold font-poppins text-[10px]">1937: FOUNDING</span>
+                <p className="text-brand-sand/70 text-[10px] mt-0.5 font-poppins">Traditional clamping kilns established in Varanasi, North India.</p>
+              </div>
+              <div>
+                <span className="font-bold text-brand-gold font-poppins text-[10px]">1983: MECHANISATION</span>
+                <p className="text-brand-sand/70 text-[10px] mt-0.5 font-poppins">Integration of mechanical extrusion presses for precision block dimensions.</p>
+              </div>
+              <div>
+                <span className="font-bold text-brand-gold font-poppins text-[10px]">TODAY: SUSTAINABILITY LEADERSHIP</span>
+                <p className="text-brand-sand/70 text-[10px] mt-0.5 font-poppins">EPD-certified production powered by closed-loop waste heat systems.</p>
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={isStoryInView ? { opacity: 1 } : { opacity: 0 }}
+              transition={{ duration: 0.8, delay: 0.5 }}
+              className="mt-2"
+            >
+              <Link
+                href="/about"
+                className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-brand-gold hover:text-brand-sand transition-colors font-poppins"
+              >
+                Read Our Story
+                <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
+            </motion.div>
           </div>
 
         </div>

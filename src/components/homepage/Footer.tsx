@@ -125,16 +125,22 @@ export const Footer: React.FC = () => {
             <div>
               <Logo height="42" />
               <p className="text-[11px] font-poppins text-brand-slate-200 leading-relaxed mt-4 max-w-[280px]">
-                Engineering structural building envelopes with premium terracotta solutions since 1983.
+                Engineering structural building envelopes with premium terracotta solutions since 1937.
               </p>
               
               {/* Technical / Certification credentials */}
-              <div className="flex flex-wrap gap-2.5 mt-6">
-                <span className="text-[8px] font-bold tracking-widest uppercase border border-brand-terracotta/30 text-brand-terracotta px-2.5 py-1 font-poppins">
-                  ISO 9001:2015
+              <div className="flex flex-wrap gap-2 mt-6">
+                <span className="text-[7px] font-bold tracking-widest uppercase border border-brand-terracotta/30 text-brand-terracotta px-2 py-0.5 font-poppins">
+                  EPD CERTIFIED
                 </span>
-                <span className="text-[8px] font-bold tracking-widest uppercase border border-brand-terracotta/30 text-brand-terracotta px-2.5 py-1 font-poppins">
-                  IGBC MEMBER
+                <span className="text-[7px] font-bold tracking-widest uppercase border border-brand-terracotta/30 text-brand-terracotta px-2 py-0.5 font-poppins">
+                  GRIHA LISTED
+                </span>
+                <span className="text-[7px] font-bold tracking-widest uppercase border border-brand-terracotta/30 text-brand-terracotta px-2 py-0.5 font-poppins">
+                  ISO 14001
+                </span>
+                <span className="text-[7px] font-bold tracking-widest uppercase border border-brand-terracotta/30 text-brand-terracotta px-2 py-0.5 font-poppins">
+                  UKCA COMPLIANT
                 </span>
               </div>
             </div>
@@ -218,17 +224,23 @@ export const Footer: React.FC = () => {
                   </h6>
                   <ul className="flex flex-col gap-2.5 text-xs font-poppins">
                     <li>
+                      <span className="text-[9px] uppercase tracking-wider text-brand-sand/50 block font-poppins">Domestic Inquiries</span>
                       <a href="mailto:info@pcpindia.com" className="font-semibold text-brand-offwhite hover:text-brand-gold transition-colors duration-200 underline underline-offset-4">
                         info@pcpindia.com
                       </a>
                     </li>
                     <li>
-                      <a href="tel:+919936011176" className="text-brand-slate-200 hover:text-brand-gold transition-colors duration-200">
-                        +91 99360 11176
+                      <span className="text-[9px] uppercase tracking-wider text-brand-sand/50 block font-poppins">Export Specifications</span>
+                      <a href="mailto:export@pcpindia.com" className="font-semibold text-brand-offwhite hover:text-brand-gold transition-colors duration-200 underline underline-offset-4">
+                        export@pcpindia.com
                       </a>
                     </li>
                     <li>
-                      <a href="tel:+919935534218" className="text-brand-slate-200 hover:text-brand-gold transition-colors duration-200">
+                      <span className="text-[9px] uppercase tracking-wider text-brand-sand/50 block font-poppins">Call Specifications Desk</span>
+                      <a href="tel:+919936011176" className="text-brand-slate-200 hover:text-brand-gold transition-colors duration-200 block">
+                        +91 99360 11176
+                      </a>
+                      <a href="tel:+919935534218" className="text-brand-slate-200 hover:text-brand-gold transition-colors duration-200 block">
                         +91 99355 34218
                       </a>
                     </li>

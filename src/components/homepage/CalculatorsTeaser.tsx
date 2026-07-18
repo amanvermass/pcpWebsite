@@ -3,53 +3,29 @@
 import React, { useRef } from "react";
 import Link from "next/link";
 import { useInView, motion } from "framer-motion";
-import { Calculator, Layers, Hammer, ArrowRight } from "lucide-react";
+import { Calculator, Layers, Hammer, ArrowRight, FileText } from "lucide-react";
 import { Magnetic } from "../ui/Magnetic";
 
-interface CalculatorCardProps {
-  id: string;
+interface UtilityCardProps {
   name: string;
   desc: string;
   icon: React.ReactNode;
-  targetCount: number;
-  suffix: string;
-  label: string;
+  href: string;
+  actionText: string;
+  badge: string;
 }
 
-const CalculatorCard: React.FC<CalculatorCardProps> = ({
-  id, name, desc, icon, targetCount, suffix, label
+const UtilityCard: React.FC<UtilityCardProps> = ({
+  name, desc, icon, href, actionText, badge
 }) => {
   const cardRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(cardRef, { once: true, margin: "-80px" });
 
-  const [count, setCount] = React.useState(0);
-
-  React.useEffect(() => {
-    if (!isInView) return;
-
-    let start = 0;
-    const duration = 1500; // 1.5s
-    const end = targetCount;
-    const incrementTime = Math.max(Math.floor(duration / end), 20);
-
-    const timer = setInterval(() => {
-      start += Math.ceil(end / (duration / incrementTime));
-      if (start >= end) {
-        clearInterval(timer);
-        setCount(end);
-      } else {
-        setCount(start);
-      }
-    }, incrementTime);
-
-    return () => clearInterval(timer);
-  }, [isInView, targetCount]);
-
   return (
     <div ref={cardRef} className="h-full">
       <Link
-        href={`/calculators?id=${id}`}
-        className="flex flex-col justify-between h-full bg-brand-charcoal border border-brand-gold/10 hover:border-brand-gold/40 rounded-none p-8 hover:shadow-[0_0_30px_rgba(197,139,69,0.15)] transition-all group duration-300"
+        href={href}
+        className="flex flex-col justify-between h-full bg-brand-charcoal border border-brand-gold/10 hover:border-brand-gold/40 rounded-none p-8 hover:shadow-[0_0_30px_rgba(197,139,69,0.15)] transition-all group duration-300 relative text-left"
       >
         <div>
           {/* Header icon row */}
@@ -57,16 +33,9 @@ const CalculatorCard: React.FC<CalculatorCardProps> = ({
             <div className="p-3 bg-brand-black border border-brand-gold/15 rounded-none text-brand-gold group-hover:border-brand-gold/40 transition-colors">
               {icon}
             </div>
-
-            {/* Animated counter preview */}
-            <div className="text-right">
-              <span className="block text-[9px] uppercase tracking-widest text-brand-slate-400 font-poppins">
-                {label}
-              </span>
-              <span className="text-2xl font-light font-cormorant text-brand-gold">
-                {count.toLocaleString()} {suffix}
-              </span>
-            </div>
+            <span className="text-[9px] uppercase tracking-widest text-brand-slate-400 font-mono border border-brand-slate-800 px-2 py-0.5 font-poppins">
+              {badge}
+            </span>
           </div>
 
           <h3 className="text-xl font-normal font-cormorant text-brand-offwhite group-hover:text-brand-gold transition-colors">
@@ -78,7 +47,7 @@ const CalculatorCard: React.FC<CalculatorCardProps> = ({
         </div>
 
         <div className="mt-8 flex items-center justify-center gap-2.5 py-3.5 rounded-none text-[10px] uppercase font-poppins font-bold tracking-[0.2em] bg-brand-gold group-hover:bg-brand-sand text-brand-black border border-brand-gold group-hover:border-brand-sand transition-colors cursor-pointer">
-          Use Estimator
+          {actionText}
           <ArrowRight className="w-3.5 h-3.5" />
         </div>
       </Link>
@@ -87,64 +56,61 @@ const CalculatorCard: React.FC<CalculatorCardProps> = ({
 };
 
 export const CalculatorsTeaser: React.FC = () => {
-  const calculatorsList = [
+  const utilities = [
     {
-      id: "brick-quantity",
-      name: "Brick Quantity Calculator",
-      desc: "Calculate brick count, volumes, and mortar requirements with customizable wastage margins.",
+      name: "Precision Material Estimators",
+      desc: "Compute exact brick counts, paving area layouts, and mortar joint volume requirements to minimize material wastage.",
       icon: <Calculator className="w-6 h-6" />,
-      targetCount: 2450,
-      suffix: "Bricks",
-      label: "average yield"
+      href: "/calculators",
+      actionText: "Launch Estimators",
+      badge: "Self-Serve Calculators"
     },
     {
-      id: "paver",
-      name: "Paver Cost Calculator",
-      desc: "Calculate structural paver count presets for roads, pathways, and square patios.",
-      icon: <Layers className="w-6 h-6" />,
-      targetCount: 1200,
-      suffix: "Pavers",
-      label: "estimated count"
-    },
-    {
-      id: "wall-net-area",
-      name: "Net Wall Area Calculator",
-      desc: "Compute exact wall areas by subtracting windows, doors, and architectural columns.",
+      name: "Installation & Anchoring Guides",
+      desc: "Access step-by-step layout blueprints, structural details, cavity wall specifications, and site guidelines for contractors.",
       icon: <Hammer className="w-6 h-6" />,
-      targetCount: 420,
-      suffix: "sq ft",
-      label: "net square area"
+      href: "/resources?type=Installation Guide",
+      actionText: "Download Guides",
+      badge: "Technical Manuals"
+    },
+    {
+      name: "Specification Comparison Tool",
+      desc: "Cross-reference physical densities, thermal U-values, dead-load limits, and certifications across our entire product range.",
+      icon: <Layers className="w-6 h-6" />,
+      href: "/resources",
+      actionText: "Compare Specifications",
+      badge: "Product Matrix"
     }
   ];
+
   return (
     <section id="calculators" className="py-16 md:py-20 lg:py-24 bg-transparent relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
 
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16 flex flex-col items-center">
-          <span className="text-[10px] uppercase font-bold tracking-[0.35em] text-brand-gold bg-brand-gold/5 px-4 py-1.5 border border-brand-gold/20 rounded-none w-fit block">
-            ENGINEERING DATA
+          <span className="text-[10px] uppercase font-bold tracking-[0.35em] text-brand-gold bg-brand-gold/5 px-4 py-1.5 border border-brand-gold/20 rounded-none w-fit block font-poppins">
+            SPECIFICATION UTILITIES
           </span>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-normal font-cormorant text-brand-offwhite mt-6 tracking-wide">
-            Construction Estimators
+            Self-Serve Resources
           </h2>
           <p className="text-brand-slate-300 text-xs sm:text-sm font-poppins mt-4 max-w-xl leading-relaxed">
-            Minimize material waste and estimate costs in seconds using our precision architectural and masonry calculators.
+            Gain immediate practical specifications with our estimators, guides, and comparison tables designed for contractors and architects mid-project.
           </p>
         </div>
 
-        {/* Dynamic Calculator Cards Grid */}
+        {/* Utilities Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {calculatorsList.map((calc) => (
-            <CalculatorCard
-              key={calc.id}
-              id={calc.id}
-              name={calc.name}
-              desc={calc.desc}
-              icon={calc.icon}
-              targetCount={calc.targetCount}
-              suffix={calc.suffix}
-              label={calc.label}
+          {utilities.map((item, idx) => (
+            <UtilityCard
+              key={idx}
+              name={item.name}
+              desc={item.desc}
+              icon={item.icon}
+              href={item.href}
+              actionText={item.actionText}
+              badge={item.badge}
             />
           ))}
         </div>
@@ -153,10 +119,10 @@ export const CalculatorsTeaser: React.FC = () => {
         <div className="text-center mt-16">
           <Magnetic>
             <Link
-              href="/calculators"
+              href="/resources"
               className="inline-flex items-center gap-2 bg-brand-gold hover:bg-brand-sand text-brand-black px-8 py-4 rounded-none font-semibold uppercase tracking-[0.2em] font-poppins text-xs transition-colors border border-brand-gold cursor-pointer"
             >
-              Explore All Estimators
+              Access Resource Library
               <ArrowRight className="w-4 h-4" />
             </Link>
           </Magnetic>

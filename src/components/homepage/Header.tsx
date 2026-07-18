@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Menu, X, ChevronDown, Building2, HardHat, FileText, Calculator, PhoneCall, Sun, Moon, ArrowRight, Compass, Layers, Hammer, LayoutGrid } from "lucide-react";
+import { Menu, X, ChevronDown, Building2, HardHat, FileText, Calculator, PhoneCall, Sun, Moon, ArrowRight, Compass, Layers, Hammer, LayoutGrid, Leaf, Shield, Award, Landmark, Users, Globe, BookOpen, Briefcase, Milestone, Factory } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Logo } from "./Logo";
 import Link from "next/link";
@@ -141,29 +141,58 @@ export const Header: React.FC<HeaderProps> = ({ darkMode, setDarkMode }) => {
     return href;
   };
 
-  const menuItems = {
-    products: [
-      { name: "Clay Bricks", href: "/products?category=Clay Bricks", desc: "Facing bricks fired at 1100°C for load-bearing facades." },
-      { name: "Terracotta Facades", href: "/products?category=Terracotta", desc: "Ventilated natural terracotta Cladding and custom sunscreens." },
-      { name: "Roofing Tiles", href: "/products?category=Roofing Tiles", desc: "Interlocking clay sloped roof tiles and finishing ridges." },
-      { name: "Paving Stones", href: "/products?category=Pavers", desc: "Heavy-duty outdoor paving bricks for paths and roadways." },
-      { name: "Hollow Blocks", href: "/products?category=Hollow Blocks", desc: "Insulating structural clay blocks for lightweight facades." },
-      { name: "Terraplasts", href: "/products?category=Terraplasts", desc: "Lightweight cellular thermal insulating autoclaved blocks." },
+  const productMenu = {
+    categories: [
+      { name: "Ecotherm Clay Hollow Blocks", href: "/products?category=Hollow Blocks", icon: <HollowBlockIcon className="w-4 h-4" /> },
+      { name: "Structural Walling", href: "/products?category=Hollow Blocks", icon: <Building2 className="w-4 h-4" /> },
+      { name: "Facing Bricks (Extruded)", href: "/products?category=Clay Bricks", icon: <FacadeIcon className="w-4 h-4" /> },
+      { name: "Traditional Handmade Bricks", href: "/products?category=Clay Bricks", icon: <FacadeIcon className="w-4 h-4" /> },
+      { name: "Linea Handmade Series", href: "/products?category=Clay Bricks", icon: <FacadeIcon className="w-4 h-4" /> },
+      { name: "Cladding Bricks & Tiles", href: "/products?category=Terracotta", icon: <FacadeIcon className="w-4 h-4" /> },
+      { name: "Clay Pavers", href: "/products?category=Pavers", icon: <PaversIcon className="w-4 h-4" /> },
+      { name: "Roofing Tiles", href: "/products?category=Roofing Tiles", icon: <RoofingIcon className="w-4 h-4" /> },
+      { name: "Terraplast", href: "/products?category=Terraplasts", icon: <AACBlockIcon className="w-4 h-4" />, isNew: true },
+      { name: "Domestic Series", href: "/products?series=domestic", icon: <ConsumerIcon className="w-4 h-4" /> }
     ],
-    calculators: [
-      { name: "Brick Quantity Calculator", href: "/calculators?id=brick-quantity", desc: "Calculate brick counts and mortar buffers." },
-      { name: "House Material Estimator", href: "/calculators?id=house-estimator", desc: "Estimate cement, sand, and aggregates." },
-      { name: "Wall Net Area Estimator", href: "/calculators?id=wall-net-area", desc: "Subtract window and door voids easily." },
-      { name: "Roofing Tile Estimator", href: "/calculators?id=roofing-tile", desc: "Roman tile count with slope angles." },
-      { name: "Paver Calculator", href: "/calculators?id=paver", desc: "Calculate rectangular and hexagonal paver patterns." },
+    downloads: [
+      { name: "TDS", label: "Technical Data Sheets", href: "/resources?type=Technical Datasheet", icon: <FileText className="w-5 h-5" /> },
+      { name: "BIM", label: "Building Information Modeling", href: "/resources?type=BIM Revit Object", icon: <Layers className="w-5 h-5" /> },
+      { name: "CAD", label: "CAD Drawings & Details", href: "/resources?type=CAD Detail", icon: <LayoutGrid className="w-5 h-5" /> }
     ],
-    resources: [
-      { name: "Technical Datasheets", href: "/resources?type=Technical Datasheet", desc: "Compressive strengths, densities, and water absorption ratios." },
-      { name: "CAD Drawings (DWG/DXF)", href: "/resources?type=CAD Detail", desc: "Standard CAD details for draftsmen." },
-      { name: "BIM & Revit Objects (RVT/IFC)", href: "/resources?type=BIM Revit Object", desc: "BIM models for architectural integration." },
-      { name: "Installation Manuals", href: "/resources?type=Installation Guide", desc: "On-site installation manuals and guides." },
-    ],
+    applications: [
+      { name: "Facades & Cladding", href: "/products?category=Terracotta", icon: <FacadeIcon className="w-4 h-4" /> },
+      { name: "Flooring & Paving", href: "/products?category=Pavers", icon: <PaversIcon className="w-4 h-4" /> },
+      { name: "Roofing", href: "/products?category=Roofing Tiles", icon: <RoofingIcon className="w-4 h-4" /> },
+      { name: "Interior Wall Finish ", highlightSuffix: "(Terraplast)", href: "/products?category=Terraplasts", icon: <AACBlockIcon className="w-4 h-4" /> },
+      { name: "Sustainable Building", href: "/#sustainability", icon: <Leaf className="w-4 h-4" /> },
+      { name: "Construction Products", href: "/products", icon: <Hammer className="w-4 h-4" />, isComingSoon: true }
+    ]
   };
+
+  const sustainabilityItems = [
+    { name: "Our EPD Certification", href: "/#sustainability", desc: "Environmental Product Declarations certifying low footprint." },
+    { name: "Certifications & Standards", href: "/about#certifications", desc: "GRIHA · ISO 14001 · UKCA compliance details." },
+    { name: "Environmental Commitments", href: "/#sustainability", desc: "CO2 reduction, zero waste discharge, and green energy." },
+    { name: "Production Process", href: "/about#process", desc: "High-efficiency European tunnel kiln firing." },
+    { name: "Sustainable Building with Clay", href: "/#sustainability", desc: "How fired clay naturally regulates temperature." }
+  ];
+
+  const resourcesItems = [
+    { name: "Installation Guides", href: "/resources?type=Installation Guide", desc: "Step-by-step layout & anchoring instructions." },
+    { name: "Material Help Centre", href: "/resources", desc: "Technical FAQs, product guides, and support." },
+    { name: "Calculators", href: "/calculators", desc: "Brick counts, wall net area, roof and paver estimators." },
+    { name: "Blog", href: "/#blogs", desc: "Masonry tips, construction science, and updates." }
+  ];
+
+  const aboutItems = [
+    { name: "Our Story (Est. 1937)", href: "/about#why-pcp", desc: "Over 80 years of excellence in fired clay." },
+    { name: "Leadership", href: "/about#leadership", desc: "Directors, ceramic chemists, and specifications engineers." },
+    { name: "Manufacturing Facility", href: "/about#process", desc: "Take a tour of our automated tunnel kiln facility." },
+    { name: "Certifications & Standards", href: "/about#certifications", desc: "GRIHA, ISO audits, UKCA structural certificates." },
+    { name: "Awards & Media", href: "/about#certifications", desc: "Recognitions in sustainable building." },
+    { name: "Export Activity / Our Footprints", href: "/about#infrastructure", desc: "Global and domestic distribution hubs." },
+    { name: "Careers", href: "/about#leadership", desc: "Join our specifications team." }
+  ];
 
   return (
     <header
@@ -191,84 +220,90 @@ export const Header: React.FC<HeaderProps> = ({ darkMode, setDarkMode }) => {
           </div>
 
           {/* Right Block (Desktop Menu & Mobile Toggle Card) */}
-          <div className={`flex items-center gap-6 transition-all duration-500 ${scrolled
+          <div className={`flex items-center gap-4 transition-all duration-500 ${scrolled
             ? "bg-transparent border-none p-0 shadow-none"
-            : "bg-brand-slate-950 border border-[#ce9456]/20 px-6 py-2 rounded-xl shadow-lg"
+            : "bg-brand-slate-950 border border-[#ce9456]/20 px-4 py-2 rounded-xl shadow-lg"
             }`}>
             {/* Desktop Nav */}
-            <nav className="hidden lg:flex items-center gap-6">
+            <nav className="hidden lg:flex items-center gap-3 xl:gap-5">
               {/* Products Dropdown Trigger */}
               <div className="relative">
                 <button
                   onMouseEnter={() => setActiveDropdown("products")}
-                  onClick={() => handleLinkClick("/products")}
-                  className={`flex items-center gap-1 text-sm font-semibold transition-colors py-2 cursor-pointer ${pathname.startsWith("/products") ? "text-brand-terracotta-500" : "text-brand-slate-200 hover:text-brand-terracotta-500"}`}
+                  className={`flex items-center gap-0.5 text-xs xl:text-[13px] font-semibold transition-colors py-2 cursor-pointer ${pathname.startsWith("/products") ? "text-brand-terracotta-500" : "text-brand-slate-200 hover:text-brand-terracotta-500"}`}
                 >
-                  Products <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${activeDropdown === "products" ? "rotate-180" : ""}`} />
+                  Products <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${activeDropdown === "products" ? "rotate-180" : ""}`} />
                 </button>
               </div>
 
               {/* Projects */}
               <button
                 onClick={() => handleLinkClick("/projects")}
-                className={`text-sm font-semibold transition-colors py-2 cursor-pointer ${pathname.startsWith("/projects") ? "text-brand-terracotta-500" : "text-brand-slate-200 hover:text-brand-terracotta-500"}`}
+                className={`text-xs xl:text-[13px] font-semibold transition-colors py-2 cursor-pointer ${pathname.startsWith("/projects") ? "text-brand-terracotta-500" : "text-brand-slate-200 hover:text-brand-terracotta-500"}`}
               >
                 Projects
               </button>
 
-              {/* Calculators Dropdown Trigger */}
+              {/* Sustainability Dropdown Trigger */}
               <div className="relative">
                 <button
-                  onMouseEnter={() => setActiveDropdown("calculators")}
-                  onClick={() => handleLinkClick("/calculators")}
-                  className={`flex items-center gap-1 text-sm font-semibold transition-colors py-2 cursor-pointer ${pathname.startsWith("/calculators") ? "text-brand-terracotta-500" : "text-brand-slate-200 hover:text-brand-terracotta-500"}`}
+                  onMouseEnter={() => setActiveDropdown("sustainability")}
+                  className={`flex items-center gap-0.5 text-xs xl:text-[13px] font-semibold transition-colors py-2 cursor-pointer ${pathname.includes("sustainability") ? "text-brand-terracotta-500" : "text-brand-slate-200 hover:text-brand-terracotta-500"}`}
                 >
-                  Calculators <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${activeDropdown === "calculators" ? "rotate-180" : ""}`} />
+                  Sustainability <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${activeDropdown === "sustainability" ? "rotate-180" : ""}`} />
                 </button>
               </div>
-
-              {/* Recommender Quiz */}
-              <button
-                onClick={() => handleLinkClick("#recommender")}
-                className="text-sm font-semibold text-brand-slate-200 hover:text-brand-terracotta-500 transition-colors py-2 cursor-pointer"
-              >
-                Material Wizard
-              </button>
 
               {/* Resources Dropdown Trigger */}
               <div className="relative">
                 <button
                   onMouseEnter={() => setActiveDropdown("resources")}
-                  onClick={() => handleLinkClick("/resources")}
-                  className={`flex items-center gap-1 text-sm font-semibold transition-colors py-2 cursor-pointer ${pathname.startsWith("/resources") ? "text-brand-terracotta-500" : "text-brand-slate-200 hover:text-brand-terracotta-500"}`}
+                  className={`flex items-center gap-0.5 text-xs xl:text-[13px] font-semibold transition-colors py-2 cursor-pointer ${pathname.startsWith("/resources") ? "text-brand-terracotta-500" : "text-brand-slate-200 hover:text-brand-terracotta-500"}`}
                 >
-                  Resources <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${activeDropdown === "resources" ? "rotate-180" : ""}`} />
+                  Resources <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${activeDropdown === "resources" ? "rotate-180" : ""}`} />
                 </button>
               </div>
 
-              {/* About */}
+              {/* About Dropdown Trigger */}
+              <div className="relative">
+                <button
+                  onMouseEnter={() => setActiveDropdown("about")}
+                  className={`flex items-center gap-0.5 text-xs xl:text-[13px] font-semibold transition-colors py-2 cursor-pointer ${pathname.startsWith("/about") ? "text-brand-terracotta-500" : "text-brand-slate-200 hover:text-brand-terracotta-500"}`}
+                >
+                  About <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${activeDropdown === "about" ? "rotate-180" : ""}`} />
+                </button>
+              </div>
+
+              {/* Where to Buy */}
               <button
-                onClick={() => handleLinkClick("/about")}
-                className={`text-sm font-semibold transition-colors py-2 cursor-pointer ${pathname.startsWith("/about") ? "text-brand-terracotta-500" : "text-brand-slate-200 hover:text-brand-terracotta-500"}`}
+                onClick={() => handleLinkClick("#dealers")}
+                className={`text-xs xl:text-[13px] font-semibold transition-colors py-2 cursor-pointer ${pathname.includes("#dealers") ? "text-brand-terracotta-500" : "text-brand-slate-200 hover:text-brand-terracotta-500"}`}
               >
-                About
+                Where to Buy
               </button>
 
-              {/* Contact */}
+              {/* Media Coverage */}
               <button
-                onClick={() => handleLinkClick("/contact")}
-                className={`text-sm font-semibold transition-colors py-2 cursor-pointer ${pathname.startsWith("/contact") ? "text-brand-terracotta-500" : "text-brand-slate-200 hover:text-brand-terracotta-500"}`}
+                onClick={() => handleLinkClick("/resources?type=media")}
+                className="text-xs xl:text-[13px] font-semibold text-brand-slate-200 hover:text-brand-terracotta-500 transition-colors py-2 cursor-pointer"
               >
-                Contact
+                Media Coverage
               </button>
 
-              {/* Enquire Now Button */}
+              {/* In the News */}
+              <button
+                onClick={() => handleLinkClick("/resources?type=news")}
+                className="text-xs xl:text-[13px] font-semibold text-brand-slate-200 hover:text-brand-terracotta-500 transition-colors py-2 cursor-pointer"
+              >
+                In the News
+              </button>
+
+              {/* Enquire CTA Button */}
               <button
                 onClick={() => handleLinkClick("/contact")}
-                className="bg-brand-gold hover:bg-brand-gold-500 text-brand-black px-4.5 py-2  text-xs font-bold uppercase tracking-wider transition-colors duration-300 font-poppins flex items-center gap-1.5 cursor-pointer shadow-md"
+                className="bg-brand-gold hover:bg-brand-gold-500 text-brand-black px-4 py-1.5 text-xs font-bold uppercase tracking-wider transition-colors duration-300 font-poppins flex items-center gap-1 cursor-pointer shadow-md shrink-0"
               >
-                <PhoneCall className="w-3.5 h-3.5" />
-                Enquire Now
+                Enquire
               </button>
             </nav>
 
@@ -288,131 +323,157 @@ export const Header: React.FC<HeaderProps> = ({ darkMode, setDarkMode }) => {
                 initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 15 }}
-                className="absolute max-w-5xl mx-auto left-4 right-4 top-full mt-2 rounded-2xl shadow-2xl bg-brand-slate-950 border border-brand-slate-800/40 p-6 grid grid-cols-12 gap-8 z-50 text-left"
+                className="absolute max-w-6xl mx-auto left-4 right-4 top-full mt-2 rounded-2xl shadow-2xl bg-brand-slate-950 border border-brand-slate-800/40 p-0 overflow-hidden grid z-50 text-left"
+                style={{ gridTemplateColumns: "3fr 2.5fr 3fr 3.5fr" }}
               >
-                {/* Left Column Callout */}
-                <div className="col-span-4 bg-brand-black border border-brand-gold/15 flex flex-col justify-between relative overflow-hidden group rounded-xl">
-                  <div className="h-32 relative w-full overflow-hidden shrink-0 border-b border-brand-gold/10">
-                    <img src="/images/hero-3.jpg" alt="Fired clay tile facade detail" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
-                  </div>
-                  <div className="p-4 flex flex-col justify-between flex-grow space-y-4">
-                    <div className="space-y-2">
-                      <span className="text-[8px] tracking-[0.3em] font-bold text-brand-gold uppercase block font-poppins">
-                        FEATURED SELECTION
-                      </span>
-                      <h4 className="text-base font-semibold font-cormorant text-brand-offwhite leading-tight">
-                        Natural Terracotta Envelopes
-                      </h4>
-                      <p className="text-[10px] font-poppins text-brand-sand/70 leading-relaxed">
-                        Eco-certified, thermal-insulating facades designed for high-load metropolitan layouts.
-                      </p>
-                    </div>
-                    <Link
-                      href="/products?category=Terracotta"
-                      onClick={() => setActiveDropdown(null)}
-                      className="inline-flex items-center gap-1.5 text-[9px] uppercase tracking-widest text-brand-gold font-bold font-poppins w-fit"
-                    >
-                      Explore Range
-                      <ArrowRight className="w-3.5 h-3.5 text-brand-gold" />
-                    </Link>
+                {/* Column 1: By Category */}
+                <div className="py-7 pl-7 pr-3 flex flex-col">
+                  <span className="text-[10px] uppercase font-bold tracking-[0.25em] text-brand-terracotta-500 mb-5 block font-poppins border-b border-brand-slate-800/40 pb-1.5">
+                    By Category
+                  </span>
+                  <div className="flex flex-col gap-1 pr-1">
+                    {productMenu.categories.map((item, idx) => (
+                      <Link
+                        key={idx}
+                        href={item.href}
+                        onClick={() => setActiveDropdown(null)}
+                        className="flex items-center gap-3 py-1.5 px-2 rounded-lg hover:bg-brand-slate-900/50 transition-colors group"
+                      >
+                        <div className="text-brand-sand/60 group-hover:text-brand-terracotta-500 transition-colors shrink-0">
+                          {item.icon}
+                        </div>
+                        <div className="flex items-center gap-1.5">
+                          <span className="text-[12px] font-medium text-brand-offwhite group-hover:text-brand-terracotta-500 transition-colors block font-poppins">
+                            {item.name}
+                          </span>
+                          {item.isNew && (
+                            <span className="bg-brand-terracotta-600 text-white text-[7px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded font-poppins shrink-0">
+                              NEW
+                            </span>
+                          )}
+                        </div>
+                      </Link>
+                    ))}
                   </div>
                 </div>
 
-                {/* Right Columns list */}
-                <div className="col-span-8 flex flex-col justify-between">
-                  <div className="grid grid-cols-2 gap-4">
-                    {menuItems.products.map((item, idx) => {
-                      const icons = [
-                        <FacadeIcon key="bricks" className="w-5 h-5 text-brand-terracotta-500" />,
-                        <FacadeIcon key="facades" className="w-5 h-5 text-brand-terracotta-500" />,
-                        <RoofingIcon key="tiles" className="w-5 h-5 text-brand-terracotta-500" />,
-                        <PaversIcon key="pavers" className="w-5 h-5 text-brand-terracotta-500" />,
-                        <HollowBlockIcon key="hollow" className="w-5 h-5 text-brand-terracotta-500" />,
-                        <AACBlockIcon key="aac" className="w-5 h-5 text-brand-terracotta-500" />,
-                      ];
-                      return (
-                        <Link
-                          key={idx}
-                          href={item.href}
-                          onClick={() => setActiveDropdown(null)}
-                          className="flex gap-3 p-3 rounded-lg hover:bg-brand-slate-900/50 transition-colors group"
-                        >
-                          <div className="p-2.5 bg-brand-black border border-brand-gold/10 rounded-lg group-hover:border-brand-gold/45 transition-colors shrink-0 flex items-center justify-center h-fit">
-                            {icons[idx % icons.length]}
-                          </div>
-                          <div className="space-y-1">
-                            <h5 className="text-xs font-semibold text-brand-offwhite group-hover:text-brand-terracotta-500 transition-colors font-poppins">
-                              {item.name}
-                            </h5>
-                            <p className="text-[9px] font-poppins text-brand-sand/65 leading-relaxed">
-                              {item.desc}
-                            </p>
-                          </div>
-                        </Link>
-                      );
-                    })}
+                {/* Column 2: Downloads */}
+                <div className="py-7 px-5 border-l border-brand-slate-900 flex flex-col gap-4">
+                  <span className="text-[10px] uppercase font-bold tracking-[0.25em] text-brand-terracotta-500 mb-1 block font-poppins border-b border-brand-slate-800/40 pb-1.5">
+                    Downloads
+                  </span>
+                  <div className="flex flex-col gap-3">
+                    {productMenu.downloads.map((item, idx) => (
+                      <Link
+                        key={idx}
+                        href={item.href}
+                        onClick={() => setActiveDropdown(null)}
+                        className="flex items-center gap-3.5 py-3 px-3 rounded-xl hover:bg-brand-slate-900/50 transition-all border border-transparent hover:border-brand-gold/10 group"
+                      >
+                        <div className="p-2.5 bg-brand-black border border-brand-slate-800 rounded-xl group-hover:border-brand-gold/30 group-hover:bg-brand-slate-950 transition-all text-brand-gold shrink-0">
+                          {item.icon}
+                        </div>
+                        <div>
+                          <span className="text-xs font-bold text-brand-offwhite group-hover:text-brand-gold transition-colors block font-poppins uppercase tracking-wider">
+                            {item.name}
+                          </span>
+                          <span className="text-[9px] text-brand-sand/50 leading-relaxed block mt-0.5 font-poppins">
+                            {item.label}
+                          </span>
+                        </div>
+                      </Link>
+                    ))}
                   </div>
+                </div>
 
-                  {/* View All Products button inside dropdown */}
-                  <div className="mt-6 pt-4 border-t border-brand-slate-800/60 flex justify-end">
+                {/* Column 3: By Application */}
+                <div className="py-7 px-5 border-l border-brand-slate-900 flex flex-col">
+                  <span className="text-[10px] uppercase font-bold tracking-[0.25em] text-brand-terracotta-500 mb-5 block font-poppins border-b border-brand-slate-800/40 pb-1.5">
+                    By Application
+                  </span>
+                  <div className="flex flex-col gap-1">
+                    {productMenu.applications.map((item, idx) => (
+                      <Link
+                        key={idx}
+                        href={item.href}
+                        onClick={() => setActiveDropdown(null)}
+                        className="flex items-center gap-3 py-1.5 px-2 rounded-lg hover:bg-brand-slate-900/50 transition-colors group"
+                      >
+                        <div className="text-brand-sand/60 group-hover:text-brand-terracotta-500 transition-colors shrink-0">
+                          {item.icon}
+                        </div>
+                        <div className="flex items-center gap-1.5 flex-wrap">
+                          <span className="text-[12px] font-medium text-brand-offwhite group-hover:text-brand-terracotta-500 transition-colors font-poppins">
+                            {item.name}
+                            {item.highlightSuffix && (
+                              <span className="text-brand-terracotta-500 font-semibold">{item.highlightSuffix}</span>
+                            )}
+                          </span>
+                          {item.isComingSoon && (
+                            <span className="border border-brand-slate-850 text-brand-sand/40 text-[7px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded font-poppins shrink-0">
+                              COMING SOON
+                            </span>
+                          )}
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Column 4: Premium Clay Solutions Callout */}
+                <div className="relative flex flex-col justify-between p-7 overflow-hidden border-l border-brand-slate-900">
+                  {/* Background Image */}
+                  <img
+                    src="/images/hero-3.jpg"
+                    alt="Premium clay building design"
+                    className="absolute inset-0 w-full h-full object-cover opacity-25"
+                  />
+                  {/* Dark Vignette Overlay for readability */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-brand-slate-950 via-brand-slate-950/95 to-brand-slate-950/20 z-10" />
+
+                  {/* Content */}
+                  <div className="relative z-20 flex flex-col justify-between h-full space-y-6">
+                    <div className="space-y-2.5">
+                      <span className="text-[9px] tracking-[0.25em] font-bold text-brand-terracotta-500 uppercase block font-poppins">
+                        PREMIUM CLAY SOLUTIONS
+                      </span>
+                      <h4 className="text-xl font-normal font-cormorant text-brand-offwhite leading-tight">
+                        Timeless Materials for Modern Architecture
+                      </h4>
+                      <p className="text-[10px] font-poppins text-brand-sand/70 leading-relaxed max-w-[200px]">
+                        Sustainable clay building materials crafted for beauty, durability and a better tomorrow.
+                      </p>
+                    </div>
                     <Link
                       href="/products"
                       onClick={() => setActiveDropdown(null)}
-                      className="bg-brand-gold hover:bg-brand-sand text-brand-black px-6 py-2.5 text-[10px] font-bold uppercase tracking-wider transition-colors duration-300 font-poppins flex items-center gap-1.5 cursor-pointer shadow-md rounded-none border border-brand-gold"
+                      className="inline-flex items-center justify-center gap-1.5 bg-brand-terracotta-600 hover:bg-brand-terracotta-700 text-brand-offwhite px-4 py-2 text-xs font-bold uppercase tracking-wider transition-colors duration-300 font-poppins w-fit shadow-lg"
                     >
-                      <span>View All Products</span>
-                      <ArrowRight className="w-3.5 h-3.5" />
+                      View All Products
+                      <ArrowRight className="w-3.5 h-3.5 text-brand-offwhite" />
                     </Link>
                   </div>
                 </div>
               </motion.div>
             )}
 
-            {activeDropdown === "calculators" && (
+            {activeDropdown === "sustainability" && (
               <motion.div
                 initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 15 }}
-                className="absolute max-w-5xl mx-auto left-4 right-4 top-full mt-2 rounded-2xl shadow-2xl bg-brand-slate-950 border border-brand-slate-800/40 p-6 grid grid-cols-12 gap-8 z-50 text-left"
+                className="absolute max-w-6xl mx-auto left-4 right-4 top-full mt-2 rounded-2xl shadow-2xl bg-brand-slate-950 border border-brand-slate-800/40 p-0 overflow-hidden grid grid-cols-12 z-50 text-left"
               >
-                {/* Left Column Callout */}
-                <div className="col-span-4 bg-brand-black border border-brand-gold/15 flex flex-col justify-between relative overflow-hidden group rounded-xl">
-                  <div className="h-32 relative w-full overflow-hidden shrink-0 border-b border-brand-gold/10">
-                    <img src="/images/hero-2.jpg" alt="PCP Automated Factory" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
-                  </div>
-                  <div className="p-4 flex flex-col justify-between flex-grow space-y-4">
-                    <div className="space-y-2">
-                      <span className="text-[8px] tracking-[0.3em] font-bold text-brand-gold uppercase block font-poppins">
-                        ESTIMATOR TOOLS
-                      </span>
-                      <h4 className="text-base font-semibold font-cormorant text-brand-offwhite leading-tight">
-                        Engineering Estimators Desk
-                      </h4>
-                      <p className="text-[10px] font-poppins text-brand-sand/70 leading-relaxed">
-                        Estimate material volumes, Roman interlocking patterns, and net masonry boundaries in real-time.
-                      </p>
-                    </div>
-                    <Link
-                      href="/calculators"
-                      onClick={() => setActiveDropdown(null)}
-                      className="inline-flex items-center gap-1.5 text-[9px] uppercase tracking-widest text-brand-gold font-bold font-poppins w-fit"
-                    >
-                      Go to Estimators
-                      <ArrowRight className="w-3.5 h-3.5 text-brand-gold" />
-                    </Link>
-                  </div>
-                </div>
-
-                {/* Right Columns list */}
-                <div className="col-span-8 flex flex-col justify-between">
+                {/* Left Columns list */}
+                <div className="col-span-8 py-7 px-7 flex flex-col justify-center">
                   <div className="grid grid-cols-2 gap-4">
-                    {menuItems.calculators.map((item, idx) => {
+                    {sustainabilityItems.map((item, idx) => {
                       const icons = [
-                        <FacadeIcon key="bricks" className="w-5 h-5 text-brand-terracotta-500" />,
-                        <ConsumerIcon key="house" className="w-5 h-5 text-brand-terracotta-500" />,
-                        <ExpertiseIcon key="wall" className="w-5 h-5 text-brand-terracotta-500" />,
-                        <RoofingIcon key="roof" className="w-5 h-5 text-brand-terracotta-500" />,
-                        <PaversIcon key="paver" className="w-5 h-5 text-brand-terracotta-500" />,
+                        <Leaf key="epd" className="w-5 h-5 text-brand-terracotta-500" />,
+                        <Award key="cert" className="w-5 h-5 text-brand-terracotta-500" />,
+                        <Shield key="commit" className="w-5 h-5 text-brand-terracotta-500" />,
+                        <Factory key="process" className="w-5 h-5 text-brand-terracotta-500" />,
+                        <Building2 key="building" className="w-5 h-5 text-brand-terracotta-500" />,
                       ];
                       return (
                         <Link
@@ -436,16 +497,39 @@ export const Header: React.FC<HeaderProps> = ({ darkMode, setDarkMode }) => {
                       );
                     })}
                   </div>
+                </div>
 
-                  {/* View All Calculators button inside dropdown */}
-                  <div className="mt-6 pt-4 border-t border-brand-slate-800/60 flex justify-end">
+                {/* Right Column Callout */}
+                <div className="col-span-4 relative flex flex-col justify-between p-7 overflow-hidden border-l border-brand-slate-900">
+                  {/* Background Image */}
+                  <img
+                    src="/images/hero-4.jpg"
+                    alt="Eco-friendly clay production"
+                    className="absolute inset-0 w-full h-full object-cover opacity-25"
+                  />
+                  {/* Dark Vignette Overlay for readability */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-brand-slate-950 via-brand-slate-950/95 to-brand-slate-950/20 z-10" />
+
+                  {/* Content */}
+                  <div className="relative z-20 flex flex-col justify-between h-full space-y-6">
+                    <div className="space-y-2.5">
+                      <span className="text-[9px] tracking-[0.25em] font-bold text-brand-terracotta-500 uppercase block font-poppins">
+                        ECO-CERTIFICATION
+                      </span>
+                      <h4 className="text-xl font-normal font-cormorant text-brand-offwhite leading-tight">
+                        Circular Earthen Craft
+                      </h4>
+                      <p className="text-[10px] font-poppins text-brand-sand/70 leading-relaxed max-w-[200px]">
+                        PCP products carry third-party audited Environmental Product Declarations (EPD) and contribute to GRIHA green building stars.
+                      </p>
+                    </div>
                     <Link
-                      href="/calculators"
+                      href="/#sustainability"
                       onClick={() => setActiveDropdown(null)}
-                      className="bg-brand-gold hover:bg-brand-sand text-brand-black px-6 py-2.5 text-[10px] font-bold uppercase tracking-wider transition-colors duration-300 font-poppins flex items-center gap-1.5 cursor-pointer shadow-md rounded-none border border-brand-gold"
+                      className="inline-flex items-center justify-center gap-1.5 bg-brand-terracotta-600 hover:bg-brand-terracotta-700 text-brand-offwhite px-4 py-2 text-xs font-bold uppercase tracking-wider transition-colors duration-300 font-poppins w-fit shadow-lg"
                     >
-                      <span>View All Calculators</span>
-                      <ArrowRight className="w-3.5 h-3.5" />
+                      EPD Details
+                      <ArrowRight className="w-3.5 h-3.5 text-brand-offwhite" />
                     </Link>
                   </div>
                 </div>
@@ -457,45 +541,17 @@ export const Header: React.FC<HeaderProps> = ({ darkMode, setDarkMode }) => {
                 initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 15 }}
-                className="absolute max-w-5xl mx-auto left-4 right-4 top-full mt-2 rounded-2xl shadow-2xl bg-brand-slate-950 border border-brand-slate-800/40 p-6 grid grid-cols-12 gap-8 z-50 text-left"
+                className="absolute max-w-6xl mx-auto left-4 right-4 top-full mt-2 rounded-2xl shadow-2xl bg-brand-slate-950 border border-brand-slate-800/40 p-0 overflow-hidden grid grid-cols-12 z-50 text-left"
               >
-                {/* Left Column Callout */}
-                <div className="col-span-4 bg-brand-black border border-brand-gold/15 flex flex-col justify-between relative overflow-hidden group rounded-xl">
-                  <div className="h-32 relative w-full overflow-hidden shrink-0 border-b border-brand-gold/10">
-                    <img src="/images/hero-1.jpg" alt="Architectural BIM blueprints" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
-                  </div>
-                  <div className="p-4 flex flex-col justify-between flex-grow space-y-4">
-                    <div className="space-y-2">
-                      <span className="text-[8px] tracking-[0.3em] font-bold text-brand-gold uppercase block font-poppins">
-                        TECHNICAL DIRECTORY
-                      </span>
-                      <h4 className="text-base font-semibold font-cormorant text-brand-offwhite leading-tight">
-                        Architect CAD & BIM Center
-                      </h4>
-                      <p className="text-[10px] font-poppins text-brand-sand/70 leading-relaxed">
-                        Download technical sheets, detailed DWG drawings, Revit RVT profiles, and installation manuals.
-                      </p>
-                    </div>
-                    <Link
-                      href="/resources"
-                      onClick={() => setActiveDropdown(null)}
-                      className="inline-flex items-center gap-1.5 text-[9px] uppercase tracking-widest text-brand-gold font-bold font-poppins w-fit"
-                    >
-                      Go to Resources
-                      <ArrowRight className="w-3.5 h-3.5 text-brand-gold" />
-                    </Link>
-                  </div>
-                </div>
-
-                {/* Right Columns list */}
-                <div className="col-span-8 flex flex-col justify-between">
+                {/* Left Columns list */}
+                <div className="col-span-8 py-7 px-7 flex flex-col justify-center">
                   <div className="grid grid-cols-2 gap-4">
-                    {menuItems.resources.map((item, idx) => {
+                    {resourcesItems.map((item, idx) => {
                       const icons = [
-                        <ExpertiseIcon key="datasheet" className="w-5 h-5 text-brand-terracotta-500" />,
-                        <ProfessionalIcon key="cad" className="w-5 h-5 text-brand-terracotta-500" />,
-                        <ProfessionalIcon key="bim" className="w-5 h-5 text-brand-terracotta-500" />,
-                        <ProfessionalIcon key="manual" className="w-5 h-5 text-brand-terracotta-500" />,
+                        <HardHat key="guides" className="w-5 h-5 text-brand-terracotta-500" />,
+                        <Compass key="help" className="w-5 h-5 text-brand-terracotta-500" />,
+                        <Calculator key="calcs" className="w-5 h-5 text-brand-terracotta-500" />,
+                        <BookOpen key="blog" className="w-5 h-5 text-brand-terracotta-500" />,
                       ];
                       return (
                         <Link
@@ -519,16 +575,120 @@ export const Header: React.FC<HeaderProps> = ({ darkMode, setDarkMode }) => {
                       );
                     })}
                   </div>
+                </div>
 
-                  {/* View All Resources button inside dropdown */}
-                  <div className="mt-6 pt-4 border-t border-brand-slate-800/60 flex justify-end">
+                {/* Right Column Callout */}
+                <div className="col-span-4 relative flex flex-col justify-between p-7 overflow-hidden border-l border-brand-slate-900">
+                  {/* Background Image */}
+                  <img
+                    src="/images/hero-1.jpg"
+                    alt="CAD blueprints"
+                    className="absolute inset-0 w-full h-full object-cover opacity-25"
+                  />
+                  {/* Dark Vignette Overlay for readability */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-brand-slate-950 via-brand-slate-950/95 to-brand-slate-950/20 z-10" />
+
+                  {/* Content */}
+                  <div className="relative z-20 flex flex-col justify-between h-full space-y-6">
+                    <div className="space-y-2.5">
+                      <span className="text-[9px] tracking-[0.25em] font-bold text-brand-terracotta-500 uppercase block font-poppins">
+                        TECHNICAL CENTER
+                      </span>
+                      <h4 className="text-xl font-normal font-cormorant text-brand-offwhite leading-tight">
+                        Blueprints & Estimation
+                      </h4>
+                      <p className="text-[10px] font-poppins text-brand-sand/70 leading-relaxed max-w-[200px]">
+                        Access detailed CAD drawings, installation guides, Revit profiles, and design estimators for masonry.
+                      </p>
+                    </div>
                     <Link
                       href="/resources"
                       onClick={() => setActiveDropdown(null)}
-                      className="bg-brand-gold hover:bg-brand-sand text-brand-black px-6 py-2.5 text-[10px] font-bold uppercase tracking-wider transition-colors duration-300 font-poppins flex items-center gap-1.5 cursor-pointer shadow-md rounded-none border border-brand-gold"
+                      className="inline-flex items-center justify-center gap-1.5 bg-brand-terracotta-600 hover:bg-brand-terracotta-700 text-brand-offwhite px-4 py-2 text-xs font-bold uppercase tracking-wider transition-colors duration-300 font-poppins w-fit shadow-lg"
                     >
-                      <span>View All Resources</span>
-                      <ArrowRight className="w-3.5 h-3.5" />
+                      Open Downloads
+                      <ArrowRight className="w-3.5 h-3.5 text-brand-offwhite" />
+                    </Link>
+                  </div>
+                </div>
+              </motion.div>
+            )}
+
+            {activeDropdown === "about" && (
+              <motion.div
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 15 }}
+                className="absolute max-w-6xl mx-auto left-4 right-4 top-full mt-2 rounded-2xl shadow-2xl bg-brand-slate-950 border border-brand-slate-800/40 p-0 overflow-hidden grid grid-cols-12 z-50 text-left"
+              >
+                {/* Left Columns list */}
+                <div className="col-span-8 py-7 px-7 flex flex-col justify-center">
+                  <div className="grid grid-cols-2 gap-4">
+                    {aboutItems.map((item, idx) => {
+                      const icons = [
+                        <Milestone key="story" className="w-5 h-5 text-brand-terracotta-500" />,
+                        <Users key="lead" className="w-5 h-5 text-brand-terracotta-500" />,
+                        <Factory key="facility" className="w-5 h-5 text-brand-terracotta-500" />,
+                        <Award key="cert" className="w-5 h-5 text-brand-terracotta-500" />,
+                        <Landmark key="media" className="w-5 h-5 text-brand-terracotta-500" />,
+                        <Globe key="export" className="w-5 h-5 text-brand-terracotta-500" />,
+                        <Briefcase key="careers" className="w-5 h-5 text-brand-terracotta-500" />,
+                      ];
+                      return (
+                        <Link
+                          key={idx}
+                          href={item.href}
+                          onClick={() => setActiveDropdown(null)}
+                          className="flex gap-3 p-3 rounded-lg hover:bg-brand-slate-900/50 transition-colors group"
+                        >
+                          <div className="p-2.5 bg-brand-black border border-brand-gold/10 rounded-lg group-hover:border-brand-gold/45 transition-colors shrink-0 flex items-center justify-center h-fit">
+                            {icons[idx % icons.length]}
+                          </div>
+                          <div className="space-y-1">
+                            <h5 className="text-xs font-semibold text-brand-offwhite group-hover:text-brand-terracotta-500 transition-colors font-poppins">
+                              {item.name}
+                            </h5>
+                            <p className="text-[9px] font-poppins text-brand-sand/65 leading-relaxed">
+                              {item.desc}
+                            </p>
+                          </div>
+                        </Link>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* Right Column Callout */}
+                <div className="col-span-4 relative flex flex-col justify-between p-7 overflow-hidden border-l border-brand-slate-900">
+                  {/* Background Image */}
+                  <img
+                    src="/images/hero-5.jpg"
+                    alt="Historic Brick Kiln"
+                    className="absolute inset-0 w-full h-full object-cover opacity-25"
+                  />
+                  {/* Dark Vignette Overlay for readability */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-brand-slate-950 via-brand-slate-950/95 to-brand-slate-950/20 z-10" />
+
+                  {/* Content */}
+                  <div className="relative z-20 flex flex-col justify-between h-full space-y-6">
+                    <div className="space-y-2.5">
+                      <span className="text-[9px] tracking-[0.25em] font-bold text-brand-terracotta-500 uppercase block font-poppins">
+                        OUR STORY
+                      </span>
+                      <h4 className="text-xl font-normal font-cormorant text-brand-offwhite leading-tight">
+                        Earthen Heritage Since 1937
+                      </h4>
+                      <p className="text-[10px] font-poppins text-brand-sand/70 leading-relaxed max-w-[200px]">
+                        Blending traditional firing chemistry with European automation to build the next generations of civil structures.
+                      </p>
+                    </div>
+                    <Link
+                      href="/about"
+                      onClick={() => setActiveDropdown(null)}
+                      className="inline-flex items-center justify-center gap-1.5 bg-brand-terracotta-600 hover:bg-brand-terracotta-700 text-brand-offwhite px-4 py-2 text-xs font-bold uppercase tracking-wider transition-colors duration-300 font-poppins w-fit shadow-lg"
+                    >
+                      Read Story
+                      <ArrowRight className="w-3.5 h-3.5 text-brand-offwhite" />
                     </Link>
                   </div>
                 </div>
@@ -550,54 +710,86 @@ export const Header: React.FC<HeaderProps> = ({ darkMode, setDarkMode }) => {
             className="lg:hidden absolute top-full left-0 w-full bg-brand-slate-950 border-t border-brand-slate-800 px-6 py-6 flex flex-col gap-4 shadow-2xl z-50 max-h-[80vh] overflow-y-auto"
           >
             {/* Navigation links */}
-            <div className="flex flex-col gap-2">
-              <button
-                onClick={() => handleLinkClick("/products")}
-                className={`w-full text-left font-semibold py-2.5 px-3 rounded-lg hover:bg-brand-slate-900 transition-colors ${pathname.startsWith("/products") ? "text-brand-terracotta-500 bg-brand-slate-900/50 font-bold" : "text-brand-slate-200"}`}
-              >
-                View All Products
-              </button>
+            <div className="flex flex-col gap-3">
+              {/* Products */}
+              <div className="border-b border-brand-slate-800/40 pb-2">
+                <span className="text-[10px] uppercase font-bold text-brand-gold tracking-widest px-3 block mb-1">Products</span>
+                <button
+                  onClick={() => handleLinkClick("/products")}
+                  className="w-full text-left text-xs font-semibold py-1.5 px-3 rounded-lg text-brand-slate-200 hover:bg-brand-slate-900 transition-colors"
+                >
+                  All Products Catalog
+                </button>
+                <div className="pl-4 flex flex-col gap-1 mt-1">
+                  <button onClick={() => handleLinkClick("/products?category=Clay Bricks")} className="text-left text-[11px] text-brand-sand/70 py-1 hover:text-brand-gold transition-colors">Facing & Handmade Bricks</button>
+                  <button onClick={() => handleLinkClick("/products?category=Terracotta")} className="text-left text-[11px] text-brand-sand/70 py-1 hover:text-brand-gold transition-colors">Facades & Cladding</button>
+                  <button onClick={() => handleLinkClick("/products?category=Pavers")} className="text-left text-[11px] text-brand-sand/70 py-1 hover:text-brand-gold transition-colors">Flooring & Clay Pavers</button>
+                  <button onClick={() => handleLinkClick("/products?category=Roofing Tiles")} className="text-left text-[11px] text-brand-sand/70 py-1 hover:text-brand-gold transition-colors">Roofing Tiles</button>
+                  <button onClick={() => handleLinkClick("/products?category=Hollow Blocks")} className="text-left text-[11px] text-brand-sand/70 py-1 hover:text-brand-gold transition-colors">Hollow Blocks (Walling)</button>
+                  <button onClick={() => handleLinkClick("/products?category=Terraplasts")} className="text-left text-[11px] text-brand-sand/70 py-1 hover:text-brand-gold transition-colors">Terraplast Wall Finish</button>
+                </div>
+              </div>
+
+              {/* Projects */}
               <button
                 onClick={() => handleLinkClick("/projects")}
-                className={`w-full text-left font-semibold py-2.5 px-3 rounded-lg hover:bg-brand-slate-900 transition-colors ${pathname.startsWith("/projects") ? "text-brand-terracotta-500 bg-brand-slate-900/50 font-bold" : "text-brand-slate-200"}`}
+                className={`w-full text-left text-xs font-semibold py-2 px-3 rounded-lg hover:bg-brand-slate-900 transition-colors ${pathname.startsWith("/projects") ? "text-brand-terracotta-500 bg-brand-slate-900/50 font-bold" : "text-brand-slate-200"}`}
               >
                 Architectural Projects
               </button>
+
+              {/* Sustainability */}
+              <div className="border-b border-brand-slate-800/40 pb-2">
+                <span className="text-[10px] uppercase font-bold text-brand-gold tracking-widest px-3 block mb-1">Sustainability</span>
+                <div className="pl-4 flex flex-col gap-1 mt-1">
+                  <button onClick={() => handleLinkClick("/#sustainability")} className="text-left text-[11px] text-brand-sand/70 py-1 hover:text-brand-gold transition-colors">EPD Certification</button>
+                  <button onClick={() => handleLinkClick("/about#certifications")} className="text-left text-[11px] text-brand-sand/70 py-1 hover:text-brand-gold transition-colors">Certifications & Standards</button>
+                  <button onClick={() => handleLinkClick("/#sustainability")} className="text-left text-[11px] text-brand-sand/70 py-1 hover:text-brand-gold transition-colors">Environmental Commitments</button>
+                </div>
+              </div>
+
+              {/* Resources */}
+              <div className="border-b border-brand-slate-800/40 pb-2">
+                <span className="text-[10px] uppercase font-bold text-brand-gold tracking-widest px-3 block mb-1">Resources</span>
+                <div className="pl-4 flex flex-col gap-1 mt-1">
+                  <button onClick={() => handleLinkClick("/resources")} className="text-left text-[11px] text-brand-sand/70 py-1 hover:text-brand-gold transition-colors">Installation Guides & Help</button>
+                  <button onClick={() => handleLinkClick("/calculators")} className="text-left text-[11px] text-brand-sand/70 py-1 hover:text-brand-gold transition-colors">Calculators & Estimators</button>
+                  <button onClick={() => handleLinkClick("/#blogs")} className="text-left text-[11px] text-brand-sand/70 py-1 hover:text-brand-gold transition-colors">Blog & News</button>
+                </div>
+              </div>
+
+              {/* About */}
+              <div className="border-b border-brand-slate-800/40 pb-2">
+                <span className="text-[10px] uppercase font-bold text-brand-gold tracking-widest px-3 block mb-1">About</span>
+                <div className="pl-4 flex flex-col gap-1 mt-1">
+                  <button onClick={() => handleLinkClick("/about#why-pcp")} className="text-left text-[11px] text-brand-sand/70 py-1 hover:text-brand-gold transition-colors">Our Story (Est. 1937)</button>
+                  <button onClick={() => handleLinkClick("/about#leadership")} className="text-left text-[11px] text-brand-sand/70 py-1 hover:text-brand-gold transition-colors">Leadership & Directors</button>
+                  <button onClick={() => handleLinkClick("/about#process")} className="text-left text-[11px] text-brand-sand/70 py-1 hover:text-brand-gold transition-colors">Manufacturing Facility</button>
+                </div>
+              </div>
+
+              {/* Where to Buy */}
               <button
-                onClick={() => handleLinkClick("/calculators")}
-                className={`w-full text-left font-semibold py-2.5 px-3 rounded-lg hover:bg-brand-slate-900 transition-colors ${pathname.startsWith("/calculators") ? "text-brand-terracotta-500 bg-brand-slate-900/50 font-bold" : "text-brand-slate-200"}`}
+                onClick={() => handleLinkClick("#dealers")}
+                className="w-full text-left text-xs font-semibold py-2 px-3 rounded-lg text-brand-slate-200 hover:bg-brand-slate-900 transition-colors"
               >
-                Material Calculators
+                Where to Buy
               </button>
+
+              {/* Media Coverage */}
               <button
-                onClick={() => handleLinkClick("#recommender")}
-                className="w-full text-left font-semibold text-brand-slate-200 py-2.5 px-3 rounded-lg hover:bg-brand-slate-900 transition-colors"
+                onClick={() => handleLinkClick("/resources?type=media")}
+                className="w-full text-left text-xs font-semibold py-2 px-3 rounded-lg text-brand-slate-200 hover:bg-brand-slate-900 transition-colors"
               >
-                Material Recommendation Quiz
+                Media Coverage
               </button>
+
+              {/* In the News */}
               <button
-                onClick={() => handleLinkClick("/resources")}
-                className={`w-full text-left font-semibold py-2.5 px-3 rounded-lg hover:bg-brand-slate-900 transition-colors ${pathname.startsWith("/resources") ? "text-brand-terracotta-500 bg-brand-slate-900/50 font-bold" : "text-brand-slate-200"}`}
+                onClick={() => handleLinkClick("/resources?type=news")}
+                className="w-full text-left text-xs font-semibold py-2 px-3 rounded-lg text-brand-slate-200 hover:bg-brand-slate-900 transition-colors"
               >
-                BIM / CAD Resource Center
-              </button>
-              <button
-                onClick={() => handleLinkClick("#sustainability")}
-                className="w-full text-left font-semibold text-brand-slate-200 py-2.5 px-3 rounded-lg hover:bg-brand-slate-900 transition-colors"
-              >
-                Sustainability Programs
-              </button>
-              <button
-                onClick={() => handleLinkClick("/about")}
-                className={`w-full text-left font-semibold py-2.5 px-3 rounded-lg hover:bg-brand-slate-900 transition-colors ${pathname.startsWith("/about") ? "text-brand-terracotta-500 bg-brand-slate-900/50 font-bold" : "text-brand-slate-200"}`}
-              >
-                About PCP India
-              </button>
-              <button
-                onClick={() => handleLinkClick("/contact")}
-                className={`w-full text-left font-semibold py-2.5 px-3 rounded-lg hover:bg-brand-slate-900 transition-colors ${pathname.startsWith("/contact") ? "text-brand-terracotta-500 bg-brand-slate-900/50 font-bold" : "text-brand-slate-200"}`}
-              >
-                Contact & Dealer Enquiry
+                In the News
               </button>
             </div>
 
@@ -613,4 +805,4 @@ export const Header: React.FC<HeaderProps> = ({ darkMode, setDarkMode }) => {
       </AnimatePresence>
     </header>
   );
-};
+}

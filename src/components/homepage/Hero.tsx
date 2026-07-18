@@ -215,7 +215,7 @@ export const Hero: React.FC<HeroProps> = ({ darkMode = true }) => {
             variants={blockVariants}
             className="text-xs sm:text-sm md:text-base font-poppins text-brand-slate-200/90 max-w-xl leading-relaxed mb-12"
           >
-            Crafting high-performance building materials, heavy-duty paving units, and clay facades designed for next-generation architectural projects since 1983.
+            Engineering premium structural envelopes with EPD-certified fired clay bricks, terracotta facades, and high-performance walling systems since 1937.
           </motion.p>
 
           {/* Staggered CTA Buttons */}
@@ -224,17 +224,17 @@ export const Hero: React.FC<HeroProps> = ({ darkMode = true }) => {
             className="flex flex-wrap items-center justify-start gap-6"
           >
             <button
-              onClick={() => handleScrollTo("#categories")}
-              className="bg-brand-gold hover:bg-brand-sand text-brand-black font-semibold tracking-[0.2em] font-poppins uppercase text-xs px-8 py-4 border border-brand-gold transition-colors cursor-pointer"
+              onClick={() => handleScrollTo("#products-range")}
+              className="bg-brand-gold hover:bg-brand-sand text-brand-black font-semibold tracking-[0.2em] font-poppins uppercase text-xs px-8 py-4 border border-brand-gold transition-all duration-300 cursor-pointer hover:shadow-lg hover:shadow-brand-gold/20"
             >
               Explore Products
             </button>
 
             <button
-              onClick={() => handleScrollTo("#projects")}
-              className="bg-transparent hover:bg-brand-gold/5 text-brand-slate-100 hover:text-brand-black tracking-[0.2em] font-poppins uppercase text-xs px-8 py-4 border border-brand-slate-200/40 hover:border-brand-gold transition-colors cursor-pointer"
+              onClick={() => handleScrollTo("#sustainability-strip")}
+              className="bg-transparent hover:bg-brand-gold/5 text-brand-slate-100 hover:text-brand-gold tracking-[0.2em] font-poppins uppercase text-xs px-8 py-4 border border-brand-slate-200/40 hover:border-brand-gold transition-all duration-300 cursor-pointer"
             >
-              View Projects
+              EPD Certified
             </button>
           </motion.div>
         </motion.div>
