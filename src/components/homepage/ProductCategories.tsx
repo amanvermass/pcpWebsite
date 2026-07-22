@@ -158,13 +158,13 @@ export const ProductCategories: React.FC = () => {
     {
       title: "Clay Hollow Bricks",
       desc: "High-performance multi-chambered thermal hollow blocks for load-bearing and partition walls.",
-      image: "/images/hero-3.jpg",
+      image: "/images/products/clay-hollow-bricks.jpg",
       link: "/products?category=Hollow Blocks"
     },
     {
       title: "Handmade bricks",
       desc: "Hand-crafted rustic facing bricks combining historic heritage texture with structural durability.",
-      image: "/images/hero-5.jpg",
+      image: "/images/products/handmade-bricks.jpg",
       link: "/products?category=Handmade Bricks"
     },
     {
@@ -182,13 +182,13 @@ export const ProductCategories: React.FC = () => {
     {
       title: "Extruded Wirecut",
       desc: "Precision wirecut facing bricks with high compressive strength and low water absorption.",
-      image: "/images/hero-1.jpg",
+      image: "/images/products/extruded-wirecut.jpg",
       link: "/products?category=Clay Bricks"
     },
     {
       title: "Clay Pavers",
       desc: "Heavy-load vitrified clay paving units designed for pedestrian walkways and public plazas.",
-      image: "/images/hero-4.jpg",
+      image: "/images/products/clay-pavers.jpg",
       link: "/products?category=Pavers"
     }
   ];

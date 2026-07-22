@@ -14,25 +14,25 @@ export const SustainabilityStrip: React.FC = () => {
       badge: "EPD",
       title: "Environmental Product Declaration",
       authority: "Third-party audited LCA footprint details",
-      icon: <Leaf className="w-5 h-5 text-brand-gold" />
+      image: "/images/certifications/logo-epd.jpg"
     },
     {
       badge: "GRIHA",
       title: "Green Building Star Ratings",
       authority: "Certified low thermal conductivity masonry",
-      icon: <Landmark className="w-5 h-5 text-brand-gold" />
+      image: "/images/certifications/logo-griha.jpg"
     },
     {
-      badge: "ISO 14001:2015",
-      title: "Environmental Management System",
-      authority: "Closed-loop factory recycling & waste reduction",
-      icon: <ShieldCheck className="w-5 h-5 text-brand-gold" />
+      badge: "ISO 9001",
+      title: "Quality Management & Audits",
+      authority: "ISO 9001:2015 certified factory standards",
+      image: "/images/certifications/logo-iso.png"
     },
     {
-      badge: "UKCA / CE",
-      title: "Structural Conformity Details",
-      authority: "Compliant for UK and European imports",
-      icon: <ShieldCheck className="w-5 h-5 text-brand-gold" />
+      badge: "SUSTAINABLE",
+      title: "Green Building Materials",
+      authority: "Suitable for IGBC, LEED, and GRIHA ratings",
+      image: "/images/certifications/logo-sustainability.png"
     }
   ];
 
@@ -77,8 +77,12 @@ export const SustainabilityStrip: React.FC = () => {
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 className="flex gap-4 p-5 bg-brand-slate-950 border border-brand-slate-900 hover:border-brand-gold/20 rounded-none transition-all group"
               >
-                <div className="p-3 bg-brand-black border border-brand-gold/10 rounded-lg group-hover:border-brand-gold/45 transition-colors shrink-0 h-fit">
-                  {cert.icon}
+                <div className="w-16 h-16 bg-white p-1 rounded-none flex items-center justify-center shrink-0 border border-brand-gold/15 group-hover:border-brand-gold/45 transition-colors">
+                  <img
+                    src={cert.image}
+                    alt={cert.title}
+                    className="w-full h-full object-contain filter contrast-105 group-hover:scale-105 transition-transform duration-300"
+                  />
                 </div>
                 <div className="space-y-1">
                   <div className="flex items-center gap-2">

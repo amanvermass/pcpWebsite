@@ -129,19 +129,22 @@ export const Footer: React.FC = () => {
               </p>
               
               {/* Technical / Certification credentials */}
-              <div className="flex flex-wrap gap-2 mt-6">
-                <span className="text-[7px] font-bold tracking-widest uppercase border border-brand-terracotta/30 text-brand-terracotta px-2 py-0.5 font-poppins">
-                  EPD CERTIFIED
-                </span>
-                <span className="text-[7px] font-bold tracking-widest uppercase border border-brand-terracotta/30 text-brand-terracotta px-2 py-0.5 font-poppins">
-                  GRIHA LISTED
-                </span>
-                <span className="text-[7px] font-bold tracking-widest uppercase border border-brand-terracotta/30 text-brand-terracotta px-2 py-0.5 font-poppins">
-                  ISO 14001
-                </span>
-                <span className="text-[7px] font-bold tracking-widest uppercase border border-brand-terracotta/30 text-brand-terracotta px-2 py-0.5 font-poppins">
-                  UKCA COMPLIANT
-                </span>
+              <div className="flex flex-wrap items-center gap-3 mt-6">
+                <div className="w-10 h-10 bg-white p-1 rounded-none flex items-center justify-center shrink-0 border border-brand-slate-800/10">
+                  <img src="/images/certifications/logo-epd.jpg" alt="EPD Certified" className="w-full h-full object-contain" />
+                </div>
+                <div className="w-10 h-10 bg-white p-1 rounded-none flex items-center justify-center shrink-0 border border-brand-slate-800/10">
+                  <img src="/images/certifications/logo-griha.jpg" alt="GRIHA Listed" className="w-full h-full object-contain" />
+                </div>
+                <div className="w-10 h-10 bg-white p-1 rounded-none flex items-center justify-center shrink-0 border border-brand-slate-800/10">
+                  <img src="/images/certifications/logo-iso.png" alt="ISO Certified" className="w-full h-full object-contain" />
+                </div>
+                <div className="w-10 h-10 bg-white p-1 rounded-none flex items-center justify-center shrink-0 border border-brand-slate-800/10">
+                  <img src="/images/certifications/logo-makeinindia.png" alt="Make in India" className="w-full h-full object-contain" />
+                </div>
+                <div className="w-10 h-10 bg-white p-1 rounded-none flex items-center justify-center shrink-0 border border-brand-slate-800/10">
+                  <img src="/images/certifications/logo-sustainability.png" alt="Sustainability" className="w-full h-full object-contain" />
+                </div>
               </div>
             </div>
             

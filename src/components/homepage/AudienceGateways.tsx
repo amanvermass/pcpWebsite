@@ -22,7 +22,7 @@ export const AudienceGateways: React.FC = () => {
     {
       title: "Architects & Consultants",
       subtitle: "High-performance clay solutions to bring your vision to life.",
-      image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=600&q=80",
+      image: "/images/hero-1.jpg",
       icon: <Compass className="w-5 h-5 text-brand-terracotta-500" />,
       checklist: [
         "Detailed product specifications",
@@ -36,7 +36,7 @@ export const AudienceGateways: React.FC = () => {
     {
       title: "Developers & Institutions",
       subtitle: "Reliable products, timely delivery and long-term performance.",
-      image: "https://images.unsplash.com/photo-1541888946425-d0fbb186a5b7?auto=format&fit=crop&w=600&q=80",
+      image: "/images/cladding-showcase.jpg",
       icon: <Building2 className="w-5 h-5 text-brand-terracotta-500" />,
       checklist: [
         "Bulk order & supply assurance",
@@ -50,7 +50,7 @@ export const AudienceGateways: React.FC = () => {
     {
       title: "Export Buyers",
       subtitle: "Globally trusted clay products from India to the world.",
-      image: "https://images.unsplash.com/photo-1518241353330-0f7941c2d9b5?auto=format&fit=crop&w=600&q=80",
+      image: "/images/hero-4.jpg",
       icon: <Globe className="w-5 h-5 text-brand-terracotta-500" />,
       checklist: [
         "International quality standards",
@@ -64,7 +64,7 @@ export const AudienceGateways: React.FC = () => {
     {
       title: "Dealers & Distributors",
       subtitle: "Grow with a brand that builds trust and delivers value.",
-      image: "/images/hero-2.jpg",
+      image: "/images/legacy-heritage.jpg",
       icon: <Handshake className="w-5 h-5 text-brand-terracotta-500" />,
       checklist: [
         "Attractive dealership opportunities",
