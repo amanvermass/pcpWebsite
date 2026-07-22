@@ -26,8 +26,8 @@ export const CompanyIntro: React.FC = () => {
           >
             <ImageReveal>
               <img
-                src="/images/hero-4.jpg"
-                alt="Prayag Clay Productions automated factory floor"
+                src="/images/legacy-heritage.jpg"
+                alt="Prayag Clay Products showroom and specification team"
                 className="w-full h-full object-cover"
               />
             </ImageReveal>

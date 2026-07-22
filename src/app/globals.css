@@ -344,3 +344,25 @@ input,
 .text-cream-force h6 {
   color: #faf6f2 !important;
 }
+
+/* Premium Custom Scrollbar for Dealer Listings */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 5px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(206, 148, 86, 0.03);
+  border-radius: 0px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(206, 148, 86, 0.25);
+  border-radius: 0px;
+  transition: background 0.2s ease;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(206, 148, 86, 0.5);
+}
+/* Firefox scrollbar support */
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(206, 148, 86, 0.25) rgba(206, 148, 86, 0.03);
+}

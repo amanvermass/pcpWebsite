@@ -8,7 +8,7 @@ import { EcothermFeature } from "@/components/homepage/EcothermFeature";
 import { SustainabilityStrip } from "@/components/homepage/SustainabilityStrip";
 import { ProductCategories } from "@/components/homepage/ProductCategories";
 import { AudienceGateways } from "@/components/homepage/AudienceGateways";
-import { ManufacturingExcellence } from "@/components/homepage/ManufacturingExcellence";
+
 import { Projects } from "@/components/homepage/Projects";
 import { CalculatorsTeaser } from "@/components/homepage/CalculatorsTeaser";
 import { DealerLocator } from "@/components/homepage/DealerLocator";
@@ -45,10 +45,7 @@ export default function Home() {
           <CompanyIntro />
         </ScrollReveal>
         
-        {/* Section 2 Stats Complement: Manufacturing Excellence (Counters) */}
-        <ScrollReveal>
-          <ManufacturingExcellence />
-        </ScrollReveal>
+
 
         {/* Section 3: Ecotherm Feature (Hero Product) */}
         <ScrollReveal>

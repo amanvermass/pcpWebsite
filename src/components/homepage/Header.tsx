@@ -143,30 +143,28 @@ export const Header: React.FC<HeaderProps> = ({ darkMode, setDarkMode }) => {
 
   const productMenu = {
     categories: [
-      { name: "Ecotherm Clay Hollow Blocks", href: "/products?category=Hollow Blocks", icon: <HollowBlockIcon className="w-4 h-4" /> },
-      { name: "Structural Walling", href: "/products?category=Hollow Blocks", icon: <Building2 className="w-4 h-4" /> },
+      { name: "Clay Hollow Blocks", href: "/products?category=Hollow Blocks", icon: <HollowBlockIcon className="w-4 h-4" /> },
       { name: "Facing Bricks (Extruded)", href: "/products?category=Clay Bricks", icon: <FacadeIcon className="w-4 h-4" /> },
-      { name: "Traditional Handmade Bricks", href: "/products?category=Clay Bricks", icon: <FacadeIcon className="w-4 h-4" /> },
+      { name: "Handmade Bricks", href: "/products?category=Clay Bricks", icon: <FacadeIcon className="w-4 h-4" /> },
       { name: "Linea Handmade Series", href: "/products?category=Clay Bricks", icon: <FacadeIcon className="w-4 h-4" /> },
       { name: "Cladding Bricks & Tiles", href: "/products?category=Terracotta", icon: <FacadeIcon className="w-4 h-4" /> },
       { name: "Clay Pavers", href: "/products?category=Pavers", icon: <PaversIcon className="w-4 h-4" /> },
       { name: "Roofing Tiles", href: "/products?category=Roofing Tiles", icon: <RoofingIcon className="w-4 h-4" /> },
-      { name: "Terraplast", href: "/products?category=Terraplasts", icon: <AACBlockIcon className="w-4 h-4" />, isNew: true },
-      { name: "Domestic Series", href: "/products?series=domestic", icon: <ConsumerIcon className="w-4 h-4" /> }
-    ],
+      { name: "Terraplast", href: "/products?category=Terraplasts", icon: <AACBlockIcon className="w-4 h-4" /> }
+    ] as { name: string; href: string; icon: React.ReactNode; isNew?: boolean }[],
     downloads: [
       { name: "TDS", label: "Technical Data Sheets", href: "/resources?type=Technical Datasheet", icon: <FileText className="w-5 h-5" /> },
       { name: "BIM", label: "Building Information Modeling", href: "/resources?type=BIM Revit Object", icon: <Layers className="w-5 h-5" /> },
       { name: "CAD", label: "CAD Drawings & Details", href: "/resources?type=CAD Detail", icon: <LayoutGrid className="w-5 h-5" /> }
     ],
     applications: [
+      { name: "Structural Walling", href: "/products?category=Hollow Blocks", icon: <Building2 className="w-4 h-4" /> },
       { name: "Facades & Cladding", href: "/products?category=Terracotta", icon: <FacadeIcon className="w-4 h-4" /> },
       { name: "Flooring & Paving", href: "/products?category=Pavers", icon: <PaversIcon className="w-4 h-4" /> },
       { name: "Roofing", href: "/products?category=Roofing Tiles", icon: <RoofingIcon className="w-4 h-4" /> },
-      { name: "Interior Wall Finish ", highlightSuffix: "(Terraplast)", href: "/products?category=Terraplasts", icon: <AACBlockIcon className="w-4 h-4" /> },
-      { name: "Sustainable Building", href: "/#sustainability", icon: <Leaf className="w-4 h-4" /> },
-      { name: "Construction Products", href: "/products", icon: <Hammer className="w-4 h-4" />, isComingSoon: true }
-    ]
+      { name: "Interior Wall Finish (Terraplast)", href: "/products?category=Terraplasts", icon: <AACBlockIcon className="w-4 h-4" /> },
+      { name: "Sustainable Building", href: "/#sustainability-strip", icon: <Leaf className="w-4 h-4" /> }
+    ] as { name: string; href: string; icon: React.ReactNode; highlightSuffix?: string; isComingSoon?: boolean }[]
   };
 
   const sustainabilityItems = [
@@ -276,8 +274,8 @@ export const Header: React.FC<HeaderProps> = ({ darkMode, setDarkMode }) => {
 
               {/* Where to Buy */}
               <button
-                onClick={() => handleLinkClick("#dealers")}
-                className={`text-xs xl:text-[13px] font-semibold transition-colors py-2 cursor-pointer ${pathname.includes("#dealers") ? "text-brand-terracotta-500" : "text-brand-slate-200 hover:text-brand-terracotta-500"}`}
+                onClick={() => handleLinkClick("/where-to-buy")}
+                className={`text-xs xl:text-[13px] font-semibold transition-colors py-2 cursor-pointer ${pathname.startsWith("/where-to-buy") ? "text-brand-terracotta-500" : "text-brand-slate-200 hover:text-brand-terracotta-500"}`}
               >
                 Where to Buy
               </button>
@@ -770,7 +768,7 @@ export const Header: React.FC<HeaderProps> = ({ darkMode, setDarkMode }) => {
 
               {/* Where to Buy */}
               <button
-                onClick={() => handleLinkClick("#dealers")}
+                onClick={() => handleLinkClick("/where-to-buy")}
                 className="w-full text-left text-xs font-semibold py-2 px-3 rounded-lg text-brand-slate-200 hover:bg-brand-slate-900 transition-colors"
               >
                 Where to Buy
