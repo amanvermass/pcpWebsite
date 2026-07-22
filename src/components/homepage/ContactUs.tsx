@@ -65,8 +65,8 @@ export const ContactUs: React.FC = () => {
   };
 
   const handleWhatsAppChat = () => {
-    const text = encodeURIComponent("Hello Prayag Clay Productions! I would like to inquire about product catalog availability.");
-    window.open(`https://wa.me/911205550180?text=${text}`, "_blank");
+    const text = encodeURIComponent("Hello Prayag Clay Products! I would like to inquire about product catalog availability.");
+    window.open(`https://wa.me/919936011176?text=${text}`, "_blank");
   };
 
   return (
@@ -116,7 +116,7 @@ export const ContactUs: React.FC = () => {
                 </div>
                 <div>
                   <span className="block text-[9px] text-brand-sand/50 uppercase font-bold font-poppins">National Hotlines</span>
-                  <span className="text-xs font-semibold text-brand-offwhite font-poppins">+91 120 555 0180 | +91 11 555 0177</span>
+                  <span className="text-xs font-semibold text-brand-offwhite font-poppins">+91 99360 11176 | +91 99355 34218</span>
                 </div>
               </div>
 
@@ -126,7 +126,7 @@ export const ContactUs: React.FC = () => {
                 </div>
                 <div>
                   <span className="block text-[9px] text-brand-sand/50 uppercase font-bold font-poppins">Technical Help Desk</span>
-                  <span className="text-xs font-semibold text-brand-offwhite font-poppins">support@prayagclay.com | estimating@prayagclay.com</span>
+                  <span className="text-xs font-semibold text-brand-offwhite font-poppins font-mono">info@pcpindia.com | export@pcpindia.com</span>
                 </div>
               </div>
 
@@ -135,8 +135,8 @@ export const ContactUs: React.FC = () => {
                   <Building className="w-5 h-5" />
                 </div>
                 <div>
-                  <span className="block text-[9px] text-brand-sand/50 uppercase font-bold font-poppins">Corporate Offices</span>
-                  <span className="text-xs font-semibold text-brand-offwhite font-poppins">Sector 62, Noida, Uttar Pradesh, India</span>
+                  <span className="block text-[9px] text-brand-sand/50 uppercase font-bold font-poppins">Varanasi HQ & Noida Sales Office</span>
+                  <span className="text-xs font-semibold text-brand-offwhite font-poppins leading-relaxed">Hariharpur, Shivpur, Varanasi | Sector 62, Noida</span>
                 </div>
               </div>
             </div>

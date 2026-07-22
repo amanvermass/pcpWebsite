@@ -131,7 +131,7 @@ export const Footer: React.FC = () => {
               {/* Technical / Certification credentials */}
               <div className="flex flex-wrap items-center gap-3 mt-6">
                 <div className="w-10 h-10 bg-white p-1 rounded-none flex items-center justify-center shrink-0 border border-brand-slate-800/10">
-                  <img src="/images/certifications/logo-epd.jpg" alt="EPD Certified" className="w-full h-full object-contain" />
+                  <img src="/images/certifications/logo-epd.png" alt="EPD Certified" className="w-full h-full object-contain" />
                 </div>
                 <div className="w-10 h-10 bg-white p-1 rounded-none flex items-center justify-center shrink-0 border border-brand-slate-800/10">
                   <img src="/images/certifications/logo-griha.jpg" alt="GRIHA Listed" className="w-full h-full object-contain" />

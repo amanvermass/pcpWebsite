@@ -14,7 +14,7 @@ export const SustainabilityStrip: React.FC = () => {
       badge: "EPD",
       title: "Environmental Product Declaration",
       authority: "Third-party audited LCA footprint details",
-      image: "/images/certifications/logo-epd.jpg"
+      image: "/images/certifications/logo-epd.png"
     },
     {
       badge: "GRIHA",
