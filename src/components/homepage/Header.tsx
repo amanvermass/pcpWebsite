@@ -162,7 +162,7 @@ export const Header: React.FC<HeaderProps> = ({ darkMode, setDarkMode }) => {
       { name: "Facades & Cladding", href: "/products?category=Terracotta", icon: <FacadeIcon className="w-4 h-4" /> },
       { name: "Flooring & Paving", href: "/products?category=Pavers", icon: <PaversIcon className="w-4 h-4" /> },
       { name: "Roofing", href: "/products?category=Roofing Tiles", icon: <RoofingIcon className="w-4 h-4" /> },
-      { name: "Interior Wall Finish (Terraplast)", href: "/products?category=Terraplasts", icon: <AACBlockIcon className="w-4 h-4" /> },
+      { name: "Clay Plaster (Terraplast)", href: "/products?category=Terraplasts", icon: <AACBlockIcon className="w-4 h-4" /> },
       { name: "Sustainable Building", href: "/#sustainability-strip", icon: <Leaf className="w-4 h-4" /> }
     ] as { name: string; href: string; icon: React.ReactNode; highlightSuffix?: string; isComingSoon?: boolean }[]
   };

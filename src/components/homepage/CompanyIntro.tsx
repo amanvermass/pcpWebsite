@@ -72,7 +72,7 @@ export const CompanyIntro: React.FC = () => {
               transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
               className="text-3xl sm:text-4xl lg:text-5xl font-normal font-cormorant text-brand-offwhite leading-tight"
             >
-              Three Generations of Badlani Leadership
+              Three Generations of Clay Craftsmanship
             </motion.h2>
 
             <motion.p 
@@ -81,7 +81,7 @@ export const CompanyIntro: React.FC = () => {
               transition={{ duration: 0.8, delay: 0.2 }}
               className="text-xs sm:text-sm font-poppins text-brand-sand/80 leading-relaxed"
             >
-              Founded in Varanasi in 1937, Prayag Clay Products (PCP) is built on an eighty-year history of structural craftsmanship. Today, under the third generation of the Badlani family, we merge traditional chemistry with European tunnel-kiln automation to deliver certified high-performance masonry solutions.
+              Founded in Varanasi in 1937, Prayag Clay Products (PCP) is built on an eighty-year history of structural craftsmanship. Today, we merge traditional chemistry with European tunnel-kiln automation to deliver certified high-performance masonry solutions.
             </motion.p>
 
             {/* Legacy Stats Strip */}

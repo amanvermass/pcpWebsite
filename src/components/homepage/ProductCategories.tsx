@@ -156,34 +156,40 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ title, desc, image, link, i
 export const ProductCategories: React.FC = () => {
   const categories = [
     {
-      title: "Bricks",
-      desc: "Premium terracotta facing bricks fired at high temperatures for facades.",
-      image: "/images/hero-1.jpg",
-      link: "/products?category=Clay Bricks"
-    },
-    {
-      title: "Pavers",
-      desc: "Heavy-load paving units designed for industrial public walkways.",
-      image: "/images/hero-4.jpg",
-      link: "/products?category=Pavers"
-    },
-    {
-      title: "Terraplasts",
-      desc: "Thermal-insulating lightweight autoclaved cellular structural blocks.",
-      image: "/images/hero-2.jpg",
-      link: "/products?category=Terraplasts"
-    },
-    {
-      title: "Cladding",
-      desc: "Organic fly-ash dense engineering bricks for structural columns.",
+      title: "Clay Hollow Bricks",
+      desc: "High-performance multi-chambered thermal hollow blocks for load-bearing and partition walls.",
       image: "/images/hero-3.jpg",
       link: "/products?category=Hollow Blocks"
     },
     {
-      title: "Construction Products",
-      desc: "Ventilated terracotta grids and custom concrete layout designs.",
+      title: "Handmade bricks",
+      desc: "Hand-crafted rustic facing bricks combining historic heritage texture with structural durability.",
       image: "/images/hero-5.jpg",
-      link: "/products"
+      link: "/products?category=Handmade Bricks"
+    },
+    {
+      title: "Terraplast",
+      desc: "Earthy plasters and lightweight insulating materials available in 22+ bespoke tones.",
+      image: "/images/ecotherm-hollow.jpg",
+      link: "/products?category=Terraplasts"
+    },
+    {
+      title: "Cladding Bricks & Tiles",
+      desc: "Premium visual cladding solutions for modern, weather-resistant building envelopes.",
+      image: "/images/cladding-showcase.jpg",
+      link: "/products?category=Cladding Tiles"
+    },
+    {
+      title: "Extruded Wirecut",
+      desc: "Precision wirecut facing bricks with high compressive strength and low water absorption.",
+      image: "/images/hero-1.jpg",
+      link: "/products?category=Clay Bricks"
+    },
+    {
+      title: "Clay Pavers",
+      desc: "Heavy-load vitrified clay paving units designed for pedestrian walkways and public plazas.",
+      image: "/images/hero-4.jpg",
+      link: "/products?category=Pavers"
     }
   ];
 
@@ -205,7 +211,7 @@ export const ProductCategories: React.FC = () => {
         </div>
 
         {/* Categories Flex Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {categories.map((cat, idx) => (
             <CategoryCard
               key={idx}

@@ -351,16 +351,7 @@ export const DealerLocator: React.FC = () => {
     return matchesState && matchesCity && matchesQuery;
   });
 
-  const handleGetDirections = (dealer: Dealer) => {
-    if (dealer.mapUrl) {
-      window.open(dealer.mapUrl, "_blank");
-    } else {
-      const searchUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-        dealer.name + ", " + dealer.address
-      )}`;
-      window.open(searchUrl, "_blank");
-    }
-  };
+
 
   return (
     <section id="dealers" className="py-16 md:py-20 lg:py-24 bg-transparent relative">
@@ -484,6 +475,27 @@ export const DealerLocator: React.FC = () => {
                         </span>
                       )}
                     </div>
+                    {selectedDealer?.id === d.id && (
+                      <div className="mt-3 pt-3 border-t border-brand-gold/10 flex flex-col gap-2">
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation(); // Prevent toggling selection
+                            if (d.mapUrl) {
+                              window.open(d.mapUrl, "_blank", "noopener,noreferrer");
+                            } else {
+                              const searchUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+                                d.name + ", " + d.address
+                              )}`;
+                              window.open(searchUrl, "_blank", "noopener,noreferrer");
+                            }
+                          }}
+                          className="w-full bg-brand-gold hover:bg-brand-sand text-brand-black py-2.5 text-[9px] uppercase font-poppins font-bold tracking-[0.15em] transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
+                        >
+                          <Navigation className="w-3 h-3.5 fill-current" />
+                          Locate Us
+                        </button>
+                      </div>
+                    )}
                   </div>
                 ))
               )}
@@ -491,90 +503,32 @@ export const DealerLocator: React.FC = () => {
 
           </div>
 
-          {/* Map and Details display column */}
+           {/* Map and Details display column */}
           <div className="lg:col-span-7 bg-brand-charcoal border border-brand-gold/10 rounded-none p-5 flex flex-col justify-between relative overflow-hidden min-h-[480px]">
             <div className="absolute inset-0 bg-brand-slate-900/10 z-0" />
 
             <div className="relative z-10 w-full flex justify-between items-center pb-3 border-b border-brand-gold/10 shrink-0">
               <span className="text-[10px] font-bold text-brand-slate-300 uppercase tracking-widest flex items-center gap-1.5 font-poppins">
                 <Compass className="w-3.5 h-3.5 text-brand-gold shrink-0 animate-spin-slow" />
-                {selectedDealer ? `${selectedDealer.name} Location` : "Distribution Coverage Map (India)"}
+                Distribution Coverage Map (India)
               </span>
-              {selectedDealer && (
-                <button
-                  onClick={() => setSelectedDealer(null)}
-                  className="text-[9px] bg-brand-gold/10 hover:bg-brand-gold/20 text-brand-gold px-2.5 py-1 border border-brand-gold/30 font-bold uppercase tracking-widest font-poppins flex items-center gap-1 cursor-pointer transition-colors"
-                >
-                  <ArrowLeft className="w-3 h-3" />
-                  India Map
-                </button>
-              )}
             </div>
 
-            {/* Content Display: Interactive Map vs Google Iframe */}
+            {/* Content Display: Always Static India Map */}
             <div className="relative flex-grow flex items-center justify-center w-full min-h-[360px] z-10 py-6">
-              {selectedDealer && selectedDealer.mapIframe ? (
-                /* Google Map Embed Mode */
-                <div className="w-full h-full min-h-[340px] border border-brand-gold/20 relative animate-fade-in">
-                  <iframe
-                    src={selectedDealer.mapIframe}
-                    width="100%"
-                    height="100%"
-                    className="absolute inset-0 border-0 bg-brand-slate-950"
-                    allowFullScreen={false}
-                    loading="lazy"
-                    referrerPolicy="no-referrer-when-downgrade"
-                  ></iframe>
-                </div>
-              ) : selectedDealer ? (
-                /* Detail Fallback Card Mode */
-                <div className="max-w-md w-full bg-brand-black/40 border border-brand-gold/10 p-6 text-left flex flex-col justify-between gap-5 animate-fade-in">
-                  <div className="space-y-4">
-                    <div className="flex items-center gap-2 text-brand-gold">
-                      <Building2 className="w-5 h-5 shrink-0" />
-                      <span className="text-[10px] font-bold tracking-widest uppercase">{selectedDealer.city} Distributor Node</span>
-                    </div>
-                    <h3 className="font-normal font-cormorant text-2xl text-brand-offwhite leading-snug">{selectedDealer.name}</h3>
-                    <p className="text-xs text-brand-slate-300 leading-relaxed mt-2">{selectedDealer.address}</p>
-                    
-                    <div className="space-y-2 text-xs text-brand-slate-300 pt-3 border-t border-brand-gold/5">
-                      <div className="flex items-center gap-2">
-                        <Phone className="w-4 h-4 text-brand-gold shrink-0" />
-                        <span>{selectedDealer.phone}</span>
-                      </div>
-                      {selectedDealer.email && (
-                        <div className="flex items-center gap-2">
-                          <Mail className="w-4 h-4 text-brand-gold shrink-0" />
-                          <a href={`mailto:${selectedDealer.email}`} className="hover:text-brand-gold underline transition-colors">{selectedDealer.email}</a>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-
-                  <button
-                    onClick={() => handleGetDirections(selectedDealer)}
-                    className="w-full bg-brand-gold hover:bg-brand-sand text-brand-black py-3 rounded-none text-xs uppercase font-poppins font-bold tracking-[0.2em] transition-colors flex items-center justify-center gap-2 cursor-pointer"
-                  >
-                    <Navigation className="w-4 h-4" />
-                    Open Google Directions
-                  </button>
-                </div>
-              ) : (
-                /* India Map Mode */
-                <div className="relative w-full h-full max-w-[550px] aspect-[989/910] flex items-center justify-center overflow-hidden select-none animate-fade-in">
-                  {/* Visual India Map Image extracted from live site */}
-                  <img
-                    src="/images/map.jpg"
-                    className="w-full h-full object-contain opacity-100 transition-opacity duration-300 pointer-events-none border border-brand-gold/20 bg-brand-black/40"
-                    alt="India Distribution Map"
-                  />
-                </div>
-              )}
+              <div className="relative w-full h-full max-w-[550px] aspect-[989/910] flex items-center justify-center overflow-hidden select-none animate-fade-in">
+                {/* Visual India Map Image extracted from live site */}
+                <img
+                  src="/images/map.jpg"
+                  className="w-full h-full object-contain opacity-100 transition-opacity duration-300 pointer-events-none border border-brand-gold/20 bg-brand-black/40"
+                  alt="India Distribution Map"
+                />
+              </div>
             </div>
 
             {/* Bottom Status bar */}
             <div className="relative z-10 text-[9px] text-brand-slate-400 font-poppins border-t border-brand-gold/10 pt-3 flex justify-between shrink-0 select-none">
-              <span>{selectedDealer ? "Selected node map rendering live coordinates." : "Interactive dealer map displaying active network nodes."}</span>
+              <span>Interactive dealer map displaying active network nodes.</span>
               <span>Active Coverage Est. 1983</span>
             </div>
 

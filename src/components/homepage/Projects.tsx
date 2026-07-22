@@ -11,21 +11,40 @@ export const Projects: React.FC<{ teaser?: boolean }> = ({ teaser = false }) => 
   // Use a curated set of projects for the homepage showcase
   const featuredList = teaser ? projects.slice(0, 3) : projects;
 
+  // Definining client logo images uploaded by user
+  const clientLogos = [
+    { name: "L&T Construction", src: "/images/clients/client-lt.png" },
+    { name: "Tata Projects", src: "/images/clients/client-tata.png" },
+    { name: "Shapoorji Pallonji", src: "/images/clients/client-shapoorji.png" },
+    { name: "Delhi Metro (DMRC)", src: "/images/clients/client-delhimetro.png" },
+    { name: "Ahluwalia Contracts", src: "/images/clients/client-ahluwalia.png" },
+    { name: "IIM Lucknow", src: "/images/clients/client-iimlucknow.png" },
+    { name: "GMR", src: "/images/clients/client-gmr.svg" },
+  ];
+
   return (
     <section id="projects" className="py-16 md:py-20 lg:py-24 bg-transparent relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
 
         {/* Client Logo Strip */}
-        <div className="border-b border-brand-gold/10 pb-12 mb-20">
-          <p className="text-center text-[10px] tracking-[0.25em] font-semibold text-brand-sand/40 uppercase font-poppins mb-6">
+        <div className="border-b border-brand-gold/10 pb-12 mb-20 overflow-hidden">
+          <p className="text-center text-[10px] tracking-[0.25em] font-semibold text-brand-sand/40 uppercase font-poppins mb-8">
             TRUSTED BY INDIA'S LEADING BUILDERS & ARCHITECTS
           </p>
-          <div className="flex flex-wrap items-center justify-center gap-x-12 gap-y-6 opacity-60">
-            {["L&T Construction", "Tata Projects", "Shapoorji Pallonji", "Ahluwalia Contracts", "Delhi Metro (DMRC)", "IIM Lucknow", "GMR Airports"].map((client, idx) => (
-              <span key={idx} className="text-xs font-bold tracking-widest font-mono text-brand-sand hover:text-brand-gold transition-colors">
-                // {client}
-              </span>
-            ))}
+          <div className="relative w-full overflow-hidden before:absolute before:left-0 before:top-0 before:z-10 before:h-full before:w-24 before:bg-gradient-to-r before:from-brand-slate-950 before:to-transparent after:absolute after:right-0 after:top-0 after:z-10 after:h-full after:w-24 after:bg-gradient-to-l after:from-brand-slate-950 after:to-transparent">
+            <div className="animate-marquee-horizontal flex items-center">
+              {[...clientLogos, ...clientLogos, ...clientLogos].map((logo, idx) => (
+                <div key={idx} className="mx-8 md:mx-12 shrink-0 flex items-center justify-center h-12 w-32">
+                  <img
+                    src={logo.src}
+                    alt={logo.name}
+                    className={`h-8 md:h-10 w-auto max-w-[130px] object-contain filter grayscale opacity-50 hover:grayscale-0 hover:opacity-100 hover:scale-105 transition-all duration-500 cursor-pointer ${
+                      logo.name === "L&T Construction" ? "invert brightness-200" : ""
+                    }`}
+                  />
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 

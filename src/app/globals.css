@@ -366,3 +366,23 @@ input,
   scrollbar-width: thin;
   scrollbar-color: rgba(206, 148, 86, 0.25) rgba(206, 148, 86, 0.03);
 }
+
+/* Infinite Marquee Animation for client logos */
+@keyframes marquee-horizontal {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.animate-marquee-horizontal {
+  display: flex;
+  width: max-content;
+  animation: marquee-horizontal 25s linear infinite;
+}
+
+.animate-marquee-horizontal:hover {
+  animation-play-state: paused;
+}

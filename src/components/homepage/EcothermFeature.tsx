@@ -129,8 +129,8 @@ export const EcothermFeature: React.FC = () => {
           <div className="lg:col-span-5 w-full h-[550px] overflow-hidden border border-brand-gold/15 hover:border-brand-gold/40 bg-brand-charcoal relative shadow-2xl group">
             <ImageReveal>
               <img
-                src="/images/hero-2.jpg"
-                alt="Modern structural walling layout using Ecotherm clay hollow blocks"
+                src="/images/ecotherm-hollow.jpg"
+                alt="Terraplast bespoke earthy plasters color chart showing 22+ earthy tones"
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
               />
             </ImageReveal>
@@ -141,13 +141,13 @@ export const EcothermFeature: React.FC = () => {
             {/* Interactive Dimension Overlay (Mock Blueprint Label) */}
             <div className="absolute bottom-6 left-6 z-20 bg-brand-black/90 p-4 border border-brand-gold/20 backdrop-blur-sm text-left max-w-xs">
               <span className="text-[8px] tracking-[0.25em] font-bold text-brand-gold uppercase block font-poppins">
-                SPECIFICATION DIMENSIONS
+                PLASTER TONES SHOWCASE
               </span>
               <h5 className="text-sm font-semibold text-brand-offwhite mt-1 font-cormorant">
-                400mm x 200mm x 200mm
+                Terraplast Bespoke Plasters
               </h5>
               <p className="text-[10px] text-brand-sand/70 leading-normal mt-1 font-poppins">
-                Engineered alignment joints reduce layout tolerances down to +/- 1.5mm.
+                22+ earthy tones from earth reds to warm creams and golden ochres.
               </p>
             </div>
           </div>
