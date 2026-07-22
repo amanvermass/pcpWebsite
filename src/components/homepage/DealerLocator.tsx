@@ -432,7 +432,7 @@ export const DealerLocator: React.FC = () => {
             </div>
 
             {/* Scrollable list */}
-            <div className="flex flex-col gap-3 max-h-[480px] overflow-y-auto pr-2 custom-scrollbar">
+            <div className="flex flex-col gap-3 max-h-[480px] overflow-y-auto pr-2 custom-scrollbar overscroll-contain">
               {filteredDealers.length === 0 ? (
                 <div className="bg-brand-charcoal/50 border border-brand-gold/10 rounded-none p-8 text-center text-brand-slate-400 text-xs font-poppins">
                   No registered distributors found matching the criteria.

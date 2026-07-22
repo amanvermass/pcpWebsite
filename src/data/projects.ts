@@ -21,7 +21,7 @@ export const projects: Project[] = [
     builder: "L&T Construction",
     year: "2025",
     productsUsed: ["Natural Terracotta Cladding Tile", "Supreme Insulated Terraplast"],
-    image: "/images/hero-1.jpg",
+    image: "/images/projects/project-48.jpg",
     desc: "A 14-storey commercial office structure utilizing custom fired terracotta rainscreen panels for energy shielding, supported by high-insulating Terraplast interior infill walls.",
   },
   {
@@ -33,7 +33,7 @@ export const projects: Project[] = [
     builder: "Shapoorji Pallonji Group",
     year: "2024",
     productsUsed: ["Classic Clay Facing Brick", "Thermolite Structural Hollow Block"],
-    image: "/images/hero-3.jpg",
+    image: "/images/projects/project-49.jpg",
     desc: "A luxury passive-solar residence incorporating structural clay hollow blocks to create high thermal mass walls, faced with traditional clay facing bricks.",
   },
   {
@@ -45,7 +45,7 @@ export const projects: Project[] = [
     builder: "Ahluwalia Contracts",
     year: "2024",
     productsUsed: ["Heavy-Duty Interlocking Paver", "Thermolite Structural Hollow Block"],
-    image: "/images/hero-4.jpg",
+    image: "/images/projects/project-50.jpg",
     desc: "Heavy-duty manufacturing complex requiring high load-bearing brick masonry for separation walls and acid-resistant chemical processing floors.",
   },
   {
@@ -57,7 +57,7 @@ export const projects: Project[] = [
     builder: "Tata Projects",
     year: "2025",
     productsUsed: ["Heavy-Duty Interlocking Paver"],
-    image: "/images/hero-2.jpg",
+    image: "/images/projects/project-51.jpg",
     desc: "Renovation of the central civic pedestrian plaza utilizing interlocking clay pavers capable of supporting heavy support vehicles and standing up to severe weather cycles.",
   },
 ];
