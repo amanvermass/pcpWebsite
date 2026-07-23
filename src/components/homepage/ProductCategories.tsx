@@ -159,37 +159,37 @@ export const ProductCategories: React.FC = () => {
       title: "Clay Hollow Bricks",
       desc: "High-performance multi-chambered thermal hollow blocks for load-bearing and partition walls.",
       image: "/images/products/clay-hollow-bricks.jpg",
-      link: "/products?category=Hollow Blocks"
+      link: "/products/ecotherm-clay-hollow-blocks"
     },
     {
       title: "Handmade bricks",
       desc: "Hand-crafted rustic facing bricks combining historic heritage texture with structural durability.",
       image: "/images/products/handmade-bricks.jpg",
-      link: "/products?category=Handmade Bricks"
+      link: "/products/traditional-handmade-bricks"
     },
     {
       title: "Terraplast",
       desc: "Earthy plasters and lightweight insulating materials available in 22+ bespoke tones.",
       image: "/images/ecotherm-hollow.jpg",
-      link: "/products?category=Terraplasts"
+      link: "/products/terraplast"
     },
     {
       title: "Cladding Bricks & Tiles",
       desc: "Premium visual cladding solutions for modern, weather-resistant building envelopes.",
       image: "/images/cladding-showcase.jpg",
-      link: "/products?category=Cladding Tiles"
+      link: "/products/cladding-bricks-tiles"
     },
     {
       title: "Extruded Wirecut",
       desc: "Precision wirecut facing bricks with high compressive strength and low water absorption.",
       image: "/images/products/extruded-wirecut.jpg",
-      link: "/products?category=Clay Bricks"
+      link: "/products/facing-bricks"
     },
     {
       title: "Clay Pavers",
       desc: "Heavy-load vitrified clay paving units designed for pedestrian walkways and public plazas.",
       image: "/images/products/clay-pavers.jpg",
-      link: "/products?category=Pavers"
+      link: "/products/clay-pavers"
     }
   ];
 

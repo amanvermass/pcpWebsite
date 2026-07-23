@@ -4,9 +4,10 @@ import React, { useState, useEffect } from "react";
 import { Header } from "@/components/homepage/Header";
 import { Footer } from "@/components/homepage/Footer";
 import { Product, products } from "@/data/products";
+import { projects } from "@/data/projects";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowLeft, ArrowRight, Download, Send, Ruler, FileText, HardHat, FileSpreadsheet, Calculator } from "lucide-react";
+import { ArrowLeft, ArrowRight, Download, Send, Ruler, FileText, HardHat, FileSpreadsheet, Calculator, CheckCircle2, Info } from "lucide-react";
 import { ToastProvider, useToast } from "@/components/ui/Toast";
 import confetti from "canvas-confetti";
 import { Magnetic } from "@/components/ui/Magnetic";
@@ -90,6 +91,10 @@ function DetailContent({ product }: ProductDetailClientProps) {
   const [estimatedUnits, setEstimatedUnits] = useState<number>(0);
   const [totalWithWastage, setTotalWithWastage] = useState<number>(0);
 
+  // Variation A: Ecotherm Savings Calculator States
+  const [savingsArea, setSavingsArea] = useState<number>(500);
+  const [savingsState, setSavingsState] = useState<string>("Delhi");
+
   // Recalculate quantities when length/height changes
   useEffect(() => {
     const area = wallLength * wallHeight;
@@ -97,8 +102,8 @@ function DetailContent({ product }: ProductDetailClientProps) {
 
     // Calculate face area of one unit in meters (length x height)
     // Convert specs from mm to meters
-    const unitLengthM = parseFloat(product.specs.length) / 1000;
-    const unitHeightM = parseFloat(product.specs.height) / 1000;
+    const unitLengthM = parseFloat(product.specs.length) / 1000 || 0.23;
+    const unitHeightM = parseFloat(product.specs.height) / 1000 || 0.075;
 
     // Standard joint thickness (10mm = 0.01m)
     const jointThickness = 0.01;
@@ -163,50 +168,94 @@ function DetailContent({ product }: ProductDetailClientProps) {
     .filter((p) => p.category === product.category && p.id !== product.id)
     .slice(0, 4);
 
-  return (
-    <div className="flex flex-col min-h-screen bg-brand-black text-brand-offwhite">
-      
-      {/* Header section with back button */}
-      <div className="pt-28 pb-10 border-b border-brand-gold/10 bg-brand-charcoal/20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <Link 
-            href="/products" 
-            className="inline-flex items-center gap-2 text-xs uppercase tracking-wider font-poppins font-semibold text-brand-sand hover:text-brand-offwhite mb-6 transition-colors group cursor-pointer"
-          >
-            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-            Back to Materials Library
-          </Link>
+  // Custom Helper to return clean Imperial equivalent sizing
+  const getImperialSizing = () => {
+    switch (product.id) {
+      case "ecotherm-clay-hollow-blocks":
+        return '16" × 8" × 8" equivalent';
+      case "facing-bricks":
+      case "traditional-handmade-bricks":
+        return '9" × 4 3/8" × 3" standard';
+      case "linea-series":
+        return '17 1/4" × 4" × 1 1/2" linear';
+      case "clay-pavers":
+        return '8" × 4" × 2 3/8" paving';
+      case "roofing-tiles":
+        return '16 1/2" × 10 1/2" × 1 1/4" tiles';
+      default:
+        return "Standard Modular sizing";
+    }
+  };
 
-          <div className="max-w-4xl">
-            <span className="text-[9px] uppercase font-bold tracking-[0.3em] text-brand-gold bg-brand-gold/5 px-4 py-1.5 border border-brand-gold/20 rounded-none w-fit block">
-              {product.category} Specifications
-            </span>
-            <h1 className="text-4xl sm:text-5xl font-normal font-cormorant text-brand-offwhite mt-4 tracking-wide leading-tight">
-              {product.name}
-            </h1>
-          </div>
+  // Custom Helper for Coverage/Pack qty
+  const getPackQuantity = () => {
+    switch (product.id) {
+      case "ecotherm-clay-hollow-blocks":
+        return "approx. 12.5 units / m² | 96 blocks per pallet";
+      case "facing-bricks":
+      case "traditional-handmade-bricks":
+        return "approx. 50 units / m² | 400 bricks per pallet";
+      case "linea-series":
+        return "approx. 45 units / m² | 360 slips per crate";
+      case "clay-pavers":
+        return "approx. 50 units / m² | 420 pavers per pallet";
+      case "roofing-tiles":
+        return "approx. 10.2 units / m² | 240 tiles per pallet";
+      default:
+        return "Custom pack quantities available upon request";
+    }
+  };
+
+  // Find a project that uses this product, or default to the first one
+  const featuredProj = projects.find(proj => 
+    proj.productsUsed.some(p => p.toLowerCase().includes(product.name.toLowerCase()) || product.name.toLowerCase().includes(p.toLowerCase()))
+  ) || projects[0];
+
+  // Pick 3 related products
+  const similarProducts = products
+    .filter((p) => p.id !== product.id)
+    .slice(0, 3);
+
+  const scrollToIntarget = (id: string) => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  return (
+    <div className="flex flex-col min-h-screen bg-brand-black text-brand-offwhite font-poppins">
+      
+      {/* Breadcrumbs Top Bar */}
+      <div className="pt-28 pb-4 bg-brand-charcoal/20 border-b border-brand-gold/10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-2 text-[10px] sm:text-xs uppercase font-poppins tracking-wider font-semibold text-brand-sand">
+            <Link href="/" className="hover:text-brand-offwhite transition-colors cursor-pointer">Home</Link>
+            <span className="text-brand-gold/40">›</span>
+            <Link href="/products" className="hover:text-brand-offwhite transition-colors cursor-pointer">Products</Link>
+            <span className="text-brand-gold/40">›</span>
+            <span className="text-brand-offwhite font-bold">{product.h1 || product.name}</span>
+          </nav>
         </div>
       </div>
 
-      {/* Main content grid */}
-      <main className="flex-grow max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-16 z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-          
-          {/* Left column: images, description, specs table */}
-          <div className="lg:col-span-7 space-y-12">
+      {/* SECTION 1: Gallery + Product Summary (split layout) */}
+      <section className="py-12 bg-brand-black">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
             
-            {/* Gallery Reveal */}
-            <div className="space-y-4">
+            {/* Left: Image Gallery */}
+            <div className="lg:col-span-7 space-y-4">
               <div className="aspect-[16/10] w-full border border-brand-gold/15 bg-brand-black overflow-hidden relative">
                 <AnimatePresence mode="wait">
                   <motion.img
                     key={activeImageIdx}
                     src={galleryImages[activeImageIdx]}
-                    alt={product.name}
-                    initial={{ opacity: 0, scale: 1.05 }}
+                    alt={`${product.name} facade texture - PCP India`}
+                    initial={{ opacity: 0, scale: 1.02 }}
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0 }}
-                    transition={{ duration: 0.5 }}
+                    transition={{ duration: 0.4 }}
                     className="object-cover w-full h-full"
                   />
                 </AnimatePresence>
@@ -215,411 +264,617 @@ function DetailContent({ product }: ProductDetailClientProps) {
                 </div>
               </div>
 
-              {/* Thumbnails row */}
+              {/* Thumbnails row (detail texture, projects, mortar variations) */}
               <div className="grid grid-cols-4 gap-4">
-                {galleryImages.map((img, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => setActiveImageIdx(idx)}
-                    className={`aspect-[16/10] border overflow-hidden cursor-pointer transition-colors ${
-                      activeImageIdx === idx ? "border-brand-gold" : "border-brand-gold/10 hover:border-brand-gold/30"
-                    }`}
-                  >
-                    <img src={img} alt="texture thumbnail" className="object-cover w-full h-full opacity-60 hover:opacity-100" />
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Description */}
-            <div className="bg-brand-charcoal p-8 border border-brand-gold/10 space-y-4">
-              <h3 className="text-xl font-normal font-cormorant text-brand-offwhite uppercase tracking-wider">
-                Material Description
-              </h3>
-              <p className="text-xs font-poppins text-brand-sand/75 leading-relaxed">
-                {product.desc}
-              </p>
-              <p className="text-xs font-poppins text-brand-sand/50 leading-relaxed border-t border-brand-gold/10 pt-4">
-                Manufactured using sustainable closed-loop processing guidelines in our state-of-the-art regional kiln facilities, ensuring long-term durability and structural resistance for all standard residential and heavy-duty environments.
-              </p>
-            </div>
-
-            {/* Specs detail table */}
-            <div className="bg-brand-charcoal p-8 border border-brand-gold/10 space-y-6">
-              <h3 className="text-xl font-normal font-cormorant text-brand-offwhite uppercase tracking-wider flex items-center gap-2">
-                <Ruler className="w-5 h-5 text-brand-gold" />
-                Technical & Structural Specifications
-              </h3>
-              
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4 text-xs font-poppins text-brand-sand/85">
-                <div className="flex justify-between py-2 border-b border-brand-gold/10">
-                  <span className="text-brand-sand/40 font-semibold uppercase">Dimensions (L × W × H)</span>
-                  <span className="text-brand-offwhite font-bold">{product.specs.length} × {product.specs.width} × {product.specs.height} mm</span>
-                </div>
-                <div className="flex justify-between py-2 border-b border-brand-gold/10">
-                  <span className="text-brand-sand/40 font-semibold uppercase">Dry Weight</span>
-                  <span className="text-brand-offwhite font-bold">{product.specs.weight}</span>
-                </div>
-                <div className="flex justify-between py-2 border-b border-brand-gold/10">
-                  <span className="text-brand-sand/40 font-semibold uppercase">Mass Density</span>
-                  <span className="text-brand-offwhite font-bold">{product.specs.density}</span>
-                </div>
-                <div className="flex justify-between py-2 border-b border-brand-gold/10">
-                  <span className="text-brand-sand/40 font-semibold uppercase">Water Absorption</span>
-                  <span className="text-brand-offwhite font-bold">{product.specs.waterAbsorption}</span>
-                </div>
-                <div className="flex justify-between py-2 border-b border-brand-gold/10">
-                  <span className="text-brand-sand/40 font-semibold uppercase">Compressive Strength</span>
-                  <span className="text-brand-gold font-extrabold">{product.specs.compStrength}</span>
-                </div>
-                <div className="flex justify-between py-2 border-b border-brand-gold/10">
-                  <span className="text-brand-sand/40 font-semibold uppercase">Fire Safety Rating</span>
-                  <span className="text-brand-offwhite font-bold">{product.specs.fireResistance}</span>
-                </div>
-                {product.specs.thermalInsulation && (
-                  <div className="flex justify-between py-2 border-b border-brand-gold/10 sm:col-span-2">
-                    <span className="text-brand-sand/40 font-semibold uppercase">Thermal Conductivity (λ Value)</span>
-                    <span className="text-brand-gold font-bold">{product.specs.thermalInsulation}</span>
-                  </div>
-                )}
-              </div>
-            </div>
-
-            {/* BIM & Revit Resources Download area */}
-            <div className="bg-brand-charcoal p-8 border border-brand-gold/10 space-y-6">
-              <div>
-                <h3 className="text-xl font-normal font-cormorant text-brand-offwhite uppercase tracking-wider">
-                  CAD & Revit BIM Downloads
-                </h3>
-                <p className="text-brand-sand/55 text-xs mt-1 font-poppins">
-                  Ensure accurate structural simulation in Autodesk Revit, AutoCAD, and ArchiCAD.
-                </p>
-              </div>
-              
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="flex items-center justify-between p-4 bg-brand-black border border-brand-gold/10 hover:border-brand-gold/30 transition-colors">
-                  <div className="flex items-center gap-3">
-                    <FileText className="w-8 h-8 text-brand-gold shrink-0" />
-                    <div>
-                      <span className="block text-xs font-semibold text-brand-offwhite font-poppins">Technical Datasheet</span>
-                      <span className="text-[9px] text-brand-sand/40 uppercase font-semibold font-poppins">PDF (1.2 MB)</span>
-                    </div>
-                  </div>
-                  <button onClick={() => handleDownload("Datasheet (PDF)")} className="p-2 hover:bg-brand-charcoal text-brand-sand hover:text-brand-offwhite cursor-pointer">
-                    <Download className="w-4 h-4" />
-                  </button>
-                </div>
-
-                <div className="flex items-center justify-between p-4 bg-brand-black border border-brand-gold/10 hover:border-brand-gold/30 transition-colors">
-                  <div className="flex items-center gap-3">
-                    <HardHat className="w-8 h-8 text-brand-gold shrink-0" />
-                    <div>
-                      <span className="block text-xs font-semibold text-brand-offwhite font-poppins">Revit BIM Object</span>
-                      <span className="text-[9px] text-brand-sand/40 uppercase font-semibold font-poppins">RVT (8.4 MB)</span>
-                    </div>
-                  </div>
-                  <button onClick={() => handleDownload("Revit (RVT)")} className="p-2 hover:bg-brand-charcoal text-brand-sand hover:text-brand-offwhite cursor-pointer">
-                    <Download className="w-4 h-4" />
-                  </button>
-                </div>
-
-                <div className="flex items-center justify-between p-4 bg-brand-black border border-brand-gold/10 hover:border-brand-gold/30 transition-colors">
-                  <div className="flex items-center gap-3">
-                    <FileSpreadsheet className="w-8 h-8 text-brand-gold shrink-0" />
-                    <div>
-                      <span className="block text-xs font-semibold text-brand-offwhite font-poppins">AutoCAD Details</span>
-                      <span className="text-[9px] text-brand-sand/40 uppercase font-semibold font-poppins">DWG (2.3 MB)</span>
-                    </div>
-                  </div>
-                  <button onClick={() => handleDownload("CAD Details (DWG)")} className="p-2 hover:bg-brand-charcoal text-brand-sand hover:text-brand-offwhite cursor-pointer">
-                    <Download className="w-4 h-4" />
-                  </button>
-                </div>
-
-                <div className="flex items-center justify-between p-4 bg-brand-black border border-brand-gold/10 hover:border-brand-gold/30 transition-colors">
-                  <div className="flex items-center gap-3">
-                    <FileText className="w-8 h-8 text-brand-gold shrink-0" />
-                    <div>
-                      <span className="block text-xs font-semibold text-brand-offwhite font-poppins">Installation Guide</span>
-                      <span className="text-[9px] text-brand-sand/40 uppercase font-semibold font-poppins">PDF (3.1 MB)</span>
-                    </div>
-                  </div>
-                  <button onClick={() => handleDownload("Installation Manual")} className="p-2 hover:bg-brand-charcoal text-brand-sand hover:text-brand-offwhite cursor-pointer">
-                    <Download className="w-4 h-4" />
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Right column: inline calculator + lead inquiry */}
-          <div className="lg:col-span-5 space-y-8">
-            
-            {/* Inline Quantity Estimator Calculator */}
-            <div className="bg-brand-charcoal border border-brand-gold/10 p-8 rounded-none space-y-6">
-              <div>
-                <h3 className="text-xl font-normal font-cormorant text-brand-offwhite uppercase tracking-wider flex items-center gap-2">
-                  <Calculator className="w-5 h-5 text-brand-gold" />
-                  Material Calculator
-                </h3>
-                <p className="text-[10px] font-poppins text-brand-sand/55 mt-1.5">
-                  Estimate the exact quantities required for your project wall area using {product.name} dimensions.
-                </p>
-              </div>
-
-              <div className="space-y-4">
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-[9px] uppercase font-bold tracking-wider text-brand-sand/50 mb-1 font-poppins">
-                      Wall Length (m)
-                    </label>
-                    <input
-                      type="number"
-                      value={wallLength}
-                      onChange={(e) => setWallLength(parseFloat(e.target.value) || 0)}
-                      className="w-full bg-brand-black border border-brand-gold/10 rounded-none px-3.5 py-2 text-xs font-poppins text-brand-offwhite focus:outline-none focus:border-brand-gold"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-[9px] uppercase font-bold tracking-wider text-brand-sand/50 mb-1 font-poppins">
-                      Wall Height (m)
-                    </label>
-                    <input
-                      type="number"
-                      value={wallHeight}
-                      onChange={(e) => setWallHeight(parseFloat(e.target.value) || 0)}
-                      className="w-full bg-brand-black border border-brand-gold/10 rounded-none px-3.5 py-2 text-xs font-poppins text-brand-offwhite focus:outline-none focus:border-brand-gold"
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-[9px] uppercase font-bold tracking-wider text-brand-sand/50 mb-1 font-poppins">
-                    Wastage Margin (%)
-                  </label>
-                  <select
-                    value={wastageMargin}
-                    onChange={(e) => setWastageMargin(parseInt(e.target.value))}
-                    className="w-full bg-brand-black border border-brand-gold/10 rounded-none px-3.5 py-2 text-xs font-poppins text-brand-offwhite focus:outline-none focus:border-brand-gold"
-                  >
-                    <option value={5}>5% wastage margin</option>
-                    <option value={10}>10% wastage margin</option>
-                    <option value={15}>15% wastage margin</option>
-                  </select>
-                </div>
-
-                {/* Calculation Outputs */}
-                <div className="bg-brand-black border border-brand-gold/10 p-4 font-poppins space-y-2 mt-2">
-                  <div className="flex justify-between text-xs text-brand-sand/60">
-                    <span>Total Wall Area:</span>
-                    <span className="font-semibold text-brand-offwhite">{calculatedArea.toFixed(2)} sq m</span>
-                  </div>
-                  <div className="flex justify-between text-xs text-brand-sand/60">
-                    <span>Base Units Needed:</span>
-                    <span className="font-semibold text-brand-offwhite">{estimatedUnits.toLocaleString()} units</span>
-                  </div>
-                  <div className="flex justify-between text-sm text-brand-gold font-semibold border-t border-brand-gold/10 pt-2 mt-2">
-                    <span>Total (inc. wastage):</span>
-                    <span>{totalWithWastage.toLocaleString()} units</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Inquire form */}
-            <div id="inquire" className="bg-brand-charcoal rounded-none border border-brand-gold/10 p-8 space-y-6">
-              <div>
-                <h3 className="text-xl font-normal font-cormorant text-brand-offwhite uppercase tracking-wider">
-                  Request Quote / Samples
-                </h3>
-                <p className="text-[10px] font-poppins text-brand-sand/55 mt-1.5">
-                  Submit this technical sales sheet to receive lead times, cost structure, or standard physical clay samples.
-                </p>
-              </div>
-
-              <form onSubmit={handleInquirySubmit} className="space-y-4">
-                <div>
-                  <label className="block text-[9px] uppercase font-bold tracking-wider text-brand-sand/55 mb-1 font-poppins">Full Name</label>
-                  <input
-                    type="text"
-                    required
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    className="w-full bg-brand-black border border-brand-gold/10 rounded-none px-4 py-3 text-xs uppercase tracking-wider font-poppins text-brand-offwhite focus:outline-none focus:border-brand-gold"
-                    placeholder="Enter name"
-                  />
-                </div>
-
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-[9px] uppercase font-bold tracking-wider text-brand-sand/55 mb-1 font-poppins">Email</label>
-                    <input
-                      type="email"
-                      required
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      className="w-full bg-brand-black border border-brand-gold/10 rounded-none px-4 py-3 text-xs uppercase tracking-wider font-poppins text-brand-offwhite focus:outline-none focus:border-brand-gold"
-                      placeholder="work email"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-[9px] uppercase font-bold tracking-wider text-brand-sand/55 mb-1 font-poppins">Phone</label>
-                    <input
-                      type="tel"
-                      required
-                      value={phone}
-                      onChange={(e) => setPhone(e.target.value)}
-                      className="w-full bg-brand-black border border-brand-gold/10 rounded-none px-4 py-3 text-xs uppercase tracking-wider font-poppins text-brand-offwhite focus:outline-none focus:border-brand-gold"
-                      placeholder="phone"
-                    />
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-[9px] uppercase font-bold tracking-wider text-brand-sand/55 mb-1 font-poppins">Company</label>
-                    <input
-                      type="text"
-                      required
-                      value={company}
-                      onChange={(e) => setCompany(e.target.value)}
-                      className="w-full bg-brand-black border border-brand-gold/10 rounded-none px-4 py-3 text-xs uppercase tracking-wider font-poppins text-brand-offwhite focus:outline-none focus:border-brand-gold"
-                      placeholder="firm name"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-[9px] uppercase font-bold tracking-wider text-brand-sand/55 mb-1 font-poppins">Role</label>
-                    <select
-                      value={userRole}
-                      onChange={(e) => setUserRole(e.target.value)}
-                      className="w-full bg-brand-black border border-brand-gold/10 rounded-none px-4 py-3 text-xs uppercase tracking-wider font-poppins text-brand-offwhite focus:outline-none focus:border-brand-gold"
+                {galleryImages.map((img, idx) => {
+                  const altLabels = [
+                    `${product.name} in-wall installation shot - PCP India`,
+                    `${product.name} close-up detail texture - PCP India`,
+                    `${product.name} masonry blend variation - PCP India`,
+                    `${product.name} mortar joint configuration - PCP India`
+                  ];
+                  return (
+                    <button
+                      key={idx}
+                      onClick={() => setActiveImageIdx(idx)}
+                      className={`aspect-[16/10] border overflow-hidden cursor-pointer transition-colors ${
+                        activeImageIdx === idx ? "border-brand-gold" : "border-brand-gold/10 hover:border-brand-gold/30"
+                      }`}
                     >
-                      <option>Architect</option>
-                      <option>Builder/Contractor</option>
-                      <option>Distributor/Dealer</option>
-                      <option>Engineer</option>
-                      <option>Developer</option>
-                      <option>Homeowner</option>
+                      <img src={img} alt={altLabels[idx] || `${product.name} detail view`} className="object-cover w-full h-full opacity-60 hover:opacity-100 transition-opacity" />
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Right: Product Summary */}
+            <div className="lg:col-span-5 space-y-6 lg:pl-4">
+              <div className="space-y-2">
+                <span className="text-[10px] tracking-[0.25em] text-brand-gold uppercase font-bold block">
+                  {product.category} Blend / {product.variationType || "Standard"} Grade
+                </span>
+                <h1 className="text-3xl sm:text-4xl font-normal font-cormorant text-brand-offwhite tracking-wide leading-tight">
+                  {product.h1 || product.name}
+                </h1>
+              </div>
+
+              <div className="border-t border-brand-gold/10 pt-4">
+                <p className="text-xs sm:text-sm text-brand-sand/85 leading-relaxed font-poppins">
+                  {product.desc}
+                </p>
+                <p className="text-xs text-brand-sand/55 leading-relaxed mt-2 italic font-poppins">
+                  Proudly manufactured in Varanasi since 1937 using native clay resources and state-of-the-art tunnel kiln technology.
+                </p>
+              </div>
+
+              {/* Action and Disclaimer */}
+              <div className="space-y-3 pt-4 border-t border-brand-gold/10">
+                <button
+                  onClick={() => scrollToIntarget("inquire")}
+                  className="w-full bg-brand-gold hover:bg-brand-sand text-brand-black font-semibold py-4 rounded-none transition-colors cursor-pointer flex items-center justify-center gap-2 text-xs uppercase tracking-wider font-poppins border border-brand-gold"
+                >
+                  Request a Sample
+                </button>
+                <span className="text-[11px] text-brand-gold/70 italic font-poppins mt-2 block font-semibold text-center uppercase tracking-wider">
+                  * Always request samples before specification
+                </span>
+              </div>
+
+              {/* Use-Case Tags */}
+              <div className="pt-4 border-t border-brand-gold/10">
+                <span className="block text-[9px] uppercase tracking-wider text-brand-sand/40 font-bold mb-2">Recommended Intent Profile</span>
+                <div className="flex flex-wrap gap-2">
+                  <span className="text-[9px] uppercase tracking-widest bg-brand-charcoal text-brand-sand/90 px-3 py-1 border border-brand-gold/10 font-bold">
+                    EPD Certified
+                  </span>
+                  <span className="text-[9px] uppercase tracking-widest bg-brand-charcoal text-brand-sand/90 px-3 py-1 border border-brand-gold/10 font-bold">
+                    Load-Bearing Spec
+                  </span>
+                  <span className="text-[9px] uppercase tracking-widest bg-brand-charcoal text-brand-sand/90 px-3 py-1 border border-brand-gold/10 font-bold">
+                    Exterior Facades
+                  </span>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* SECTION 2: Product Details (compact spec list) + Downloads */}
+      <section className="py-16 bg-brand-charcoal/20 border-t border-brand-gold/10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+            
+            {/* Left: Compact Specs Sheet */}
+            <div className="lg:col-span-7 space-y-6">
+              <h2 className="text-xl font-normal font-cormorant text-brand-offwhite uppercase tracking-wider flex items-center gap-2">
+                <Ruler className="w-5 h-5 text-brand-gold" />
+                Technical Parameters Spec Sheet
+              </h2>
+              
+              <div className="overflow-x-auto border border-brand-gold/10">
+                <table className="w-full text-left text-xs font-poppins text-brand-sand/85 border-collapse">
+                  <tbody>
+                    <tr className="border-b border-brand-gold/10 hover:bg-brand-black/25 transition-colors">
+                      <td className="py-3 px-4 font-semibold uppercase text-[10px] text-brand-sand/55 bg-brand-black/20 w-1/3">Dimensions (Metric)</td>
+                      <td className="py-3 px-4 text-brand-offwhite font-bold">{product.specs.length} × {product.specs.width} × {product.specs.height} mm</td>
+                    </tr>
+                    <tr className="border-b border-brand-gold/10 hover:bg-brand-black/25 transition-colors">
+                      <td className="py-3 px-4 font-semibold uppercase text-[10px] text-brand-sand/55 bg-brand-black/20">Dimensions (Imperial)</td>
+                      <td className="py-3 px-4 text-brand-offwhite font-bold">{getImperialSizing()}</td>
+                    </tr>
+                    <tr className="border-b border-brand-gold/10 hover:bg-brand-black/25 transition-colors">
+                      <td className="py-3 px-4 font-semibold uppercase text-[10px] text-brand-sand/55 bg-brand-black/20">Compressive Strength</td>
+                      <td className="py-3 px-4 text-brand-gold font-extrabold">{product.specs.compStrength}</td>
+                    </tr>
+                    <tr className="border-b border-brand-gold/10 hover:bg-brand-black/25 transition-colors">
+                      <td className="py-3 px-4 font-semibold uppercase text-[10px] text-brand-sand/55 bg-brand-black/20">Water Absorption</td>
+                      <td className="py-3 px-4 text-brand-offwhite font-bold">{product.specs.waterAbsorption}</td>
+                    </tr>
+                    <tr className="border-b border-brand-gold/10 hover:bg-brand-black/25 transition-colors">
+                      <td className="py-3 px-4 font-semibold uppercase text-[10px] text-brand-sand/55 bg-brand-black/20">Dry Mass Weight</td>
+                      <td className="py-3 px-4 text-brand-offwhite font-bold">{product.specs.weight}</td>
+                    </tr>
+                    <tr className="border-b border-brand-gold/10 hover:bg-brand-black/25 transition-colors">
+                      <td className="py-3 px-4 font-semibold uppercase text-[10px] text-brand-sand/55 bg-brand-black/20">Coverage / Pack Qty</td>
+                      <td className="py-3 px-4 text-brand-offwhite font-bold">{getPackQuantity()}</td>
+                    </tr>
+                    <tr className="border-b border-brand-gold/10 hover:bg-brand-black/25 transition-colors">
+                      <td className="py-3 px-4 font-semibold uppercase text-[10px] text-brand-sand/55 bg-brand-black/20">Relevant Standard</td>
+                      <td className="py-3 px-4 text-brand-offwhite font-bold">BS EN 771-1 / IS 13757 certified</td>
+                    </tr>
+                    {product.specs.thermalInsulation && (
+                      <tr className="border-b border-brand-gold/10 hover:bg-brand-black/25 transition-colors">
+                        <td className="py-3 px-4 font-semibold uppercase text-[10px] text-brand-sand/55 bg-brand-black/20">Thermal Conductivity</td>
+                        <td className="py-3 px-4 text-brand-gold font-bold">{product.specs.thermalInsulation}</td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
+              </div>
+
+              {/* Downloads Deck attached directly beneath specs */}
+              <div className="pt-4 space-y-4">
+                <span className="block text-[10px] uppercase tracking-wider text-brand-sand/40 font-bold">Datasheets & Revit Objects</span>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="flex items-center justify-between p-4 bg-brand-black/40 border border-brand-gold/10 hover:border-brand-gold/30 transition-colors">
+                    <div className="flex items-center gap-3">
+                      <FileText className="w-8 h-8 text-brand-gold shrink-0" />
+                      <div>
+                        <span className="block text-xs font-semibold text-brand-offwhite">Technical Datasheet</span>
+                        <span className="text-[9px] text-brand-sand/40 uppercase font-semibold">pcp-{product.id}-tds.pdf</span>
+                      </div>
+                    </div>
+                    <button onClick={() => handleDownload("Datasheet (PDF)")} className="p-2 text-brand-sand hover:text-brand-offwhite cursor-pointer">
+                      <Download className="w-4 h-4" />
+                    </button>
+                  </div>
+
+                  <div className="flex items-center justify-between p-4 bg-brand-black/40 border border-brand-gold/10 hover:border-brand-gold/30 transition-colors">
+                    <div className="flex items-center gap-3">
+                      <HardHat className="w-8 h-8 text-brand-gold shrink-0" />
+                      <div>
+                        <span className="block text-xs font-semibold text-brand-offwhite">Revit BIM Object</span>
+                        <span className="text-[9px] text-brand-sand/40 uppercase font-semibold">pcp-{product.id}-bim.rvt</span>
+                      </div>
+                    </div>
+                    <button onClick={() => handleDownload("Revit (RVT)")} className="p-2 text-brand-sand hover:text-brand-offwhite cursor-pointer">
+                      <Download className="w-4 h-4" />
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            {/* Right: Quantity Estimator Form */}
+            <div className="lg:col-span-5">
+              <div className="bg-brand-charcoal/40 border border-brand-gold/10 p-8 rounded-none space-y-6">
+                <div>
+                  <h3 className="text-xl font-normal font-cormorant text-brand-offwhite uppercase tracking-wider flex items-center gap-2">
+                    <Calculator className="w-5 h-5 text-brand-gold" />
+                    Masonry Quantity Estimator
+                  </h3>
+                  <p className="text-[10px] font-poppins text-brand-sand/55 mt-1.5">
+                    Estimate the materials required for your project wall area based on standard dimensions.
+                  </p>
+                </div>
+
+                <div className="space-y-4">
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-[9px] uppercase font-bold tracking-wider text-brand-sand/50 mb-1 font-poppins">
+                        Wall Length (m)
+                      </label>
+                      <input
+                        type="number"
+                        value={wallLength}
+                        onChange={(e) => setWallLength(parseFloat(e.target.value) || 0)}
+                        className="w-full bg-brand-black border border-brand-gold/10 rounded-none px-3.5 py-2 text-xs font-poppins text-brand-offwhite focus:outline-none focus:border-brand-gold"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[9px] uppercase font-bold tracking-wider text-brand-sand/50 mb-1 font-poppins">
+                        Wall Height (m)
+                      </label>
+                      <input
+                        type="number"
+                        value={wallHeight}
+                        onChange={(e) => setWallHeight(parseFloat(e.target.value) || 0)}
+                        className="w-full bg-brand-black border border-brand-gold/10 rounded-none px-3.5 py-2 text-xs font-poppins text-brand-offwhite focus:outline-none focus:border-brand-gold"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-[9px] uppercase font-bold tracking-wider text-brand-sand/50 mb-1 font-poppins">
+                      Wastage Margin (%)
+                    </label>
+                    <select
+                      value={wastageMargin}
+                      onChange={(e) => setWastageMargin(parseInt(e.target.value))}
+                      className="w-full bg-brand-black border border-brand-gold/10 rounded-none px-3.5 py-2 text-xs font-poppins text-brand-offwhite focus:outline-none focus:border-brand-gold"
+                    >
+                      <option value={5}>5% wastage margin</option>
+                      <option value={10}>10% wastage margin</option>
+                      <option value={15}>15% wastage margin</option>
                     </select>
                   </div>
-                </div>
 
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-[9px] uppercase font-bold tracking-wider text-brand-sand/55 mb-1 font-poppins">State</label>
-                    <input
-                      type="text"
-                      required
-                      value={state}
-                      onChange={(e) => setState(e.target.value)}
-                      className="w-full bg-brand-black border border-brand-gold/10 rounded-none px-4 py-3 text-xs uppercase tracking-wider font-poppins text-brand-offwhite focus:outline-none focus:border-brand-gold"
-                      placeholder="Delhi"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-[9px] uppercase font-bold tracking-wider text-brand-sand/55 mb-1 font-poppins">City</label>
-                    <input
-                      type="text"
-                      required
-                      value={city}
-                      onChange={(e) => setCity(e.target.value)}
-                      className="w-full bg-brand-black border border-brand-gold/10 rounded-none px-4 py-3 text-xs uppercase tracking-wider font-poppins text-brand-offwhite focus:outline-none focus:border-brand-gold"
-                      placeholder="city"
-                    />
+                  <div className="bg-brand-black border border-brand-gold/10 p-4 font-poppins space-y-2 mt-2">
+                    <div className="flex justify-between text-xs text-brand-sand/60">
+                      <span>Total Wall Area:</span>
+                      <span className="font-semibold text-brand-offwhite">{calculatedArea.toFixed(2)} sq m</span>
+                    </div>
+                    <div className="flex justify-between text-xs text-brand-sand/60">
+                      <span>Base Units Needed:</span>
+                      <span className="font-semibold text-brand-offwhite">{estimatedUnits.toLocaleString()} units</span>
+                    </div>
+                    <div className="flex justify-between text-sm text-brand-gold font-semibold border-t border-brand-gold/10 pt-2 mt-2">
+                      <span>Total (inc. wastage):</span>
+                      <span>{totalWithWastage.toLocaleString()} units</span>
+                    </div>
                   </div>
                 </div>
-
-                <div>
-                  <label className="block text-[9px] uppercase font-bold tracking-wider text-brand-sand/55 mb-1 font-poppins">Technical Inquiry Message</label>
-                  <textarea
-                    required
-                    value={message}
-                    onChange={(e) => setMessage(e.target.value)}
-                    rows={4}
-                    className="w-full bg-brand-black border border-brand-gold/10 rounded-none px-4 py-3 text-xs uppercase tracking-wider font-poppins text-brand-offwhite focus:outline-none focus:border-brand-gold resize-none"
-                  />
-                </div>
-
-                <button
-                  type="submit"
-                  disabled={submitting}
-                  className="w-full bg-brand-gold hover:bg-brand-sand disabled:bg-brand-gold/50 text-brand-black font-semibold py-4 rounded-none transition-colors cursor-pointer flex items-center justify-center gap-2 text-xs uppercase tracking-wider font-poppins border border-brand-gold"
-                >
-                  {submitting ? (
-                    <span className="w-5 h-5 rounded-full border-2 border-brand-black border-t-transparent animate-spin" />
-                  ) : (
-                    <>
-                      <Send className="w-4 h-4 shrink-0" />
-                      Submit Price Request
-                    </>
-                  )}
-                </button>
-              </form>
-            </div>
-          </div>
-
-        </div>
-
-        {/* Related Products Carousel (Section bottom) */}
-        {relatedProducts.length > 0 && (
-          <div className="mt-24 border-t border-brand-gold/10 pt-16">
-            <div className="flex justify-between items-end mb-10">
-              <div>
-                <span className="text-[9px] uppercase font-bold tracking-[0.3em] text-brand-gold bg-brand-gold/5 px-4 py-1.5 border border-brand-gold/20 rounded-none w-fit block font-poppins">
-                  RELATED MATERIALS
-                </span>
-                <h3 className="text-2xl sm:text-3xl font-normal font-cormorant text-brand-offwhite mt-4 tracking-wide">
-                  Explore Similar Products
-                </h3>
               </div>
             </div>
 
-            {/* Carousel track */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-              {isLoading ? (
-                Array.from({ length: 4 }).map((_, index) => (
-                  <ProductCardSkeleton key={index} index={index} />
-                ))
-              ) : (
-                relatedProducts.map((p, index) => (
-                  <ScrollReveal 
-                    key={p.id} 
-                    delay={(index % 4) * 0.1} 
-                    duration={0.8}
-                    direction="up" 
-                    distance={30}
-                  >
-                    <div className="group rounded-none border border-brand-gold/10 bg-brand-charcoal flex flex-col justify-between hover:border-brand-gold/40 transition-colors shadow-lg h-full">
-                      <div className="aspect-[4/3] w-full overflow-hidden bg-brand-black border-b border-brand-gold/10">
-                        <ImageReveal>
-                          <img src={p.image} alt={p.name} className="object-cover w-full h-full" />
-                        </ImageReveal>
-                      </div>
-                      <div className="p-5 flex-grow flex flex-col justify-between">
-                        <div>
-                          <h4 className="text-base font-normal font-cormorant text-brand-offwhite group-hover:text-brand-gold transition-colors">
-                            {p.name}
-                          </h4>
-                          <p className="text-[10px] font-poppins text-brand-sand/60 mt-1 leading-relaxed line-clamp-2">
-                            {p.desc}
-                          </p>
-                        </div>
-                        <Link
-                          href={`/products/${p.id}`}
-                          className="mt-4 inline-flex items-center gap-1.5 text-[10px] font-semibold font-poppins uppercase tracking-wider text-brand-gold hover:text-brand-offwhite transition-colors cursor-pointer"
-                        >
-                          View Specs
-                          <ArrowRight className="w-3 h-3" />
-                        </Link>
-                      </div>
-                    </div>
-                  </ScrollReveal>
-                ))
-              )}
+          </div>
+
+          {/* Integrated Ecotherm Variation details */}
+          {product.variationType === "Ecotherm" && (
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-12 pt-12 border-t border-brand-gold/10">
+              <div className="bg-brand-charcoal p-8 border border-brand-gold/10 space-y-6">
+                <h2 className="text-xl font-normal font-cormorant text-brand-offwhite uppercase tracking-wider">
+                  Ecotherm vs Solid Clay Brickwork
+                </h2>
+                <div className="overflow-x-auto text-[11px] font-poppins text-brand-sand/80">
+                  <table className="w-full text-left border-collapse">
+                    <thead>
+                      <tr className="border-b border-brand-gold/20 text-[9px] uppercase tracking-widest text-brand-sand/55">
+                        <th className="py-2 px-1">Metric</th>
+                        <th className="py-2 px-1 text-emerald-400 font-bold">Ecotherm Block</th>
+                        <th className="py-2 px-1">Solid Clay Brick</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr className="border-b border-brand-gold/5 py-2">
+                        <td className="py-2">Mass Density</td>
+                        <td className="text-emerald-400 font-bold">850 kg/m³ (55% lighter)</td>
+                        <td>1900 kg/m³</td>
+                      </tr>
+                      <tr className="border-b border-brand-gold/5 py-2">
+                        <td className="py-2">Mortar Joint</td>
+                        <td className="text-emerald-400 font-bold">Thin-bed joint (2-3mm)</td>
+                        <td>Thick-bed joint (10-12mm)</td>
+                      </tr>
+                      <tr className="border-b border-brand-gold/5 py-2">
+                        <td className="py-2">Speed of Assembly</td>
+                        <td className="text-emerald-400 font-bold">3x faster layout work</td>
+                        <td>Standard assembly</td>
+                      </tr>
+                      <tr className="border-b border-brand-gold/5 py-2">
+                        <td className="py-2">U-value insulation</td>
+                        <td className="text-emerald-400 font-bold">0.22 W/mK</td>
+                        <td>0.52 W/mK</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              {/* Ecotherm S-Series break downs */}
+              <div className="bg-brand-charcoal p-8 border border-brand-gold/10 space-y-6">
+                <h2 className="text-xl font-normal font-cormorant text-brand-offwhite uppercase tracking-wider">
+                  Ecotherm Series Breakdown
+                </h2>
+                <div className="overflow-x-auto text-[11px] font-poppins text-brand-sand/80">
+                  <table className="w-full text-left border-collapse">
+                    <thead>
+                      <tr className="border-b border-brand-gold/20 text-[9px] uppercase tracking-widest text-brand-sand/55">
+                        <th className="py-2 px-1">Series</th>
+                        <th className="py-2 px-1">Purpose</th>
+                        <th className="py-2 px-1">U-Value</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr className="border-b border-brand-gold/5 py-2">
+                        <td className="py-2 font-bold">VP Series</td>
+                        <td>Structural load-bearing blocks</td>
+                        <td className="text-brand-gold font-bold">0.85</td>
+                      </tr>
+                      <tr className="border-b border-brand-gold/5 py-2">
+                        <td className="py-2 font-bold">HP Series</td>
+                        <td>Partition walling systems</td>
+                        <td className="text-brand-gold font-bold">1.10</td>
+                      </tr>
+                      <tr className="border-b border-brand-gold/5 py-2">
+                        <td className="py-2 font-bold">Special S Series</td>
+                        <td>High precision thermal lock</td>
+                        <td className="text-brand-gold font-bold">0.68</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Integrated Terraplast Plaster overview */}
+          {product.variationType === "Terraplast" && (
+            <div className="bg-brand-charcoal p-8 border border-brand-gold/10 mt-12 space-y-4">
+              <h2 className="text-xl font-normal font-cormorant text-brand-offwhite uppercase tracking-wider">
+                Natural Clay Plaster Performance
+              </h2>
+              <p className="text-xs text-brand-sand/75 leading-relaxed">
+                Clay plaster is highly vapor-permeable, allowing internal walls to breathe naturally and act as a humidity buffer. When relative humidity rises, clay absorbs vapor; when dry, it slowly vents it, keeping indoor space balanced and preventing mold development.
+              </p>
+            </div>
+          )}
+
+        </div>
+      </section>
+
+      {/* SECTION 3: Certification Strip (Thin band) */}
+      <section className="py-8 bg-brand-charcoal/40 border-y border-brand-gold/10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
+          <div className="flex items-center gap-6">
+            <img src="/images/certifications/logo-epd.png" alt="EPD Certified" className="h-10 object-contain invert opacity-80" />
+            {product.variationType === "Ecotherm" && (
+              <img src="/images/certifications/logo-griha.jpg" alt="GRIHA Listed" className="h-10 object-contain opacity-80" />
+            )}
+            <img src="/images/certifications/logo-iso.png" alt="ISO Standard" className="h-10 object-contain invert opacity-70" />
+          </div>
+          <div className="text-center md:text-right space-y-1">
+            <p className="text-xs text-brand-sand font-poppins">
+              Fully compliant with international EPD-certified clay bricks and facade standards.
+            </p>
+            <Link
+              href="/#sustainability-strip"
+              className="text-[10px] font-bold text-brand-gold hover:text-brand-offwhite uppercase tracking-wider font-poppins cursor-pointer inline-flex items-center gap-1"
+            >
+              Learn about our Sustainability credentials <ArrowRight className="w-3 h-3" />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* SECTION 4: Featured Project (Full-Width Image Showcase) */}
+      <section className="py-16 bg-brand-black">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+          <div>
+            <span className="text-[9px] uppercase font-bold tracking-[0.3em] text-brand-gold bg-brand-gold/5 px-4 py-1.5 border border-brand-gold/20 rounded-none w-fit block font-poppins">
+              CASE STUDY IN ACTION
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-normal font-cormorant text-brand-offwhite mt-4 tracking-wide uppercase">
+              Featured Signature Project
+            </h2>
+          </div>
+
+          <div className="border border-brand-gold/10 bg-brand-charcoal overflow-hidden group">
+            <div className="aspect-[21/9] w-full bg-brand-black overflow-hidden relative">
+              <img src={featuredProj.image} alt={featuredProj.name} className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-700" />
+              <div className="absolute inset-0 bg-gradient-to-t from-brand-black/90 via-transparent to-transparent z-10" />
+              
+              <div className="absolute bottom-6 left-6 right-6 z-20 space-y-2">
+                <span className="text-[9px] uppercase tracking-widest text-brand-gold bg-brand-black/70 px-3 py-1 border border-brand-gold/20 font-bold w-fit block">
+                  {featuredProj.type} | {featuredProj.location}
+                </span>
+                <h3 className="text-lg sm:text-xl font-normal font-cormorant text-brand-offwhite font-bold leading-tight uppercase">
+                  {featuredProj.name}
+                </h3>
+              </div>
+            </div>
+            
+            <div className="p-6 sm:p-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-t border-brand-gold/10">
+              <p className="text-xs text-brand-sand/80 max-w-2xl font-poppins">
+                {featuredProj.desc}
+              </p>
+              <Link
+                href="/projects"
+                className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-brand-gold hover:text-brand-offwhite transition-colors cursor-pointer shrink-0"
+              >
+                <span>View all projects</span>
+                <ArrowRight className="w-4 h-4" />
+              </Link>
             </div>
           </div>
-        )}
-      </main>
+        </div>
+      </section>
+
+      {/* SECTION 5: Similar Products (adjacent blends/categories) */}
+      <section className="py-16 bg-brand-charcoal/20 border-t border-brand-gold/10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+          <div>
+            <span className="text-[9px] uppercase font-bold tracking-[0.3em] text-brand-gold bg-brand-gold/5 px-4 py-1.5 border border-brand-gold/20 rounded-none w-fit block font-poppins">
+              MATERIALS EXPLORER
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-normal font-cormorant text-brand-offwhite mt-4 tracking-wide uppercase">
+              Similar Blends & Variants
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {similarProducts.map((p) => (
+              <div key={p.id} className="group rounded-none border border-brand-gold/10 bg-brand-charcoal flex flex-col justify-between hover:border-brand-gold/40 transition-colors shadow-lg h-full">
+                <div className="aspect-[4/3] w-full overflow-hidden bg-brand-black border-b border-brand-gold/10">
+                  <img src={p.image} alt={`${p.name} - PCP India`} className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500" />
+                </div>
+                <div className="p-5 flex-grow flex flex-col justify-between">
+                  <div>
+                    <h3 className="text-base font-normal font-cormorant text-brand-offwhite group-hover:text-brand-gold transition-colors font-semibold">
+                      {p.name}
+                    </h3>
+                    <p className="text-[10px] font-poppins text-brand-sand/60 mt-1.5 leading-relaxed line-clamp-2">
+                      {p.desc}
+                    </p>
+                  </div>
+                  <Link
+                    href={`/products/${p.id}`}
+                    className="mt-4 inline-flex items-center gap-1.5 text-[10px] font-semibold font-poppins uppercase tracking-wider text-brand-gold hover:text-brand-offwhite transition-colors cursor-pointer"
+                  >
+                    View Specs
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </Link>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* FAQs Accordion Block (between Similar and Closing Band) */}
+      <section className="py-16 bg-brand-black border-t border-brand-gold/10">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+          <div className="text-center">
+            <span className="text-[9px] uppercase font-bold tracking-[0.3em] text-brand-gold bg-brand-gold/5 px-4 py-1.5 border border-brand-gold/20 rounded-none w-fit block font-poppins mx-auto">
+              SPECIFICATION FAQ
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-normal font-cormorant text-brand-offwhite mt-4 tracking-wide uppercase">
+              Frequently Asked Questions
+            </h2>
+          </div>
+
+          <div className="space-y-4 font-poppins text-xs pt-4">
+            {product.faqs?.map((faq, index) => (
+              <div key={index} className="border-b border-brand-gold/10 pb-4">
+                <h3 className="font-semibold text-brand-offwhite uppercase tracking-wider text-[11px] mb-2">
+                  {faq.question}
+                </h3>
+                <p className="text-brand-sand/75 leading-relaxed">
+                  {faq.answer}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Inquiry Form Block (Targets scroll anchors) */}
+      <section id="inquire" className="py-16 bg-brand-charcoal/20 border-t border-brand-gold/10">
+        <div className="max-w-xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+          <div className="text-center">
+            <h3 className="text-2xl font-normal font-cormorant text-brand-offwhite uppercase tracking-wider">
+              Request Samples / Quotation
+            </h3>
+            <p className="text-[10px] font-poppins text-brand-sand/55 mt-1.5">
+              Submit your technical specification project requirements to receive physical samples.
+            </p>
+          </div>
+
+          <form onSubmit={handleInquirySubmit} className="space-y-4">
+            <div>
+              <label className="block text-[9px] uppercase font-bold tracking-wider text-brand-sand/55 mb-1 font-poppins">Full Name</label>
+              <input
+                type="text"
+                required
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                className="w-full bg-brand-black border border-brand-gold/10 rounded-none px-4 py-3 text-xs uppercase tracking-wider font-poppins text-brand-offwhite focus:outline-none focus:border-brand-gold"
+                placeholder="Enter name"
+              />
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className="block text-[9px] uppercase font-bold tracking-wider text-brand-sand/55 mb-1 font-poppins">Email</label>
+                <input
+                  type="email"
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full bg-brand-black border border-brand-gold/10 rounded-none px-4 py-3 text-xs uppercase tracking-wider font-poppins text-brand-offwhite focus:outline-none focus:border-brand-gold"
+                  placeholder="work email"
+                />
+              </div>
+              <div>
+                <label className="block text-[9px] uppercase font-bold tracking-wider text-brand-sand/55 mb-1 font-poppins">Phone</label>
+                <input
+                  type="tel"
+                  required
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  className="w-full bg-brand-black border border-brand-gold/10 rounded-none px-4 py-3 text-xs uppercase tracking-wider font-poppins text-brand-offwhite focus:outline-none focus:border-brand-gold"
+                  placeholder="phone"
+                />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className="block text-[9px] uppercase font-bold tracking-wider text-brand-sand/55 mb-1 font-poppins">Company</label>
+                <input
+                  type="text"
+                  required
+                  value={company}
+                  onChange={(e) => setCompany(e.target.value)}
+                  className="w-full bg-brand-black border border-brand-gold/10 rounded-none px-4 py-3 text-xs uppercase tracking-wider font-poppins text-brand-offwhite focus:outline-none focus:border-brand-gold"
+                  placeholder="firm name"
+                />
+              </div>
+              <div>
+                <label className="block text-[9px] uppercase font-bold tracking-wider text-brand-sand/55 mb-1 font-poppins">Role</label>
+                <select
+                  value={userRole}
+                  onChange={(e) => setUserRole(e.target.value)}
+                  className="w-full bg-brand-black border border-brand-gold/10 rounded-none px-4 py-3 text-xs uppercase tracking-wider font-poppins text-brand-offwhite focus:outline-none focus:border-brand-gold"
+                >
+                  <option>Architect</option>
+                  <option>Builder/Contractor</option>
+                  <option>Distributor/Dealer</option>
+                  <option>Engineer</option>
+                  <option>Developer</option>
+                  <option>Homeowner</option>
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-[9px] uppercase font-bold tracking-wider text-brand-sand/55 mb-1 font-poppins">Technical Inquiry Message</label>
+              <textarea
+                required
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                rows={4}
+                className="w-full bg-brand-black border border-brand-gold/10 rounded-none px-4 py-3 text-xs uppercase tracking-wider font-poppins text-brand-offwhite focus:outline-none focus:border-brand-gold resize-none"
+              />
+            </div>
+
+            <button
+              type="submit"
+              disabled={submitting}
+              className="w-full bg-brand-gold hover:bg-brand-sand disabled:bg-brand-gold/50 text-brand-black font-semibold py-4 rounded-none transition-colors cursor-pointer flex items-center justify-center gap-2 text-xs uppercase tracking-wider font-poppins border border-brand-gold"
+            >
+              {submitting ? (
+                <span className="w-5 h-5 rounded-full border-2 border-brand-black border-t-transparent animate-spin" />
+              ) : (
+                <>
+                  <Send className="w-4 h-4 shrink-0" />
+                  Submit Request
+                </>
+              )}
+            </button>
+          </form>
+        </div>
+      </section>
+
+      {/* SECTION 6: Sample CTA Band (Closing conversion path) */}
+      <section className="py-12 bg-brand-charcoal border-t border-brand-gold/10 text-center space-y-4">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-3">
+          <h3 className="text-xl sm:text-2xl font-normal font-cormorant text-brand-offwhite uppercase tracking-wider">
+            Confirm Sizing & Colors Locally
+          </h3>
+          <p className="text-xs text-brand-sand/70 max-w-xl mx-auto">
+            Clay materials vary naturally across kiln batches. We strongly advise architects to inspect real brick specimens before signing specifications.
+          </p>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
+            <button
+              onClick={() => scrollToIntarget("inquire")}
+              className="bg-brand-gold hover:bg-brand-sand text-brand-black font-semibold px-8 py-3.5 rounded-none text-xs uppercase tracking-widest font-poppins border border-brand-gold cursor-pointer"
+            >
+              Request a Sample
+            </button>
+            <button
+              onClick={() => scrollToIntarget("inquire")}
+              className="bg-transparent hover:bg-brand-gold/10 text-brand-gold hover:text-brand-offwhite font-semibold px-8 py-3.5 rounded-none text-xs uppercase tracking-widest font-poppins border border-brand-gold/30 hover:border-brand-gold transition-all cursor-pointer"
+            >
+              Quick Enquiry
+            </button>
+          </div>
+          <div className="pt-4">
+            <Link
+              href="/where-to-buy"
+              className="text-xs text-brand-sand hover:text-brand-gold font-semibold uppercase tracking-wider transition-colors inline-flex items-center gap-1.5"
+            >
+              Find an Authorized Dealer near you in India <ArrowRight className="w-3.5 h-3.5" />
+            </Link>
+          </div>
+        </div>
+      </section>
+
     </div>
   );
 }

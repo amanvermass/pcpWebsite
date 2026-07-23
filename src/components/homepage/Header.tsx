@@ -143,14 +143,14 @@ export const Header: React.FC<HeaderProps> = ({ darkMode, setDarkMode }) => {
 
   const productMenu = {
     categories: [
-      { name: "Clay Hollow Blocks", href: "/products?category=Hollow Blocks", icon: <HollowBlockIcon className="w-4 h-4" /> },
-      { name: "Facing Bricks (Extruded)", href: "/products?category=Clay Bricks", icon: <FacadeIcon className="w-4 h-4" /> },
-      { name: "Handmade Bricks", href: "/products?category=Clay Bricks", icon: <FacadeIcon className="w-4 h-4" /> },
-      { name: "Linea Handmade Series", href: "/products?category=Clay Bricks", icon: <FacadeIcon className="w-4 h-4" /> },
-      { name: "Cladding Bricks & Tiles", href: "/products?category=Terracotta", icon: <FacadeIcon className="w-4 h-4" /> },
-      { name: "Clay Pavers", href: "/products?category=Pavers", icon: <PaversIcon className="w-4 h-4" /> },
-      { name: "Roofing Tiles", href: "/products?category=Roofing Tiles", icon: <RoofingIcon className="w-4 h-4" /> },
-      { name: "Terraplast", href: "/products?category=Terraplasts", icon: <AACBlockIcon className="w-4 h-4" /> }
+      { name: "Clay Hollow Blocks", href: "/products/ecotherm-clay-hollow-blocks", icon: <HollowBlockIcon className="w-4 h-4" /> },
+      { name: "Facing Bricks (Extruded)", href: "/products/facing-bricks", icon: <FacadeIcon className="w-4 h-4" /> },
+      { name: "Handmade Bricks", href: "/products/traditional-handmade-bricks", icon: <FacadeIcon className="w-4 h-4" /> },
+      { name: "Linea Handmade Series", href: "/products/linea-series", icon: <FacadeIcon className="w-4 h-4" /> },
+      { name: "Cladding Bricks & Tiles", href: "/products/cladding-bricks-tiles", icon: <FacadeIcon className="w-4 h-4" /> },
+      { name: "Clay Pavers", href: "/products/clay-pavers", icon: <PaversIcon className="w-4 h-4" /> },
+      { name: "Roofing Tiles", href: "/products/roofing-tiles", icon: <RoofingIcon className="w-4 h-4" /> },
+      { name: "Terraplast", href: "/products/terraplast", icon: <AACBlockIcon className="w-4 h-4" /> }
     ] as { name: string; href: string; icon: React.ReactNode; isNew?: boolean }[],
     downloads: [
       { name: "TDS", label: "Technical Data Sheets", href: "/resources?type=Technical Datasheet", icon: <FileText className="w-5 h-5" /> },
@@ -158,11 +158,11 @@ export const Header: React.FC<HeaderProps> = ({ darkMode, setDarkMode }) => {
       { name: "CAD", label: "CAD Drawings & Details", href: "/resources?type=CAD Detail", icon: <LayoutGrid className="w-5 h-5" /> }
     ],
     applications: [
-      { name: "Structural Walling", href: "/products?category=Hollow Blocks", icon: <Building2 className="w-4 h-4" /> },
-      { name: "Facades & Cladding", href: "/products?category=Terracotta", icon: <FacadeIcon className="w-4 h-4" /> },
-      { name: "Flooring & Paving", href: "/products?category=Pavers", icon: <PaversIcon className="w-4 h-4" /> },
-      { name: "Roofing", href: "/products?category=Roofing Tiles", icon: <RoofingIcon className="w-4 h-4" /> },
-      { name: "Clay Plaster (Terraplast)", href: "/products?category=Terraplasts", icon: <AACBlockIcon className="w-4 h-4" /> },
+      { name: "Structural Walling", href: "/products/applications/structural-walling", icon: <Building2 className="w-4 h-4" /> },
+      { name: "Facades & Cladding", href: "/products/applications/facades-cladding", icon: <FacadeIcon className="w-4 h-4" /> },
+      { name: "Flooring & Paving", href: "/products/clay-pavers", icon: <PaversIcon className="w-4 h-4" /> },
+      { name: "Roofing", href: "/products/roofing-tiles", icon: <RoofingIcon className="w-4 h-4" /> },
+      { name: "Clay Plaster (Terraplast)", href: "/products/terraplast", icon: <AACBlockIcon className="w-4 h-4" /> },
       { name: "Sustainable Building", href: "/#sustainability-strip", icon: <Leaf className="w-4 h-4" /> }
     ] as { name: string; href: string; icon: React.ReactNode; highlightSuffix?: string; isComingSoon?: boolean }[]
   };
@@ -719,12 +719,13 @@ export const Header: React.FC<HeaderProps> = ({ darkMode, setDarkMode }) => {
                   All Products Catalog
                 </button>
                 <div className="pl-4 flex flex-col gap-1 mt-1">
-                  <button onClick={() => handleLinkClick("/products?category=Clay Bricks")} className="text-left text-[11px] text-brand-sand/70 py-1 hover:text-brand-gold transition-colors">Facing & Handmade Bricks</button>
-                  <button onClick={() => handleLinkClick("/products?category=Terracotta")} className="text-left text-[11px] text-brand-sand/70 py-1 hover:text-brand-gold transition-colors">Facades & Cladding</button>
-                  <button onClick={() => handleLinkClick("/products?category=Pavers")} className="text-left text-[11px] text-brand-sand/70 py-1 hover:text-brand-gold transition-colors">Flooring & Clay Pavers</button>
-                  <button onClick={() => handleLinkClick("/products?category=Roofing Tiles")} className="text-left text-[11px] text-brand-sand/70 py-1 hover:text-brand-gold transition-colors">Roofing Tiles</button>
-                  <button onClick={() => handleLinkClick("/products?category=Hollow Blocks")} className="text-left text-[11px] text-brand-sand/70 py-1 hover:text-brand-gold transition-colors">Hollow Blocks (Walling)</button>
-                  <button onClick={() => handleLinkClick("/products?category=Terraplasts")} className="text-left text-[11px] text-brand-sand/70 py-1 hover:text-brand-gold transition-colors">Terraplast Wall Finish</button>
+                  <button onClick={() => handleLinkClick("/products/facing-bricks")} className="text-left text-[11px] text-brand-sand/70 py-1 hover:text-brand-gold transition-colors">Facing & Extruded Bricks</button>
+                  <button onClick={() => handleLinkClick("/products/traditional-handmade-bricks")} className="text-left text-[11px] text-brand-sand/70 py-1 hover:text-brand-gold transition-colors">Handmade Heritage Bricks</button>
+                  <button onClick={() => handleLinkClick("/products/applications/facades-cladding")} className="text-left text-[11px] text-brand-sand/70 py-1 hover:text-brand-gold transition-colors">Facades & Cladding</button>
+                  <button onClick={() => handleLinkClick("/products/clay-pavers")} className="text-left text-[11px] text-brand-sand/70 py-1 hover:text-brand-gold transition-colors">Flooring & Clay Pavers</button>
+                  <button onClick={() => handleLinkClick("/products/roofing-tiles")} className="text-left text-[11px] text-brand-sand/70 py-1 hover:text-brand-gold transition-colors">Roofing Tiles</button>
+                  <button onClick={() => handleLinkClick("/products/applications/structural-walling")} className="text-left text-[11px] text-brand-sand/70 py-1 hover:text-brand-gold transition-colors">Hollow Blocks (Walling)</button>
+                  <button onClick={() => handleLinkClick("/products/terraplast")} className="text-left text-[11px] text-brand-sand/70 py-1 hover:text-brand-gold transition-colors">Terraplast Wall Finish</button>
                 </div>
               </div>
 

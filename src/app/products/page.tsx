@@ -58,32 +58,32 @@ function CatalogContent() {
       {/* Parallax Hero Banner */}
       <div
         ref={heroRef}
-        className="relative h-[55vh] md:h-[65vh] w-full flex items-center overflow-hidden bg-black"
+        className="relative h-[55vh] md:h-[65vh] w-full flex items-center overflow-hidden bg-brand-slate-950"
       >
         <motion.div
           style={{ y: heroImageY }}
-          className="absolute inset-0 z-0 scale-[1.08] opacity-40"
+          className="absolute inset-0 z-0 scale-100 opacity-90"
         >
           <img
-            src="/images/hero-1.jpg"
-            alt="Luxury modern architecture facade grid"
-            className="w-full h-full object-cover"
+            src="/images/projects/project-48.jpg"
+            alt="Commercial facade architectural grid"
+            className="w-full h-full object-cover object-center"
           />
         </motion.div>
 
-        {/* Dark Vignette Mask */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#121110] via-[#121110]/75 to-transparent z-10" />
-
         {/* Hero content */}
         <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-          <motion.div style={{ y: heroTextY }} className="max-w-3xl">
-            <span className="text-[10px] uppercase font-bold tracking-[0.35em] text-brand-gold bg-brand-gold/5 px-4 py-1.5 border border-brand-gold/20 rounded-none w-fit block mb-4">
+          <motion.div 
+            style={{ y: heroTextY }} 
+            className="max-w-2xl bg-brand-charcoal/60 border border-brand-gold/15 p-8 md:p-10 backdrop-blur-md"
+          >
+            <span className="text-[10px] uppercase font-bold tracking-[0.35em] text-brand-gold bg-brand-gold/10 px-4 py-1.5 border border-brand-gold/20 rounded-none w-fit block mb-4">
               PCP Materials Library
             </span>
-            <h1 className="text-4xl sm:text-6xl font-normal font-cormorant text-[#faf6f2] tracking-wide leading-tight mt-2">
+            <h1 className="text-3xl sm:text-5xl font-normal font-cormorant text-brand-offwhite tracking-wide leading-tight mt-2">
               Architectural Product Catalog
             </h1>
-            <p className="text-brand-sand-400 mt-4 text-sm sm:text-base font-poppins leading-relaxed max-w-2xl">
+            <p className="text-brand-sand/90 mt-4 text-xs sm:text-sm font-poppins leading-relaxed max-w-xl">
               Browse our high-performance building materials, structural components, and masonry solutions designed for next-generation architectural projects.
             </p>
           </motion.div>
