@@ -36,17 +36,11 @@ const YouTubeIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
   </svg>
 );
 
-export const Footer: React.FC = () => {
-  const { toast } = useToast();
-  const [newsletterEmail, setNewsletterEmail] = useState("");
+interface FooterProps {
+  showCTA?: boolean;
+}
 
-  const handleNewsletterSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!newsletterEmail) return;
-    toast("Thank you! You have subscribed to the Technical Architectural bulletin.", "success");
-    setNewsletterEmail("");
-  };
-
+export const Footer: React.FC<FooterProps> = ({ showCTA = true }) => {
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
@@ -55,231 +49,164 @@ export const Footer: React.FC = () => {
   };
 
   return (
-    <footer className="bg-brand-slate pt-20 pb-12 relative z-10 border-t border-brand-slate-600/10 text-brand-slate-200 font-poppins">
-      {/* Structural background lines */}
-      <div className="absolute inset-0 pointer-events-none z-0 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-4 h-full opacity-10">
-        <div className="border-l border-brand-charcoal h-full" />
-        <div className="border-l border-brand-charcoal h-full" />
-        <div className="border-l border-brand-charcoal h-full" />
-        <div className="border-l border-brand-charcoal h-full border-r" />
-      </div>
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        
-        {/* Top Branding Statement & Back to Top Header Block */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center pb-8 border-b border-brand-charcoal/10 mb-12 gap-6">
-          <div className="flex flex-col gap-2">
-            <span className="text-[9px] uppercase font-bold tracking-[0.35em] text-brand-terracotta font-poppins">
-              BRAND PHILOSOPHY
-            </span>
-            <h2 className="text-xl sm:text-2xl lg:text-3xl font-light font-cormorant text-brand-offwhite leading-tight uppercase tracking-wider">
-              Clay Is Our Heritage. Architecture Is Our Canvas.
-            </h2>
-          </div>
-          <button
-            onClick={scrollToTop}
-            className="flex items-center gap-2 text-[9px] uppercase tracking-widest font-bold font-poppins text-brand-offwhite hover:text-brand-gold transition-colors cursor-pointer group"
-          >
-            <span>Back to top</span>
-            <div className="p-1.5 border border-brand-gold/20 group-hover:border-brand-gold transition-colors">
-              <ArrowUp className="w-3.5 h-3.5 text-brand-gold" />
+    <footer className={`bg-brand-black border-t border-brand-gold/10 relative z-10 text-brand-slate-200 font-poppins ${showCTA ? 'pt-32 md:pt-40 lg:pt-44' : 'pt-20'} pb-12`}>
+      
+      {/* Overlapping CTA Card */}
+      {showCTA && (
+        <div className="absolute top-0 left-0 right-0 transform -translate-y-1/2 z-20 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="relative overflow-hidden bg-brand-charcoal border border-brand-gold/25 p-8 md:p-12 shadow-2xl flex flex-col md:flex-row items-center justify-between gap-8 rounded-none">
+            {/* Background Image of project */}
+            <div className="absolute inset-0 z-0">
+              <img
+                src="/images/projects/project-48.jpg"
+                alt="Featured architectural project facade - PCP India"
+                className="w-full h-full object-cover object-center opacity-25"
+              />
+              <div className="absolute inset-0 bg-gradient-to-r from-brand-black via-brand-black/90 to-transparent" />
             </div>
-          </button>
-        </div>
-
-        {/* Newsletter subscription panel - White-Contrast Card overlay */}
-        <div className="w-full bg-brand-charcoal border border-brand-slate/40 p-6 sm:p-8 rounded-none flex flex-col lg:flex-row items-center justify-between gap-6 mb-16 shadow-sm relative z-10">
-          <div className="flex flex-col gap-1.5 text-left max-w-xl">
-            <span className="text-[9px] uppercase font-bold tracking-[0.25em] text-brand-gold font-poppins">
-              ARCHITECTURAL DISPATCH
-            </span>
-            <h3 className="text-lg font-normal font-cormorant text-brand-offwhite leading-tight">
-              Subscribe to get technical bulletins, brick quantity calculators, and product blueprints.
-            </h3>
+            
+            {/* CTA Text */}
+            <div className="relative z-10 space-y-2 text-left">
+              <h3 className="text-2xl sm:text-3xl font-normal font-cormorant text-brand-offwhite leading-tight uppercase tracking-wider">
+                Experience Fired Clay Excellence
+              </h3>
+              <p className="text-xs sm:text-sm font-poppins text-brand-sand/70 max-w-md">
+                Heritage craftsmanship since 1937. Request our physical spec catalogs and sample blocks today.
+              </p>
+            </div>
+            
+            {/* CTA Button */}
+            <div className="relative z-10 shrink-0">
+              <Link
+                href="/contact"
+                className="inline-flex items-center justify-center bg-brand-gold hover:bg-brand-sand text-brand-black font-bold px-8 py-3.5 rounded-none text-xs uppercase tracking-widest font-poppins transition-colors duration-300"
+              >
+                Get Started
+              </Link>
+            </div>
           </div>
-          
-          <form onSubmit={handleNewsletterSubmit} className="flex gap-2 w-full lg:w-auto shrink-0 max-w-md">
-            <input
-              type="email"
-              placeholder="Enter your work email"
-              value={newsletterEmail}
-              onChange={(e) => setNewsletterEmail(e.target.value)}
-              className="bg-brand-black border border-brand-slate rounded-none px-4 py-3 text-xs uppercase tracking-widest font-poppins text-brand-offwhite focus:outline-none focus:border-brand-gold w-full lg:w-64"
-              required
-            />
-            <button
-              type="submit"
-              className="px-6 py-3 bg-brand-gold text-brand-black hover:bg-brand-sand transition-colors duration-300 font-bold uppercase tracking-wider text-xs cursor-pointer border border-brand-gold flex items-center gap-2 shrink-0"
-            >
-              <span>SUBSCRIBE</span>
-              <ArrowRight className="w-3.5 h-3.5" />
-            </button>
-          </form>
         </div>
+      )}
 
-        {/* Main Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 pt-2">
+      {/* Main Footer Container */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 mt-4">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 pt-4">
           
-          {/* Left Side Column: Logo, credentials, & copyright */}
-          <div className="col-span-12 lg:col-span-4 flex flex-col justify-between h-full min-h-[200px] text-left">
+          {/* Left Column: Brand Coordinates, Contact Address, Phones, Emails */}
+          <div className="col-span-12 lg:col-span-5 space-y-8 text-left">
+            <div className="space-y-4">
+              <Logo height="40" />
+              <p className="text-[11px] font-poppins text-brand-sand/70 leading-relaxed max-w-sm">
+                Engineering high-performance structural building envelopes and heritage clay facing solutions since 1937.
+              </p>
+            </div>
+
+            {/* Coordinates & Addresses side by side */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-xs text-brand-sand/80 font-poppins">
+              <div className="space-y-1">
+                <span className="text-[9px] uppercase tracking-wider text-brand-gold font-bold block">Varanasi HQ</span>
+                <span className="text-[8px] text-brand-terracotta font-bold font-mono block">25.3176° N, 82.9739° E</span>
+                <p className="text-[11px] leading-relaxed text-brand-sand/65">
+                  Vill. Hariharpur, Off Ring Road Ph-1,<br />
+                  Shivpur, Varanasi, UP, India 221003
+                </p>
+              </div>
+
+              <div className="space-y-1">
+                <span className="text-[9px] uppercase tracking-wider text-brand-gold font-bold block">Noida Sales Office</span>
+                <span className="text-[8px] text-brand-terracotta font-bold font-mono block">28.6273° N, 77.3725° E</span>
+                <p className="text-[11px] leading-relaxed text-brand-sand/65">
+                  Sector 62, Noida,<br />
+                  Uttar Pradesh, India 201301
+                </p>
+              </div>
+            </div>
+
+            {/* Phone & Email Display blocks (side-by-side) */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-xs text-brand-sand/80 border-t border-brand-gold/10 pt-6">
+              <div className="space-y-1">
+                <span className="text-[9px] uppercase tracking-wider text-brand-gold font-bold block">Phone Numbers</span>
+                <a href="tel:+919936011176" className="block text-brand-offwhite hover:text-brand-gold transition-colors font-bold">+91 99360 11176</a>
+                <a href="tel:+919935534218" className="block text-brand-offwhite hover:text-brand-gold transition-colors font-bold">+91 99355 34218</a>
+              </div>
+
+              <div className="space-y-1">
+                <span className="text-[9px] uppercase tracking-wider text-brand-gold font-bold block">Email Enquiries</span>
+                <a href="mailto:info@pcpindia.com" className="block text-brand-offwhite hover:text-brand-gold transition-colors font-bold">info@pcpindia.com</a>
+                <a href="mailto:export@pcpindia.com" className="block text-brand-offwhite hover:text-brand-gold transition-colors font-bold">export@pcpindia.com</a>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Column: 3 Link Blocks */}
+          <div className="col-span-12 lg:col-span-7 grid grid-cols-1 sm:grid-cols-3 gap-8 text-left">
+            
+            {/* Column 1: Quick Links */}
             <div>
-              <Logo height="42" />
-              <p className="text-[11px] font-poppins text-brand-slate-200 leading-relaxed mt-4 max-w-[280px]">
-                Engineering structural building envelopes with premium terracotta solutions since 1937.
-              </p>
-              
-              {/* Technical / Certification credentials */}
-              <div className="flex flex-wrap items-center gap-3 mt-6">
-                <div className="w-10 h-10 bg-white p-1 rounded-none flex items-center justify-center shrink-0 border border-brand-slate-800/10">
-                  <img src="/images/certifications/logo-epd.png" alt="EPD Certified" className="w-full h-full object-contain" />
-                </div>
-                <div className="w-10 h-10 bg-white p-1 rounded-none flex items-center justify-center shrink-0 border border-brand-slate-800/10">
-                  <img src="/images/certifications/logo-griha.jpg" alt="GRIHA Listed" className="w-full h-full object-contain" />
-                </div>
-                <div className="w-10 h-10 bg-white p-1 rounded-none flex items-center justify-center shrink-0 border border-brand-slate-800/10">
-                  <img src="/images/certifications/logo-iso.png" alt="ISO Certified" className="w-full h-full object-contain" />
-                </div>
-                <div className="w-10 h-10 bg-white p-1 rounded-none flex items-center justify-center shrink-0 border border-brand-slate-800/10">
-                  <img src="/images/certifications/logo-makeinindia.png" alt="Make in India" className="w-full h-full object-contain" />
-                </div>
-                <div className="w-10 h-10 bg-white p-1 rounded-none flex items-center justify-center shrink-0 border border-brand-slate-800/10">
-                  <img src="/images/certifications/logo-sustainability.png" alt="Sustainability" className="w-full h-full object-contain" />
-                </div>
-              </div>
-            </div>
-            
-            <div className="space-y-2 mt-8 lg:mt-12">
-              <p className="text-[10px] font-poppins text-brand-slate-300 leading-relaxed">
-                Prayag Clay Products &copy; 2026. All Rights Reserved.
-              </p>
-              <p className="text-[9px] font-poppins text-brand-slate-300/50 leading-relaxed">
-                Varanasi Web Development -{" "}
-                <a 
-                  href="https://kvtechmedia.com" 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  className="text-brand-offwhite hover:text-brand-gold transition-colors underline underline-offset-2"
-                >
-                  KV TechMedia
-                </a>
-              </p>
-            </div>
-          </div>
-
-          {/* Right Side Column: Navigation Links, Coordinates, Say Hello */}
-          <div className="col-span-12 lg:col-span-8 flex flex-col gap-8">
-            
-            {/* Top Social Links Row */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pb-6 border-b border-brand-charcoal/10">
-              <a href="#" className="flex items-center justify-center gap-2.5 border border-brand-gold/15 hover:border-brand-gold py-3 px-4 bg-brand-charcoal hover:bg-brand-gold text-brand-offwhite hover:text-brand-black transition-all duration-300 text-[9px] font-bold uppercase tracking-widest font-poppins">
-                <FacebookIcon className="w-3.5 h-3.5" />
-                <span>Facebook</span>
-              </a>
-              <a href="#" className="flex items-center justify-center gap-2.5 border border-brand-gold/15 hover:border-brand-gold py-3 px-4 bg-brand-charcoal hover:bg-brand-gold text-brand-offwhite hover:text-brand-black transition-all duration-300 text-[9px] font-bold uppercase tracking-widest font-poppins">
-                <InstagramIcon className="w-3.5 h-3.5" />
-                <span>Instagram</span>
-              </a>
-              <a href="#" className="flex items-center justify-center gap-2.5 border border-brand-gold/15 hover:border-brand-gold py-3 px-4 bg-brand-charcoal hover:bg-brand-gold text-brand-offwhite hover:text-brand-black transition-all duration-300 text-[9px] font-bold uppercase tracking-widest font-poppins">
-                <LinkedInIcon className="w-3.5 h-3.5" />
-                <span>LinkedIn</span>
-              </a>
-              <a href="#" className="flex items-center justify-center gap-2.5 border border-brand-gold/15 hover:border-brand-gold py-3 px-4 bg-brand-charcoal hover:bg-brand-gold text-brand-offwhite hover:text-brand-black transition-all duration-300 text-[9px] font-bold uppercase tracking-widest font-poppins">
-                <YouTubeIcon className="w-3.5 h-3.5" />
-                <span>YouTube</span>
-              </a>
+              <h4 className="text-[10px] uppercase font-bold tracking-[0.25em] text-brand-gold mb-5">
+                Quick Links
+              </h4>
+              <ul className="flex flex-col gap-3.5 text-xs font-poppins">
+                <li><Link href="/" className="text-brand-sand/80 hover:text-brand-gold transition-colors">Home</Link></li>
+                <li><Link href="/about" className="text-brand-sand/80 hover:text-brand-gold transition-colors">About Us</Link></li>
+                <li><Link href="/products" className="text-brand-sand/80 hover:text-brand-gold transition-colors">Products Catalog</Link></li>
+                <li><Link href="/projects" className="text-brand-sand/80 hover:text-brand-gold transition-colors">Signature Projects</Link></li>
+                <li><Link href="/calculators" className="text-brand-sand/80 hover:text-brand-gold transition-colors">Walling Estimators</Link></li>
+              </ul>
             </div>
 
-            {/* Links Group Columns */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 pt-2 text-left">
-              
-              {/* Column 1: OUR WEBSITE */}
-              <div>
-                <h6 className="font-poppins text-uppercase text-[10px] font-bold tracking-[0.25em] text-brand-terracotta mb-5">
-                  OUR WEBSITE
-                </h6>
-                <ul className="flex flex-col gap-3.5 text-xs font-poppins">
-                  <li><Link href="/" className="text-brand-slate-200 hover:text-brand-gold transition-colors duration-200 relative after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-0 hover:after:w-full after:bg-brand-gold after:transition-all after:duration-300 pb-0.5">Home</Link></li>
-                  <li><Link href="/about" className="text-brand-slate-200 hover:text-brand-gold transition-colors duration-200 relative after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-0 hover:after:w-full after:bg-brand-gold after:transition-all after:duration-300 pb-0.5">About Us</Link></li>
-                  <li><Link href="/inspiration" className="text-brand-slate-200 hover:text-brand-gold transition-colors duration-200 relative after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-0 hover:after:w-full after:bg-brand-gold after:transition-all after:duration-300 pb-0.5">Inspiration</Link></li>
-                  <li><Link href="/enquiry" className="text-brand-slate-200 hover:text-brand-gold transition-colors duration-200 relative after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-0 hover:after:w-full after:bg-brand-gold after:transition-all after:duration-300 pb-0.5">Business Enquiry</Link></li>
-                  <li><Link href="/privacy" className="text-brand-slate-200 hover:text-brand-gold transition-colors duration-200 relative after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-0 hover:after:w-full after:bg-brand-gold after:transition-all after:duration-300 pb-0.5">Privacy Policy</Link></li>
-                </ul>
-              </div>
+            {/* Column 2: Social coordinates */}
+            <div>
+              <h4 className="text-[10px] uppercase font-bold tracking-[0.25em] text-brand-gold mb-5">
+                Social Links
+              </h4>
+              <ul className="flex flex-col gap-3.5 text-xs font-poppins">
+                <li><a href="#" className="text-brand-sand/80 hover:text-brand-gold transition-colors">Facebook</a></li>
+                <li><a href="#" className="text-brand-sand/80 hover:text-brand-gold transition-colors">Instagram</a></li>
+                <li><a href="#" className="text-brand-sand/80 hover:text-brand-gold transition-colors">LinkedIn</a></li>
+                <li><a href="#" className="text-brand-sand/80 hover:text-brand-gold transition-colors">YouTube</a></li>
+              </ul>
+            </div>
 
-              {/* Column 2: EXPLORE */}
-              <div>
-                <h6 className="font-poppins text-uppercase text-[10px] font-bold tracking-[0.25em] text-brand-terracotta mb-5">
-                  EXPLORE
-                </h6>
-                <ul className="flex flex-col gap-3.5 text-xs font-poppins">
-                  <li><Link href="/products" className="text-brand-slate-200 hover:text-brand-gold transition-colors duration-200 relative after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-0 hover:after:w-full after:bg-brand-gold after:transition-all after:duration-300 pb-0.5">Products</Link></li>
-                  <li><Link href="/projects" className="text-brand-slate-200 hover:text-brand-gold transition-colors duration-200 relative after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-0 hover:after:w-full after:bg-brand-gold after:transition-all after:duration-300 pb-0.5">Projects</Link></li>
-                  <li><Link href="/dealers" className="text-brand-slate-200 hover:text-brand-gold transition-colors duration-200 relative after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-0 hover:after:w-full after:bg-brand-gold after:transition-all after:duration-300 pb-0.5">Where to buy</Link></li>
-                  <li><Link href="/contact" className="text-brand-slate-200 hover:text-brand-gold transition-colors duration-200 relative after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-0 hover:after:w-full after:bg-brand-gold after:transition-all after:duration-300 pb-0.5">Contacts</Link></li>
-                </ul>
-              </div>
-
-              {/* Column 3: SAY HELLO & GEOGRAPHY */}
-              <div className="space-y-6">
-                <div>
-                  <h6 className="font-poppins text-uppercase text-[10px] font-bold tracking-[0.25em] text-brand-terracotta mb-3">
-                    SAY HELLO
-                  </h6>
-                  <ul className="flex flex-col gap-2.5 text-xs font-poppins">
-                    <li>
-                      <span className="text-[9px] uppercase tracking-wider text-brand-sand/50 block font-poppins">Domestic Inquiries</span>
-                      <a href="mailto:info@pcpindia.com" className="font-semibold text-brand-offwhite hover:text-brand-gold transition-colors duration-200 underline underline-offset-4">
-                        info@pcpindia.com
-                      </a>
-                    </li>
-                    <li>
-                      <span className="text-[9px] uppercase tracking-wider text-brand-sand/50 block font-poppins">Export Specifications</span>
-                      <a href="mailto:export@pcpindia.com" className="font-semibold text-brand-offwhite hover:text-brand-gold transition-colors duration-200 underline underline-offset-4">
-                        export@pcpindia.com
-                      </a>
-                    </li>
-                    <li>
-                      <span className="text-[9px] uppercase tracking-wider text-brand-sand/50 block font-poppins">Call Specifications Desk</span>
-                      <a href="tel:+919936011176" className="text-brand-slate-200 hover:text-brand-gold transition-colors duration-200 block">
-                        +91 99360 11176
-                      </a>
-                      <a href="tel:+919935534218" className="text-brand-slate-200 hover:text-brand-gold transition-colors duration-200 block">
-                        +91 99355 34218
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-                
-                <div>
-                  <h6 className="font-poppins text-uppercase text-[10px] font-bold tracking-[0.25em] text-brand-terracotta mb-3">
-                    REACH US
-                  </h6>
-                  <div className="text-[10.5px] font-poppins text-brand-slate-200 leading-relaxed space-y-3">
-                    <div className="space-y-0.5">
-                      <p className="font-semibold text-brand-offwhite text-xs">Varanasi Headquarters</p>
-                      <p className="text-[8.5px] text-brand-terracotta font-bold tracking-wider uppercase font-mono">25.3176° N, 82.9739° E</p>
-                      <p className="text-[10px] leading-relaxed">
-                        Vill. Hariharpur, Off Ring Road Ph-1,<br />
-                        Shivpur, Varanasi, UP, India 221003
-                      </p>
-                    </div>
-                    
-                    <div className="space-y-0.5 pt-1.5 border-t border-brand-charcoal/10">
-                      <p className="font-semibold text-brand-offwhite text-xs">Noida Sales Office</p>
-                      <p className="text-[8.5px] text-brand-terracotta font-bold tracking-wider uppercase font-mono">28.6273° N, 77.3725° E</p>
-                      <p className="text-[10px] leading-relaxed">
-                        Sector 62, Noida,<br />
-                        Uttar Pradesh, India 201301
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
+            {/* Column 3: Legal compliance */}
+            <div>
+              <h4 className="text-[10px] uppercase font-bold tracking-[0.25em] text-brand-gold mb-5">
+                Legal
+              </h4>
+              <ul className="flex flex-col gap-3.5 text-xs font-poppins">
+                <li><Link href="/terms" className="text-brand-sand/80 hover:text-brand-gold transition-colors">Terms of Service</Link></li>
+                <li><Link href="/privacy" className="text-brand-sand/80 hover:text-brand-gold transition-colors">Privacy Policy</Link></li>
+                <li><Link href="/cookies" className="text-brand-sand/80 hover:text-brand-gold transition-colors">Cookie Policy</Link></li>
+              </ul>
             </div>
 
           </div>
 
+        </div>
+
+        {/* Footer Bottom copyright and developer credits */}
+        <div className="border-t border-brand-gold/10 mt-16 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-[10px] text-brand-sand/50 font-poppins">
+          <p>© 2026 Prayag Clay Products. All rights reserved.</p>
+          <div className="flex items-center gap-4">
+            <button
+              onClick={scrollToTop}
+              className="text-[9px] uppercase tracking-widest font-bold font-poppins text-brand-sand hover:text-brand-gold transition-colors cursor-pointer"
+            >
+              Back to Top ↑
+            </button>
+            <span className="text-brand-gold/20">|</span>
+            <p>
+              Varanasi Web Development -{" "}
+              <a 
+                href="https://kvtechmedia.com" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="text-brand-sand/80 hover:text-brand-gold transition-colors underline underline-offset-2"
+              >
+                KV TechMedia
+              </a>
+            </p>
+          </div>
         </div>
 
       </div>

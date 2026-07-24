@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef, Suspense } from "react";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import { Header } from "@/components/homepage/Header";
 import { Footer } from "@/components/homepage/Footer";
 import { products, Product } from "@/data/products";
@@ -115,7 +115,7 @@ function CatalogContent() {
       </div>
 
       {/* Main catalog view */}
-      <main className="flex-grow max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-16 z-10">
+      <main className="flex-grow max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 pt-16 pb-32 md:pb-40 lg:pb-48 z-10">
         <div className="space-y-8">
           {isLoading ? (
             /* Skeletal Loading Grid */
@@ -331,6 +331,7 @@ const ProductCardSkeleton: React.FC<{ index: number }> = ({ index }) => {
 };
 
 function ProductCard({ product, index, onQuickView }: { product: Product; index: number; onQuickView: (p: Product) => void }) {
+  const router = useRouter();
   const cardRef = useRef<HTMLDivElement>(null);
 
   // 3D tilt coordinates
@@ -369,12 +370,13 @@ function ProductCard({ product, index, onQuickView }: { product: Product; index:
     >
       <motion.div
         ref={cardRef}
+        onClick={() => router.push(`/products/${product.id}`)}
         style={{
           rotateX,
           rotateY,
           transformStyle: "preserve-3d"
         }}
-        className="group rounded-none border border-brand-gold/10 bg-brand-charcoal flex flex-col justify-between hover:border-brand-gold/45 hover:shadow-[0_0_25px_rgba(197,139,69,0.12)] transition-[border-color,box-shadow] ease-out duration-300 cursor-pointer"
+        className="group rounded-none border border-brand-gold/10 bg-brand-charcoal flex flex-col justify-between hover:border-brand-gold/45 hover:shadow-[0_0_25px_rgba(197,139,69,0.12)] transition-[border-color,box-shadow] ease-out duration-300 cursor-pointer text-left"
       >
         <div className={`relative ${aspectClass} w-full overflow-hidden bg-brand-black border-b border-brand-gold/10`}>
           <ImageReveal>
@@ -391,7 +393,10 @@ function ProductCard({ product, index, onQuickView }: { product: Product; index:
           {/* Quick view spec trigger */}
           <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
             <button
-              onClick={() => onQuickView(product)}
+              onClick={(e) => {
+                e.stopPropagation();
+                onQuickView(product);
+              }}
               className="p-3 bg-brand-gold border border-brand-gold text-brand-black hover:scale-110 transition-transform cursor-pointer rounded-none"
               title="Quick View Technical Specs"
             >
@@ -402,7 +407,7 @@ function ProductCard({ product, index, onQuickView }: { product: Product; index:
 
         <div className="p-6 flex-grow flex flex-col justify-between" style={{ transform: "translateZ(20px)" }}>
           <div>
-            <Link href={`/products/${product.id}`}>
+            <Link href={`/products/${product.id}`} onClick={(e) => e.stopPropagation()}>
               <h3 className="text-xl font-normal font-cormorant text-brand-offwhite group-hover:text-brand-gold transition-colors leading-tight">
                 {product.name}
               </h3>
@@ -415,13 +420,17 @@ function ProductCard({ product, index, onQuickView }: { product: Product; index:
           <div className="mt-6 flex items-center gap-3 pt-4 border-t border-brand-gold/10">
             <Link
               href={`/products/${product.id}`}
+              onClick={(e) => e.stopPropagation()}
               className="flex-1 text-center py-3 rounded-none text-[10px] uppercase font-poppins tracking-wider font-semibold bg-brand-black text-brand-sand hover:text-brand-offwhite border border-brand-gold/15 hover:border-brand-gold/50 transition-colors cursor-pointer"
             >
               Full details
             </Link>
 
             <button
-              onClick={() => onQuickView(product)}
+              onClick={(e) => {
+                e.stopPropagation();
+                onQuickView(product);
+              }}
               className="flex-1 flex items-center justify-center gap-1.5 py-3 rounded-none text-[10px] uppercase font-poppins tracking-wider font-semibold bg-brand-gold/10 text-brand-gold hover:bg-brand-gold hover:text-brand-black transition-colors border border-brand-gold/30 hover:border-brand-gold cursor-pointer"
             >
               Specs Info

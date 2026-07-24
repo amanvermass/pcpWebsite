@@ -7,7 +7,7 @@ import { Product, products } from "@/data/products";
 import { projects } from "@/data/projects";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowLeft, ArrowRight, Download, Send, Ruler, FileText, HardHat, FileSpreadsheet, Calculator, CheckCircle2, Info } from "lucide-react";
+import { ArrowLeft, ArrowRight, Download, Send, Ruler, FileText, HardHat, FileSpreadsheet, Calculator, CheckCircle2, Info, X } from "lucide-react";
 import { ToastProvider, useToast } from "@/components/ui/Toast";
 import confetti from "canvas-confetti";
 import { Magnetic } from "@/components/ui/Magnetic";
@@ -71,6 +71,7 @@ function DetailContent({ product }: ProductDetailClientProps) {
   const [activeImageIdx, setActiveImageIdx] = useState(0);
 
   // Form states
+  const [isEnquiryOpen, setIsEnquiryOpen] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -160,6 +161,7 @@ function DetailContent({ product }: ProductDetailClientProps) {
       setCompany("");
       setState("");
       setCity("");
+      setIsEnquiryOpen(false);
     }, 1200);
   };
 
@@ -311,7 +313,7 @@ function DetailContent({ product }: ProductDetailClientProps) {
               {/* Action and Disclaimer */}
               <div className="space-y-3 pt-4 border-t border-brand-gold/10">
                 <button
-                  onClick={() => scrollToIntarget("inquire")}
+                  onClick={() => setIsEnquiryOpen(true)}
                   className="w-full bg-brand-gold hover:bg-brand-sand text-brand-black font-semibold py-4 rounded-none transition-colors cursor-pointer flex items-center justify-center gap-2 text-xs uppercase tracking-wider font-poppins border border-brand-gold"
                 >
                   Request a Sample
@@ -321,19 +323,45 @@ function DetailContent({ product }: ProductDetailClientProps) {
                 </span>
               </div>
 
-              {/* Use-Case Tags */}
-              <div className="pt-4 border-t border-brand-gold/10">
-                <span className="block text-[9px] uppercase tracking-wider text-brand-sand/40 font-bold mb-2">Recommended Intent Profile</span>
-                <div className="flex flex-wrap gap-2">
-                  <span className="text-[9px] uppercase tracking-widest bg-brand-charcoal text-brand-sand/90 px-3 py-1 border border-brand-gold/10 font-bold">
-                    EPD Certified
-                  </span>
-                  <span className="text-[9px] uppercase tracking-widest bg-brand-charcoal text-brand-sand/90 px-3 py-1 border border-brand-gold/10 font-bold">
-                    Load-Bearing Spec
-                  </span>
-                  <span className="text-[9px] uppercase tracking-widest bg-brand-charcoal text-brand-sand/90 px-3 py-1 border border-brand-gold/10 font-bold">
-                    Exterior Facades
-                  </span>
+              {/* Downloads Deck */}
+              <div className="pt-4 border-t border-brand-gold/10 space-y-3">
+                <span className="block text-[10px] uppercase tracking-wider text-brand-sand/40 font-bold">Datasheets & Revit Objects</span>
+                <div className="grid grid-cols-1 gap-3">
+                  <button
+                    onClick={() => handleDownload("Datasheet (PDF)")}
+                    className="flex items-center justify-between p-4 bg-brand-charcoal hover:bg-brand-gold/5 border border-brand-gold/15 hover:border-brand-gold transition-all text-left w-full cursor-pointer group"
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="p-2 bg-brand-black border border-brand-gold/10 group-hover:border-brand-gold/30 text-brand-gold transition-colors">
+                        <FileText className="w-5 h-5" />
+                      </div>
+                      <div>
+                        <span className="block text-xs font-semibold text-brand-offwhite group-hover:text-brand-gold transition-colors">Technical Datasheet (TDS)</span>
+                        <span className="text-[9px] text-brand-sand/40 uppercase font-mono mt-0.5 block">pcp-{product.id}-tds.pdf</span>
+                      </div>
+                    </div>
+                    <div className="p-2 text-brand-sand group-hover:text-brand-gold transition-colors">
+                      <Download className="w-4 h-4" />
+                    </div>
+                  </button>
+
+                  <button
+                    onClick={() => handleDownload("Revit (RVT)")}
+                    className="flex items-center justify-between p-4 bg-brand-charcoal hover:bg-brand-gold/5 border border-brand-gold/15 hover:border-brand-gold transition-all text-left w-full cursor-pointer group"
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="p-2 bg-brand-black border border-brand-gold/10 group-hover:border-brand-gold/30 text-brand-gold transition-colors">
+                        <HardHat className="w-5 h-5" />
+                      </div>
+                      <div>
+                        <span className="block text-xs font-semibold text-brand-offwhite group-hover:text-brand-gold transition-colors">Revit BIM Object (RVT)</span>
+                        <span className="text-[9px] text-brand-sand/40 uppercase font-mono mt-0.5 block">pcp-{product.id}-bim.rvt</span>
+                      </div>
+                    </div>
+                    <div className="p-2 text-brand-sand group-hover:text-brand-gold transition-colors">
+                      <Download className="w-4 h-4" />
+                    </div>
+                  </button>
                 </div>
               </div>
 
@@ -396,37 +424,7 @@ function DetailContent({ product }: ProductDetailClientProps) {
                 </table>
               </div>
 
-              {/* Downloads Deck attached directly beneath specs */}
-              <div className="pt-4 space-y-4">
-                <span className="block text-[10px] uppercase tracking-wider text-brand-sand/40 font-bold">Datasheets & Revit Objects</span>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div className="flex items-center justify-between p-4 bg-brand-black/40 border border-brand-gold/10 hover:border-brand-gold/30 transition-colors">
-                    <div className="flex items-center gap-3">
-                      <FileText className="w-8 h-8 text-brand-gold shrink-0" />
-                      <div>
-                        <span className="block text-xs font-semibold text-brand-offwhite">Technical Datasheet</span>
-                        <span className="text-[9px] text-brand-sand/40 uppercase font-semibold">pcp-{product.id}-tds.pdf</span>
-                      </div>
-                    </div>
-                    <button onClick={() => handleDownload("Datasheet (PDF)")} className="p-2 text-brand-sand hover:text-brand-offwhite cursor-pointer">
-                      <Download className="w-4 h-4" />
-                    </button>
-                  </div>
-
-                  <div className="flex items-center justify-between p-4 bg-brand-black/40 border border-brand-gold/10 hover:border-brand-gold/30 transition-colors">
-                    <div className="flex items-center gap-3">
-                      <HardHat className="w-8 h-8 text-brand-gold shrink-0" />
-                      <div>
-                        <span className="block text-xs font-semibold text-brand-offwhite">Revit BIM Object</span>
-                        <span className="text-[9px] text-brand-sand/40 uppercase font-semibold">pcp-{product.id}-bim.rvt</span>
-                      </div>
-                    </div>
-                    <button onClick={() => handleDownload("Revit (RVT)")} className="p-2 text-brand-sand hover:text-brand-offwhite cursor-pointer">
-                      <Download className="w-4 h-4" />
-                    </button>
-                  </div>
-                </div>
-              </div>
+            
 
             </div>
 
@@ -706,143 +704,9 @@ function DetailContent({ product }: ProductDetailClientProps) {
         </div>
       </section>
 
-      {/* FAQs Accordion Block (between Similar and Closing Band) */}
-      <section className="py-16 bg-brand-black border-t border-brand-gold/10">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-          <div className="text-center">
-            <span className="text-[9px] uppercase font-bold tracking-[0.3em] text-brand-gold bg-brand-gold/5 px-4 py-1.5 border border-brand-gold/20 rounded-none w-fit block font-poppins mx-auto">
-              SPECIFICATION FAQ
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-normal font-cormorant text-brand-offwhite mt-4 tracking-wide uppercase">
-              Frequently Asked Questions
-            </h2>
-          </div>
-
-          <div className="space-y-4 font-poppins text-xs pt-4">
-            {product.faqs?.map((faq, index) => (
-              <div key={index} className="border-b border-brand-gold/10 pb-4">
-                <h3 className="font-semibold text-brand-offwhite uppercase tracking-wider text-[11px] mb-2">
-                  {faq.question}
-                </h3>
-                <p className="text-brand-sand/75 leading-relaxed">
-                  {faq.answer}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Inquiry Form Block (Targets scroll anchors) */}
-      <section id="inquire" className="py-16 bg-brand-charcoal/20 border-t border-brand-gold/10">
-        <div className="max-w-xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
-          <div className="text-center">
-            <h3 className="text-2xl font-normal font-cormorant text-brand-offwhite uppercase tracking-wider">
-              Request Samples / Quotation
-            </h3>
-            <p className="text-[10px] font-poppins text-brand-sand/55 mt-1.5">
-              Submit your technical specification project requirements to receive physical samples.
-            </p>
-          </div>
-
-          <form onSubmit={handleInquirySubmit} className="space-y-4">
-            <div>
-              <label className="block text-[9px] uppercase font-bold tracking-wider text-brand-sand/55 mb-1 font-poppins">Full Name</label>
-              <input
-                type="text"
-                required
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                className="w-full bg-brand-black border border-brand-gold/10 rounded-none px-4 py-3 text-xs uppercase tracking-wider font-poppins text-brand-offwhite focus:outline-none focus:border-brand-gold"
-                placeholder="Enter name"
-              />
-            </div>
-
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label className="block text-[9px] uppercase font-bold tracking-wider text-brand-sand/55 mb-1 font-poppins">Email</label>
-                <input
-                  type="email"
-                  required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="w-full bg-brand-black border border-brand-gold/10 rounded-none px-4 py-3 text-xs uppercase tracking-wider font-poppins text-brand-offwhite focus:outline-none focus:border-brand-gold"
-                  placeholder="work email"
-                />
-              </div>
-              <div>
-                <label className="block text-[9px] uppercase font-bold tracking-wider text-brand-sand/55 mb-1 font-poppins">Phone</label>
-                <input
-                  type="tel"
-                  required
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                  className="w-full bg-brand-black border border-brand-gold/10 rounded-none px-4 py-3 text-xs uppercase tracking-wider font-poppins text-brand-offwhite focus:outline-none focus:border-brand-gold"
-                  placeholder="phone"
-                />
-              </div>
-            </div>
-
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label className="block text-[9px] uppercase font-bold tracking-wider text-brand-sand/55 mb-1 font-poppins">Company</label>
-                <input
-                  type="text"
-                  required
-                  value={company}
-                  onChange={(e) => setCompany(e.target.value)}
-                  className="w-full bg-brand-black border border-brand-gold/10 rounded-none px-4 py-3 text-xs uppercase tracking-wider font-poppins text-brand-offwhite focus:outline-none focus:border-brand-gold"
-                  placeholder="firm name"
-                />
-              </div>
-              <div>
-                <label className="block text-[9px] uppercase font-bold tracking-wider text-brand-sand/55 mb-1 font-poppins">Role</label>
-                <select
-                  value={userRole}
-                  onChange={(e) => setUserRole(e.target.value)}
-                  className="w-full bg-brand-black border border-brand-gold/10 rounded-none px-4 py-3 text-xs uppercase tracking-wider font-poppins text-brand-offwhite focus:outline-none focus:border-brand-gold"
-                >
-                  <option>Architect</option>
-                  <option>Builder/Contractor</option>
-                  <option>Distributor/Dealer</option>
-                  <option>Engineer</option>
-                  <option>Developer</option>
-                  <option>Homeowner</option>
-                </select>
-              </div>
-            </div>
-
-            <div>
-              <label className="block text-[9px] uppercase font-bold tracking-wider text-brand-sand/55 mb-1 font-poppins">Technical Inquiry Message</label>
-              <textarea
-                required
-                value={message}
-                onChange={(e) => setMessage(e.target.value)}
-                rows={4}
-                className="w-full bg-brand-black border border-brand-gold/10 rounded-none px-4 py-3 text-xs uppercase tracking-wider font-poppins text-brand-offwhite focus:outline-none focus:border-brand-gold resize-none"
-              />
-            </div>
-
-            <button
-              type="submit"
-              disabled={submitting}
-              className="w-full bg-brand-gold hover:bg-brand-sand disabled:bg-brand-gold/50 text-brand-black font-semibold py-4 rounded-none transition-colors cursor-pointer flex items-center justify-center gap-2 text-xs uppercase tracking-wider font-poppins border border-brand-gold"
-            >
-              {submitting ? (
-                <span className="w-5 h-5 rounded-full border-2 border-brand-black border-t-transparent animate-spin" />
-              ) : (
-                <>
-                  <Send className="w-4 h-4 shrink-0" />
-                  Submit Request
-                </>
-              )}
-            </button>
-          </form>
-        </div>
-      </section>
 
       {/* SECTION 6: Sample CTA Band (Closing conversion path) */}
-      <section className="py-12 bg-brand-charcoal border-t border-brand-gold/10 text-center space-y-4">
+      <section className="pt-12 pb-32 md:pb-40 lg:pb-48 bg-brand-charcoal border-t border-brand-gold/10 text-center space-y-4">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-3">
           <h3 className="text-xl sm:text-2xl font-normal font-cormorant text-brand-offwhite uppercase tracking-wider">
             Confirm Sizing & Colors Locally
@@ -852,13 +716,13 @@ function DetailContent({ product }: ProductDetailClientProps) {
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
             <button
-              onClick={() => scrollToIntarget("inquire")}
+              onClick={() => setIsEnquiryOpen(true)}
               className="bg-brand-gold hover:bg-brand-sand text-brand-black font-semibold px-8 py-3.5 rounded-none text-xs uppercase tracking-widest font-poppins border border-brand-gold cursor-pointer"
             >
               Request a Sample
             </button>
             <button
-              onClick={() => scrollToIntarget("inquire")}
+              onClick={() => setIsEnquiryOpen(true)}
               className="bg-transparent hover:bg-brand-gold/10 text-brand-gold hover:text-brand-offwhite font-semibold px-8 py-3.5 rounded-none text-xs uppercase tracking-widest font-poppins border border-brand-gold/30 hover:border-brand-gold transition-all cursor-pointer"
             >
               Quick Enquiry
@@ -875,6 +739,135 @@ function DetailContent({ product }: ProductDetailClientProps) {
         </div>
       </section>
 
+      {/* Enquiry Popup Modal Dialog */}
+      <AnimatePresence>
+        {isEnquiryOpen && (
+          <div className="fixed inset-0 z-50 bg-brand-black/90 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 10 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 10 }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
+              className="relative w-full max-w-xl bg-brand-charcoal border border-brand-gold/25 p-8 shadow-2xl my-8 text-left"
+            >
+              {/* Close Button */}
+              <button
+                onClick={() => setIsEnquiryOpen(false)}
+                className="absolute top-4 right-4 text-brand-sand hover:text-brand-offwhite transition-colors cursor-pointer p-1"
+                aria-label="Close modal"
+              >
+                <X className="w-5 h-5" />
+              </button>
+
+              <div className="space-y-6">
+                <div>
+                  <span className="text-[9px] uppercase font-bold tracking-[0.25em] text-brand-gold font-poppins">Technical Spec Desk</span>
+                  <h3 className="text-2xl font-normal font-cormorant text-brand-offwhite mt-1 uppercase tracking-wider">
+                    Request Samples & Quote
+                  </h3>
+                  <p className="text-[10px] font-poppins text-brand-sand/55 mt-1.5 leading-relaxed">
+                    Specifying {product.name}. Submit your project coordinates below to receive a physical sample box.
+                  </p>
+                </div>
+
+                <form onSubmit={handleInquirySubmit} className="space-y-4">
+                  <div>
+                    <label className="block text-[9px] uppercase font-bold tracking-wider text-brand-sand/55 mb-1 font-poppins">Full Name</label>
+                    <input
+                      type="text"
+                      required
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      className="w-full bg-brand-black border border-brand-gold/10 rounded-none px-4 py-3 text-xs uppercase tracking-wider font-poppins text-brand-offwhite focus:outline-none focus:border-brand-gold"
+                      placeholder="Enter name"
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-[9px] uppercase font-bold tracking-wider text-brand-sand/55 mb-1 font-poppins">Email</label>
+                      <input
+                        type="email"
+                        required
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        className="w-full bg-[#0a0a09] border border-brand-gold/10 rounded-none px-4 py-3 text-xs uppercase tracking-wider font-poppins text-brand-offwhite focus:outline-none focus:border-brand-gold"
+                        placeholder="work email"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[9px] uppercase font-bold tracking-wider text-brand-sand/55 mb-1 font-poppins">Phone</label>
+                      <input
+                        type="tel"
+                        required
+                        value={phone}
+                        onChange={(e) => setPhone(e.target.value)}
+                        className="w-full bg-[#0a0a09] border border-brand-gold/10 rounded-none px-4 py-3 text-xs uppercase tracking-wider font-poppins text-brand-offwhite focus:outline-none focus:border-brand-gold"
+                        placeholder="phone"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-[9px] uppercase font-bold tracking-wider text-brand-sand/55 mb-1 font-poppins">Company</label>
+                      <input
+                        type="text"
+                        required
+                        value={company}
+                        onChange={(e) => setCompany(e.target.value)}
+                        className="w-full bg-[#0a0a09] border border-brand-gold/10 rounded-none px-4 py-3 text-xs uppercase tracking-wider font-poppins text-brand-offwhite focus:outline-none focus:border-brand-gold"
+                        placeholder="firm name"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[9px] uppercase font-bold tracking-wider text-brand-sand/55 mb-1 font-poppins">Role</label>
+                      <select
+                        value={userRole}
+                        onChange={(e) => setUserRole(e.target.value)}
+                        className="w-full bg-[#0a0a09] border border-brand-gold/10 rounded-none px-4 py-3 text-xs uppercase tracking-wider font-poppins text-brand-offwhite focus:outline-none focus:border-brand-gold"
+                      >
+                        <option>Architect</option>
+                        <option>Builder/Contractor</option>
+                        <option>Distributor/Dealer</option>
+                        <option>Engineer</option>
+                        <option>Developer</option>
+                        <option>Homeowner</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-[9px] uppercase font-bold tracking-wider text-brand-sand/55 mb-1 font-poppins">Technical Inquiry Message</label>
+                    <textarea
+                      required
+                      value={message}
+                      onChange={(e) => setMessage(e.target.value)}
+                      rows={4}
+                      className="w-full bg-brand-black border border-brand-gold/10 rounded-none px-4 py-3 text-xs uppercase tracking-wider font-poppins text-brand-offwhite focus:outline-none focus:border-brand-gold resize-none"
+                    />
+                  </div>
+
+                  <button
+                    type="submit"
+                    disabled={submitting}
+                    className="w-full bg-brand-gold hover:bg-brand-sand disabled:bg-brand-gold/50 text-brand-black font-semibold py-4 rounded-none transition-colors cursor-pointer flex items-center justify-center gap-2 text-xs uppercase tracking-wider font-poppins border border-brand-gold"
+                  >
+                    {submitting ? (
+                      <span className="w-5 h-5 rounded-full border-2 border-brand-black border-t-transparent animate-spin" />
+                    ) : (
+                      <>
+                        <Send className="w-4 h-4 shrink-0" />
+                        Submit Request
+                      </>
+                    )}
+                  </button>
+                </form>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
@@ -895,7 +888,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
       <div className="flex flex-col min-h-screen">
         <Header darkMode={darkMode} setDarkMode={setDarkMode} />
         <DetailContent product={product} />
-        <Footer />
+        <Footer showCTA={true} />
       </div>
     </ToastProvider>
   );

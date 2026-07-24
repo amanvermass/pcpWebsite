@@ -27,7 +27,7 @@ export default function WhereToBuyClient() {
           <DealerLocator />
         </div>
       </main>
-      <Footer />
+      <Footer showCTA={false} />
     </div>
   );
 }

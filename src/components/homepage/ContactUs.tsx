@@ -70,7 +70,7 @@ export const ContactUs: React.FC = () => {
   };
 
   return (
-    <section id="contact" className="bg-transparent py-16 md:py-20 lg:py-24 relative overflow-hidden select-none">
+    <section id="contact" className="bg-transparent pt-16 md:pt-20 lg:pt-24 pb-32 md:pb-40 lg:pb-48 relative overflow-hidden select-none">
       {/* Animated background shapes (Let's Build CTA layout) */}
       <div className="absolute inset-0 pointer-events-none z-0">
         <motion.div

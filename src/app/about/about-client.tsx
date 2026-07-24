@@ -78,7 +78,7 @@ export default function AboutClient() {
       <Header darkMode={darkMode} setDarkMode={setDarkMode} />
 
       {/* Hero Cover Banner */}
-      <div ref={containerRef} className="relative w-full h-[65vh] overflow-hidden bg-black">
+      <div ref={containerRef} className="relative w-full h-[65vh] overflow-hidden bg-[#FAF6F2]">
         <motion.div 
           style={{ y: imageY }}
           className="absolute inset-0 w-full h-[120%] -top-[10%]"
@@ -87,26 +87,20 @@ export default function AboutClient() {
           <img 
             src="/images/hero-4.jpg" 
             alt="Premium corporate factory architecture" 
-            className="w-full h-full object-cover opacity-65 scale-102" 
+            className="w-full h-full object-cover opacity-90 scale-102" 
           />
         </motion.div>
-        
-        {/* Dark vignette overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#121110]/95 via-[#121110]/45 to-[#121110]/80 z-10" />
 
         {/* Content Overlays */}
-        <div className="absolute inset-0 z-20 flex flex-col justify-between p-6 sm:p-12 max-w-7xl mx-auto w-full pt-28">
-          <div>
-            <span className="text-[10px] uppercase font-bold tracking-[0.35em] text-brand-gold bg-brand-gold/5 px-4 py-1.5 border border-brand-gold/20 rounded-none w-fit block font-poppins">
-              SINCE 1983 / EARTHEN HERITAGE
+        <div className="absolute inset-0 z-20 flex items-center p-6 sm:p-12 max-w-7xl mx-auto w-full pt-20">
+          <div className="max-w-2xl bg-brand-charcoal/65 border border-brand-gold/15 p-8 md:p-10 backdrop-blur-md">
+            <span className="text-[10px] uppercase font-bold tracking-[0.35em] text-brand-gold bg-brand-gold/10 px-4 py-1.5 border border-brand-gold/20 rounded-none w-fit block mb-4 font-poppins">
+              SINCE 1937 / EARTHEN HERITAGE
             </span>
-          </div>
-          
-          <div className="max-w-4xl mt-auto">
-            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-normal font-cormorant text-[#faf6f2] tracking-wide leading-none">
+            <h1 className="text-3xl sm:text-5xl font-normal font-cormorant text-brand-offwhite tracking-wide leading-tight">
               Engineering Resilient Envelopes.
             </h1>
-            <p className="text-brand-sand-400 text-xs sm:text-sm font-poppins mt-4 max-w-lg leading-relaxed">
+            <p className="text-brand-sand/90 text-xs sm:text-sm font-poppins mt-4 leading-relaxed max-w-xl">
               Prayag Clay Productions blends traditional clay firing chemistry with European automated tunnel kiln technologies to supply premium facing bricks and terracotta facades.
             </p>
           </div>
@@ -210,7 +204,7 @@ export default function AboutClient() {
       </section>
 
       {/* Certifications and ESG Awards */}
-      <section id="certifications" className="py-16 md:py-20 lg:py-24 bg-brand-charcoal/50 border-t border-brand-gold/10 relative">
+      <section id="certifications" className="pt-16 md:pt-20 lg:pt-24 pb-32 md:pb-40 lg:pb-48 bg-brand-charcoal/50 border-t border-brand-gold/10 relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             

@@ -129,8 +129,8 @@ export const EcothermFeature: React.FC = () => {
           <div className="lg:col-span-5 w-full h-[550px] overflow-hidden border border-brand-gold/15 hover:border-brand-gold/40 bg-brand-charcoal relative shadow-2xl group">
             <ImageReveal>
               <img
-                src="/images/ecotherm-hollow.jpg"
-                alt="Terraplast bespoke earthy plasters color chart showing 22+ earthy tones"
+                src="/images/products/clay-hollow-bricks.jpg"
+                alt="Ecotherm structural clay hollow blocks stacked showing multi-chamber air cell geometry"
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
               />
             </ImageReveal>
@@ -141,13 +141,13 @@ export const EcothermFeature: React.FC = () => {
             {/* Interactive Dimension Overlay (Mock Blueprint Label) */}
             <div className="absolute bottom-6 left-6 z-20 bg-brand-black/90 p-4 border border-brand-gold/20 backdrop-blur-sm text-left max-w-xs">
               <span className="text-[8px] tracking-[0.25em] font-bold text-brand-gold uppercase block font-poppins">
-                PLASTER TONES SHOWCASE
+                DIMENSIONAL SPECIFICATIONS
               </span>
               <h5 className="text-sm font-semibold text-brand-offwhite mt-1 font-cormorant">
-                Terraplast Bespoke Plasters
+                Ecotherm S-Series Block
               </h5>
               <p className="text-[10px] text-brand-sand/70 leading-normal mt-1 font-poppins">
-                22+ earthy tones from earth reds to warm creams and golden ochres.
+                400 × 200 × 200 mm modular size featuring multi-chambered thermal insulation.
               </p>
             </div>
           </div>

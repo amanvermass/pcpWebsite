@@ -128,48 +128,33 @@ export default function ProjectsPage() {
         <Header darkMode={darkMode} setDarkMode={setDarkMode} />
 
         {/* Fullscreen Project Montage Hero */}
-        <div className="relative h-screen w-full flex items-center overflow-hidden bg-black">
+        <div className="relative h-[65vh] w-full flex items-center overflow-hidden bg-[#FAF6F2]">
           <div className="absolute inset-0 z-0">
             <AnimatePresence mode="wait">
               <motion.div
                 key={heroIdx}
                 initial={{ opacity: 0, scale: 1.05 }}
-                animate={{ opacity: 0.35, scale: 1 }}
+                animate={{ opacity: 0.85, scale: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 1.2 }}
                 className="absolute inset-0 bg-cover bg-center bg-no-repeat"
                 style={{ backgroundImage: `url(${projects[heroIdx].image})` }}
               />
             </AnimatePresence>
-            <div className="absolute inset-0 bg-gradient-to-t from-[#121110] via-[#121110]/80 to-transparent z-10" />
           </div>
 
           <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full mt-12">
-            <motion.div style={{ y: heroTextY }} className="max-w-3xl">
-              <span className="text-[10px] uppercase font-bold tracking-[0.35em] text-brand-gold bg-brand-gold/5 px-4 py-1.5 border border-brand-gold/20 rounded-none w-fit block mb-4">
+            <motion.div style={{ y: heroTextY }} className="max-w-2xl bg-brand-charcoal/65 border border-brand-gold/15 p-8 md:p-10 backdrop-blur-md">
+              <span className="text-[10px] uppercase font-bold tracking-[0.35em] text-brand-gold bg-brand-gold/10 px-4 py-1.5 border border-brand-gold/20 rounded-none w-fit block mb-4 font-poppins">
                 PCP Case Studies
               </span>
-              <h1 className="text-5xl sm:text-7xl font-normal font-cormorant text-[#faf6f2] tracking-wide leading-none">
+              <h1 className="text-3xl sm:text-5xl font-normal font-cormorant text-brand-offwhite tracking-wide leading-tight">
                 Architectural Work.
               </h1>
-              <p className="text-brand-sand-400 mt-6 text-sm sm:text-base font-poppins leading-relaxed max-w-xl">
+              <p className="text-brand-sand/90 mt-4 text-xs sm:text-sm font-poppins leading-relaxed max-w-xl">
                 Explore our portfolio of completed projects. From heavy-duty commercial plazas to low-energy residential homes, discover how we build with durability.
               </p>
             </motion.div>
-          </div>
-
-          {/* Scroll cue indicator */}
-          <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2">
-            <span className="text-[9px] font-semibold tracking-widest uppercase text-brand-sand/55 font-poppins">
-              Explore Portfolio
-            </span>
-            <div className="w-px h-10 bg-brand-gold/20 relative overflow-hidden">
-              <motion.div 
-                animate={{ y: ["-100%", "100%"] }}
-                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute top-0 left-0 w-full h-4 bg-brand-gold"
-              />
-            </div>
           </div>
         </div>
 
@@ -199,7 +184,7 @@ export default function ProjectsPage() {
         </div>
 
         {/* Projects Metro Grid */}
-        <main className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-16 flex-grow">
+        <main className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 pt-16 pb-32 md:pb-40 lg:pb-48 flex-grow">
           <motion.div 
             layout
             className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start"

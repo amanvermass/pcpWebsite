@@ -349,7 +349,7 @@ export default function ContactClient() {
       <div className="flex flex-col min-h-screen bg-brand-black text-brand-offwhite">
         <Header darkMode={darkMode} setDarkMode={setDarkMode} />
         <ContactContent />
-        <Footer />
+        <Footer showCTA={false} />
       </div>
     </ToastProvider>
   );

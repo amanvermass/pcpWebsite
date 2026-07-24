@@ -143,7 +143,7 @@ export const Hero: React.FC<HeroProps> = ({ darkMode = true }) => {
       >
         {/* Subtle grid watermark */}
         <div className="absolute inset-0 opacity-[0.05] bg-[linear-gradient(to_right,#ce9456_1px,transparent_1px),linear-gradient(to_bottom,#ce9456_1px,transparent_1px)] bg-[size:30px_30px]" />
-        
+
         {/* Soft radial backdrop gradient */}
         <div className="absolute inset-0 bg-[radial-gradient(circle_800px_at_100%_200px,rgba(206,148,86,0.04),transparent)]" />
       </motion.div>
@@ -372,7 +372,7 @@ const BlueprintSketch: React.FC<{ glowing?: boolean }> = ({ glowing = false }) =
           <rect x={200} y={330} width={1100} height={170} fill="url(#wallGrad)" />
           {/* First Floor Walls */}
           <rect x={200} y={160} width={1100} height={150} fill="url(#wallGrad)" />
-          
+
           {/* Portico Wall back projection (subtle contrast) */}
           <rect x={600} y={160} width={300} height={340} fill="#fcf9f2" opacity="0.6" />
 
@@ -380,10 +380,10 @@ const BlueprintSketch: React.FC<{ glowing?: boolean }> = ({ glowing = false }) =
           <polygon points="200,160 600,160 560,80 240,80" fill="url(#roofGrad)" />
           <polygon points="900,160 1300,160 1260,80 940,80" fill="url(#roofGrad)" />
           <polygon points="580,160 750,50 920,160" fill="url(#roofGrad)" />
-          
+
           {/* Plinth Base Fill */}
           <rect x={190} y={500} width={1120} height={15} fill="url(#plinthGrad)" />
-          
+
           {/* Stairs Fills */}
           <rect x={600} y={535} width={300} height={10} fill="url(#plinthGrad)" />
           <rect x={610} y={525} width={280} height={10} fill="url(#plinthGrad)" />
@@ -391,7 +391,7 @@ const BlueprintSketch: React.FC<{ glowing?: boolean }> = ({ glowing = false }) =
           <rect x={630} y={505} width={240} height={10} fill="url(#plinthGrad)" />
           <rect x={595} y={505} width={15} height={40} fill="url(#plinthGrad)" />
           <rect x={890} y={505} width={15} height={40} fill="url(#plinthGrad)" />
-          
+
           {/* Balustrade rail fill (y=140 to 160) */}
           <rect x={200} y={145} width={380} height={15} fill="#f7f3eb" />
           <rect x={920} y={145} width={380} height={15} fill="#f7f3eb" />
@@ -413,12 +413,12 @@ const BlueprintSketch: React.FC<{ glowing?: boolean }> = ({ glowing = false }) =
 
           {/* Window Glass Fills */}
           {groundWindows.map((x) => (
-            <path key={`g-win-fill-${x}`} d={`M ${x-30},500 L ${x-30},440 A 30,30 0 0,1 ${x+30},440 L ${x+30},500 Z`} fill="url(#glassGrad)" />
+            <path key={`g-win-fill-${x}`} d={`M ${x - 30},500 L ${x - 30},440 A 30,30 0 0,1 ${x + 30},440 L ${x + 30},500 Z`} fill="url(#glassGrad)" />
           ))}
           <path d="M 710,500 L 710,430 A 40,40 0 0,1 790,430 L 790,500 Z" fill="url(#glassGrad)" />
-          
+
           {upperWindows.map((x) => (
-            <rect key={`u-win-fill-${x}`} x={x-25} y={220} width={50} height={90} fill="url(#glassGrad)" />
+            <rect key={`u-win-fill-${x}`} x={x - 25} y={220} width={50} height={90} fill="url(#glassGrad)" />
           ))}
           <rect x={720} y={200} width={60} height={110} fill="url(#glassGrad)" />
 
@@ -514,13 +514,13 @@ const BlueprintSketch: React.FC<{ glowing?: boolean }> = ({ glowing = false }) =
         {groundWindows.map((x, idx) => (
           <g key={`g-window-${x}`}>
             {/* Outer Arch */}
-            <motion.path d={`M ${x-30},500 L ${x-30},440 A 30,30 0 0,1 ${x+30},440 L ${x+30},500`} variants={lineVariants} custom={3.6 + idx * 0.08} />
+            <motion.path d={`M ${x - 30},500 L ${x - 30},440 A 30,30 0 0,1 ${x + 30},440 L ${x + 30},500`} variants={lineVariants} custom={3.6 + idx * 0.08} />
             {/* Inner Sash */}
-            <motion.path d={`M ${x-25},500 L ${x-25},442 A 25,25 0 0,1 ${x+25},442 L ${x+25},500`} variants={lineVariants} custom={3.7 + idx * 0.08} />
+            <motion.path d={`M ${x - 25},500 L ${x - 25},442 A 25,25 0 0,1 ${x + 25},442 L ${x + 25},500`} variants={lineVariants} custom={3.7 + idx * 0.08} />
             {/* Window grids */}
             <motion.line x1={x} y1={412} x2={x} y2={500} variants={lineVariants} custom={3.8} />
-            <motion.line x1={x-25} y1={458} x2={x+25} y2={458} variants={lineVariants} custom={3.8} />
-            <motion.line x1={x-25} y1={478} x2={x+25} y2={478} variants={lineVariants} custom={3.8} />
+            <motion.line x1={x - 25} y1={458} x2={x + 25} y2={458} variants={lineVariants} custom={3.8} />
+            <motion.line x1={x - 25} y1={478} x2={x + 25} y2={478} variants={lineVariants} custom={3.8} />
           </g>
         ))}
 
@@ -553,15 +553,15 @@ const BlueprintSketch: React.FC<{ glowing?: boolean }> = ({ glowing = false }) =
         {upperWindows.map((x, idx) => (
           <g key={`u-window-${x}`}>
             {/* Window outer frame */}
-            <motion.path d={`M ${x-25},310 L ${x-25},220 L ${x+25},220 L ${x+25},310 Z`} variants={lineVariants} custom={3.7 + idx * 0.08} />
+            <motion.path d={`M ${x - 25},310 L ${x - 25},220 L ${x + 25},220 L ${x + 25},310 Z`} variants={lineVariants} custom={3.7 + idx * 0.08} />
             {/* Window inner sash */}
-            <motion.path d={`M ${x-20},310 L ${x-20},225 L ${x+20},225 L ${x+20},310 Z`} variants={lineVariants} custom={3.8 + idx * 0.08} />
+            <motion.path d={`M ${x - 20},310 L ${x - 20},225 L ${x + 20},225 L ${x + 20},310 Z`} variants={lineVariants} custom={3.8 + idx * 0.08} />
             {/* Window grids */}
             <motion.line x1={x} y1={225} x2={x} y2={310} variants={lineVariants} custom={3.9} />
-            <motion.line x1={x-20} y1={250} x2={x+20} y2={250} variants={lineVariants} custom={3.9} />
-            <motion.line x1={x-20} y1={280} x2={x+20} y2={280} variants={lineVariants} custom={3.9} />
+            <motion.line x1={x - 20} y1={250} x2={x + 20} y2={250} variants={lineVariants} custom={3.9} />
+            <motion.line x1={x - 20} y1={280} x2={x + 20} y2={280} variants={lineVariants} custom={3.9} />
             {/* Triangular pediment hood */}
-            <motion.polygon points={`${x-28},220 ${x},198 ${x+28},220`} variants={lineVariants} custom={4.0 + idx * 0.08} />
+            <motion.polygon points={`${x - 28},220 ${x},198 ${x + 28},220`} variants={lineVariants} custom={4.0 + idx * 0.08} />
           </g>
         ))}
 
@@ -613,7 +613,7 @@ const BlueprintSketch: React.FC<{ glowing?: boolean }> = ({ glowing = false }) =
         <motion.polygon points="580,160 750,50 920,160" variants={lineVariants} custom={3.1} />
         {/* Pediment molding frame offset */}
         <motion.polygon points="595,155 750,68 905,155" variants={lineVariants} custom={3.2} />
-        
+
         {/* Center Medallion circle detail */}
         <motion.circle cx={750} cy={115} r={22} variants={lineVariants} custom={3.3} />
         <motion.circle cx={750} cy={115} r={14} strokeDasharray="2 2" variants={lineVariants} custom={3.4} />
